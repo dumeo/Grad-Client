@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MainActivity</string>
+    <string name="default_avatar">https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png</string>
 </resources>

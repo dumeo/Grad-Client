@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="http_host">192.168.1.104</string>
+    <integer name="http_port">8080</integer>
+</resources>
