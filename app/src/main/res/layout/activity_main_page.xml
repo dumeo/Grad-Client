@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".information.MainPageActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_page_toolbar"
+        app:title=""
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        >
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/main_page_frames"
+        android:layout_width="match_parent"
+        android:layout_height="615dp"
+        android:layout_below="@id/main_page_toolbar"
+        ></FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:padding="5dp"
+        android:layout_marginBottom="6dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:id="@+id/main_page_tv_main_page"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/main_page_bottom_textSize"
+            android:text="首页"
+            android:gravity="center"
+            android:layout_weight="1"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/main_page_tv_recommand"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/main_page_bottom_textSize"
+            android:text="推荐"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            ></TextView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/main_page_iv_newpost"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:src="@mipmap/ic_newpost"
+            app:shapeAppearance="@style/circleStyle"
+            android:shadowColor="@android:color/holo_blue_bright"
+            />
+
+        <TextView
+            android:id="@+id/main_page_tv_following"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/main_page_bottom_textSize"
+            android:text="关注"
+            android:gravity="center"
+            android:layout_weight="1"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/main_page_tv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/main_page_bottom_textSize"
+            android:text="我的"
+            android:gravity="center"
+            android:layout_weight="1"
+            ></TextView>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

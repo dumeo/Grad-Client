@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_news"
+        android:title="社区新闻"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_second_hand"
+        android:title="二手交易"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_logout"
+        android:title="退出登录"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_search"
+        android:title="搜索"
+        app:showAsAction="always"
+        android:orderInCategory="60"
+        app:actionViewClass="android.widget.SearchView" />
+</menu>

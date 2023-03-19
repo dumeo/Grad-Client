@@ -8,7 +8,7 @@ import lombok.ToString;
 public class User {
 
 
-    private long uid;
+    private int uid;
     private String username;
     private String password;
     private String email;
@@ -23,7 +23,7 @@ public class User {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
