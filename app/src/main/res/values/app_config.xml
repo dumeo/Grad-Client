@@ -2,4 +2,5 @@
 <resources>
     <string name="http_host">192.168.1.104</string>
     <integer name="http_port">8080</integer>
+    <integer name="item_space">5</integer>
 </resources>

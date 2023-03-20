@@ -4,19 +4,42 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 public class User {
-
 
     private int uid;
     private String username;
     private String password;
     private String email;
     private String communityName;
-    private String avatarUrl = "";
+    private String houseAddr;
+    private String avatarUrl;
     private int emailValid;
     private String createDate;
+
     public User() {
+    }
+
+    public User(int uid, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, int emailValid, String createDate) {
+        this.uid = uid;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.communityName = communityName;
+        this.houseAddr = houseAddr;
+        this.avatarUrl = avatarUrl;
+        this.emailValid = emailValid;
+        this.createDate = createDate;
+    }
+
+    public User(String username, String password, String email, String communityName, String houseAddr, String avatarUrl, int emailValid, String createDate) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.communityName = communityName;
+        this.houseAddr = houseAddr;
+        this.avatarUrl = avatarUrl;
+        this.emailValid = emailValid;
+        this.createDate = createDate;
     }
 
     public long getUid() {
@@ -64,32 +87,17 @@ public class User {
     }
 
 
+    public String getHouseAddr() {
+        return houseAddr;
+    }
+
+    public void setHouseAddr(String houseAddr) {
+        this.houseAddr = houseAddr;
+    }
+
+
     public String getAvatarUrl() {
         return avatarUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", communityName='" + communityName + '\'' +
-                ", avatarUrl='" + avatarUrl + '\'' +
-                ", emailValid=" + emailValid +
-                ", createDate=" + createDate +
-                '}';
-    }
-
-    public User(String username, String password, String email, String communityName, String avatarUrl, int emailValid, String createDate) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.communityName = communityName;
-        this.avatarUrl = avatarUrl;
-        this.emailValid = emailValid;
-        this.createDate = createDate;
     }
 
     public void setAvatarUrl(String avatarUrl) {
@@ -114,4 +122,18 @@ public class User {
         this.createDate = createDate;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", communityName='" + communityName + '\'' +
+                ", houseAddr='" + houseAddr + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", emailValid=" + emailValid +
+                ", createDate='" + createDate + '\'' +
+                '}';
+    }
 }

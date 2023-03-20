@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".information.MainPageActivity">
+    tools:context=".information.mainpage.MainPageActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_page_toolbar"
+        android:id="@+id/toolbar"
         app:title=""
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -17,13 +17,15 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
-        android:id="@+id/main_page_frames"
+        android:id="@+id/main_frames"
         android:layout_width="match_parent"
-        android:layout_height="615dp"
-        android:layout_below="@id/main_page_toolbar"
+        android:layout_height="618dp"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom_option"
         ></FrameLayout>
 
     <LinearLayout
+        android:id="@+id/bottom_option"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:padding="5dp"
@@ -32,7 +34,7 @@
         >
 
         <TextView
-            android:id="@+id/main_page_tv_main_page"
+            android:id="@+id/tv_main_page"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="@dimen/main_page_bottom_textSize"
@@ -42,7 +44,7 @@
             ></TextView>
 
         <TextView
-            android:id="@+id/main_page_tv_recommand"
+            android:id="@+id/tv_recommand"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="@dimen/main_page_bottom_textSize"
@@ -53,7 +55,7 @@
             ></TextView>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_page_iv_newpost"
+            android:id="@+id/iv_newpost"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -65,7 +67,7 @@
             />
 
         <TextView
-            android:id="@+id/main_page_tv_following"
+            android:id="@+id/tv_following"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="@dimen/main_page_bottom_textSize"
@@ -75,7 +77,7 @@
             ></TextView>
 
         <TextView
-            android:id="@+id/main_page_tv_profile"
+            android:id="@+id/tv_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="@dimen/main_page_bottom_textSize"

@@ -65,8 +65,19 @@ public class UserViewModel{
         userObservableField.get().setCommunityName(communityName);
     }
 
+    public String getHouseAddr(){
+        return userObservableField.get().getHouseAddr();
+    }
+
+    public void setHouseAddr(String houseAddr){
+        userObservableField.get().setHouseAddr(houseAddr);
+    }
+
     public void onRegisterClicked(View view){
-        if(StrUtil.isEmpty(userObservableField.get().getUsername()) || StrUtil.isEmpty(userObservableField.get().getPassword()) || StrUtil.isEmpty(userObservableField.get().getCommunityName()))
+        if(StrUtil.isEmpty(userObservableField.get().getUsername()) ||
+                StrUtil.isEmpty(userObservableField.get().getPassword())
+                || StrUtil.isEmpty(userObservableField.get().getCommunityName())
+                || StrUtil.isEmpty(userObservableField.get().getHouseAddr()))
             registerStatus.postValue(DefaultVals.REGISTER_UNFILL);
         else registerUser();
     }
@@ -75,7 +86,6 @@ public class UserViewModel{
     private void registerUser(){
 
         registerStatus.postValue(DefaultVals.REGISTERING);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

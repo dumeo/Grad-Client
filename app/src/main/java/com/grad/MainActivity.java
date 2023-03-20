@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.grad.information.MainPageActivity;
+import com.grad.information.mainpage.MainPageActivity;
 import com.grad.user.RegisterActivity;
 import com.grad.util.DefaultVals;
 import com.grad.util.SharedPreferenceUtil;

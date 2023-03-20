@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.grad.R;
 import com.grad.databinding.ActivityRegisterBinding;
-import com.grad.information.MainPageActivity;
+import com.grad.information.mainpage.MainPageActivity;
 import com.grad.pojo.User;
 import com.grad.util.DefaultVals;
 import com.grad.util.SharedPreferenceUtil;

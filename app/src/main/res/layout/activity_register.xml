@@ -13,10 +13,11 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/register_useravatar"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_gravity="center"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="80dp"
             android:padding="1dp"
             android:src="@drawable/ic_launcher_background"
             app:shapeAppearance="@style/circleStyle"
@@ -54,12 +55,23 @@
                 android:layout_below="@id/password_register"
                 android:layout_marginTop="30dp"
                 android:text="@={userViewModel.CommunityName}" />
+
+            <EditText
+                android:id="@+id/houseaddr_register"
+                android:layout_width="@dimen/edittext_width"
+                android:layout_height="@dimen/edittext_height"
+                android:hint="家庭地址"
+                android:layout_below="@id/community_register"
+                android:layout_marginTop="30dp"
+                android:text="@={userViewModel.HouseAddr}" />
+
+
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="@dimen/edittext_width"
                 android:layout_height="50dp"
                 android:text="注册"
-                android:layout_below="@id/community_register"
+                android:layout_below="@id/houseaddr_register"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_bg1"
                 android:onClick="@{userViewModel.onRegisterClicked}"/>
