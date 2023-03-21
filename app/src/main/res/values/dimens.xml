@@ -1,5 +1,6 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="progressBarSize">15dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="main_page_bottom_textSize">21sp</dimen>
@@ -16,7 +17,6 @@
     <dimen name="main_page_item_avatarSize">33dp</dimen>
     <dimen name="item_top_linearlayout">40dp</dimen>
     <dimen name="tag_text_margin">10dp</dimen>
-
     <dimen name="tag_height">40dp</dimen>
     <dimen name="tag_width">150dp</dimen>
 

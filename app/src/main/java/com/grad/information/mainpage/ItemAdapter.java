@@ -1,7 +1,6 @@
 package com.grad.information.mainpage;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grad.R;
+import com.grad.databinding.ItemTypeImageBinding;
+import com.grad.databinding.ItemTypeTextBinding;
+import com.grad.pojo.PostItem;
 
-public class AdapterMainPageReclv extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import java.util.List;
 
+public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<PostItem> mPosts;
     private Context mContext;
+    private ItemTypeImageBinding mItemTypeImageBinding;
+    private ItemTypeTextBinding mItemTypeTextBinding;
 
-    public AdapterMainPageReclv(Context context){
+    public ItemAdapter(Context context){
         mContext = context;
     }
 
@@ -29,6 +35,10 @@ public class AdapterMainPageReclv extends RecyclerView.Adapter<RecyclerView.View
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+//        mItemTypeImageBinding = ItemTypeImageBinding.inflate(LayoutInflater.from(mContext), parent, false);
+//        mItemTypeTextBinding = ItemTypeTextBinding.inflate(LayoutInflater.from(mContext), parent, false);
+//
 
         if(viewType == 0){
             return new ViewHolderWithImg( LayoutInflater.from(mContext).inflate(R.layout.item_type_image, parent, false));
@@ -62,7 +72,7 @@ public class AdapterMainPageReclv extends RecyclerView.Adapter<RecyclerView.View
         TextView tag;
         public ViewHolderWithImg(@NonNull View itemView) {
             super(itemView);
-            tag = itemView.findViewById(R.id.item_main_page_tv_tag);
+            tag = itemView.findViewById(R.id.post_tag);
         }
     }
 
@@ -70,7 +80,7 @@ public class AdapterMainPageReclv extends RecyclerView.Adapter<RecyclerView.View
         TextView tag;
         public ViewHolderWithContent(@NonNull View itemView) {
             super(itemView);
-            tag = itemView.findViewById(R.id.item_main_page_tv_tag2);
+            tag = itemView.findViewById(R.id.post_tag2);
         }
     }
 }

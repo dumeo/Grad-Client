@@ -6,21 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 public class User {
 
-    private int uid;
+    private long uid;
+    private long utype;
     private String username;
     private String password;
     private String email;
     private String communityName;
     private String houseAddr;
     private String avatarUrl;
-    private int emailValid;
+    private long emailValid;
     private String createDate;
 
     public User() {
     }
 
-    public User(int uid, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, int emailValid, String createDate) {
+    public User(long uid, long utype, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, long emailValid, String createDate) {
         this.uid = uid;
+        this.utype = utype;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -31,7 +33,8 @@ public class User {
         this.createDate = createDate;
     }
 
-    public User(String username, String password, String email, String communityName, String houseAddr, String avatarUrl, int emailValid, String createDate) {
+    public User(long utype, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, long emailValid, String createDate) {
+        this.utype = utype;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -46,8 +49,17 @@ public class User {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(long uid) {
         this.uid = uid;
+    }
+
+
+    public long getUtype() {
+        return utype;
+    }
+
+    public void setUtype(long utype) {
+        this.utype = utype;
     }
 
 
@@ -109,7 +121,7 @@ public class User {
         return emailValid;
     }
 
-    public void setEmailValid(int emailValid) {
+    public void setEmailValid(long emailValid) {
         this.emailValid = emailValid;
     }
 
@@ -126,6 +138,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "uid=" + uid +
+                ", utype=" + utype +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

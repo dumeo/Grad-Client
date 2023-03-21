@@ -38,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
                         int uid = mUserViewModel.getUid();
                         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getBaseContext(), DefaultVals.SHARED_USER_INFO);
                         sharedPreferenceUtil.writeInt("uid", uid);
-                        Log.e("wjj", "read uid = " + sharedPreferenceUtil.readInt("uid", -1));
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         finish();
                     }

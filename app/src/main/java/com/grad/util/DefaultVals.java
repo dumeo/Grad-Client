@@ -10,5 +10,6 @@ public class DefaultVals {
 
     //-------------------SharedPreferences----------------------
     public static final String SHARED_USER_INFO = "userInfo";
-
+    public static Integer POST_TYPE_TEXT = 0;
+    public static Integer POST_TYPE_IMG = 1;
 }

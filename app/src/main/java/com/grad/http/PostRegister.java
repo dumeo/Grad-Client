@@ -10,9 +10,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface PostRegister {
-
     @POST(value = "/user/register")
     Call<JsonObject> registerUser(@Body User user);
-
-
 }

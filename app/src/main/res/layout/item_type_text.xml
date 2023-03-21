@@ -7,13 +7,13 @@
     >
 
     <LinearLayout
-        android:id="@+id/item_main_page_top2"
+        android:id="@+id/top_linearlayout2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_top_linearlayout"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/item_main_page_useravatar2"
+            android:id="@+id/user_avatar2"
             android:layout_width="@dimen/main_page_item_avatarSize"
             android:layout_height="@dimen/main_page_item_avatarSize"
             android:layout_gravity="center"
@@ -32,7 +32,7 @@
             android:layout_marginLeft="@dimen/image_boarder_margin">
 
             <TextView
-                android:id="@+id/item_main_page_username2"
+                android:id="@+id/username2"
                 android:layout_width="200dp"
                 android:layout_height="15dp"
                 android:text="俄国人给你"
@@ -42,14 +42,14 @@
                 android:textSize="@dimen/main_page_item_username_textSize"></TextView>
 
             <TextView
-                android:id="@+id/item_main_page_userunit2"
+                android:id="@+id/user_unit2"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/main_page_item_userunit_textSize"
                 android:text="三单元501"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:layout_below="@id/item_main_page_username2"
+                android:layout_below="@id/username2"
                 ></TextView>
 
         </RelativeLayout>
@@ -57,10 +57,10 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/item_main_page_title2"
+        android:id="@+id/post_title2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_main_page_top2"
+        android:layout_below="@id/top_linearlayout2"
         android:layout_marginTop="@dimen/image_text_margin"
         android:layout_marginLeft="@dimen/main_page_item_title_marginLeft"
         android:layout_marginRight="@dimen/main_page_item_title_marginLeft"
@@ -73,10 +73,10 @@
 
 
     <TextView
-        android:id="@+id/item_main_page_content"
+        android:id="@+id/post_content2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_main_page_title2"
+        android:layout_below="@id/post_title2"
         android:layout_marginTop="@dimen/image_text_margin"
         android:layout_marginLeft="@dimen/main_page_item_title_marginLeft"
         android:layout_marginRight="@dimen/main_page_item_title_marginLeft"
@@ -86,10 +86,10 @@
 
 
     <TextView
-        android:id="@+id/item_main_page_tv_tag2"
+        android:id="@+id/post_tag2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_main_page_content"
+        android:layout_below="@id/post_content2"
         android:layout_marginTop="@dimen/tag_text_margin"
         android:layout_marginBottom="@dimen/tag_text_margin"
         android:layout_marginLeft="@dimen/tag_text_margin"
@@ -100,11 +100,11 @@
         ></TextView>
 
     <TextView
-        android:id="@+id/item_main_page_date"
+        android:id="@+id/post_date2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/item_main_page_tv_tag2"
-        android:layout_below="@id/item_main_page_content"
+        android:layout_toRightOf="@id/post_tag2"
+        android:layout_below="@id/post_content2"
         android:layout_marginTop="@dimen/tag_text_margin"
         android:layout_marginRight="20dp"
         android:gravity="center"

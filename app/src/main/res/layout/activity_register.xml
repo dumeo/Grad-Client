@@ -7,89 +7,95 @@
             type="com.grad.user.UserViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/register_useravatar"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="80dp"
-            android:padding="1dp"
-            android:src="@drawable/ic_launcher_background"
-            app:shapeAppearance="@style/circleStyle"
-            android:shadowColor="@android:color/holo_blue_bright"
-            app:strokeWidth="2dp"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
 
-            <EditText
-                android:id="@+id/username_register"
-                android:layout_width="@dimen/edittext_width"
-                android:layout_height="@dimen/edittext_height"
-                android:hint="用户名"
-                android:text="@={userViewModel.username}" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/register_useravatar"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:padding="1dp"
+                android:src="@drawable/ic_launcher_background"
+                app:shapeAppearance="@style/circleStyle"
+                android:shadowColor="@android:color/holo_blue_bright"
+                app:strokeWidth="2dp"/>
 
-            <EditText
-                android:id="@+id/password_register"
-                android:layout_width="@dimen/edittext_width"
-                android:layout_height="@dimen/edittext_height"
-                android:hint="密码"
-                android:inputType="textPassword"
-                android:layout_below="@id/username_register"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:text="@={userViewModel.password}" />
-            <EditText
-                android:id="@+id/community_register"
-                android:layout_width="@dimen/edittext_width"
-                android:layout_height="@dimen/edittext_height"
-                android:hint="所在社区"
-                android:layout_below="@id/password_register"
-                android:layout_marginTop="30dp"
-                android:text="@={userViewModel.CommunityName}" />
+                >
 
-            <EditText
-                android:id="@+id/houseaddr_register"
-                android:layout_width="@dimen/edittext_width"
-                android:layout_height="@dimen/edittext_height"
-                android:hint="家庭地址"
-                android:layout_below="@id/community_register"
-                android:layout_marginTop="30dp"
-                android:text="@={userViewModel.HouseAddr}" />
+                <EditText
+                    android:id="@+id/username_register"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="@dimen/edittext_height"
+                    android:hint="用户名"
+                    android:text="@={userViewModel.username}" />
+
+                <EditText
+                    android:id="@+id/password_register"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="@dimen/edittext_height"
+                    android:hint="密码"
+                    android:inputType="textPassword"
+                    android:layout_below="@id/username_register"
+                    android:layout_marginTop="30dp"
+                    android:text="@={userViewModel.password}" />
+                <EditText
+                    android:id="@+id/community_register"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="@dimen/edittext_height"
+                    android:hint="所在社区"
+                    android:layout_below="@id/password_register"
+                    android:layout_marginTop="30dp"
+                    android:text="@={userViewModel.CommunityName}" />
+
+                <EditText
+                    android:id="@+id/houseaddr_register"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="@dimen/edittext_height"
+                    android:hint="家庭地址"
+                    android:layout_below="@id/community_register"
+                    android:layout_marginTop="30dp"
+                    android:text="@={userViewModel.HouseAddr}" />
 
 
-            <Button
-                android:id="@+id/register_button"
-                android:layout_width="@dimen/edittext_width"
+                <Button
+                    android:id="@+id/register_button"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="50dp"
+                    android:text="注册"
+                    android:layout_below="@id/houseaddr_register"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/button_bg1"
+                    android:onClick="@{userViewModel.onRegisterClicked}"/>
+
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/register_progressbar"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="注册"
-                android:layout_below="@id/houseaddr_register"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/button_bg1"
-                android:onClick="@{userViewModel.onRegisterClicked}"/>
-
-        </RelativeLayout>
-
-        <ProgressBar
-            android:id="@+id/register_progressbar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/register_button"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            android:layout_marginTop="60dp"></ProgressBar>
+                android:layout_below="@id/register_button"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                android:layout_marginTop="60dp"></ProgressBar>
 
 
 
-    </LinearLayout>
+        </LinearLayout>
 
+    </ScrollView>
 
 </layout>
