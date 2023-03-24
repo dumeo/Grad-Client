@@ -31,6 +31,10 @@ public class UserViewModel{
 
     }
 
+    public User getUser(){
+        return userObservableField.get();
+    }
+
     public MutableLiveData<Integer> getRegisterStatus() {
         return registerStatus;
     }
@@ -97,7 +101,7 @@ public class UserViewModel{
            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                registerStatus.postValue(DefaultVals.REGISTERING_SUCCESS);
                RegisterRet registerRet = JsonUtil.jsonToObject(response.body().toString(), RegisterRet.class);
-               userObservableField.get().setUid(registerRet.getUid());
+               userObservableField.set(registerRet.getUser());
            }
 
            @Override

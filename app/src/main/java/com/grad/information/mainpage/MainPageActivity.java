@@ -3,10 +3,13 @@ package com.grad.information.mainpage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.view.MenuItem;
 import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -27,7 +31,10 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewFollowing;
     private TextView mTextViewProfile;
     private ShapeableImageView mNewPostImageView;
+
     private FragmentManager mFragmentManager;
+    private MainPageFragment mMainPageFragment;
+    Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +59,16 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         mTextViewFollowing = findViewById(R.id.tv_following);
         mTextViewProfile = findViewById(R.id.tv_profile);
         mNewPostImageView = findViewById(R.id.iv_newpost);
-        mFragmentManager = getSupportFragmentManager();
+        mTextViewMainPage.setOnClickListener(this);
+        mTextViewRecommand.setOnClickListener(this);
+        mTextViewFollowing.setOnClickListener(this);
+        mTextViewProfile.setOnClickListener(this);
+        mNewPostImageView.setOnClickListener(this);
 
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        showFragment(transaction, new MainPageFragment());
-        transaction.commit();
+        mFragmentManager = getSupportFragmentManager();
+        mMainPageFragment = new MainPageFragment();
+        //增加首页fragment
+        mFragmentManager.beginTransaction().add(R.id.main_frames, mMainPageFragment).commit();
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -74,21 +86,50 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    public void showFragment(FragmentTransaction transaction, Fragment fragment){
-        transaction.add(R.id.main_frames, fragment, "mainPageFragment");
-        transaction.show(fragment);
-    }
 
-
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_newpost:
-            case R.id.tv_main_page:
-            case R.id.tv_recommand:
-            case R.id.tv_following:
-            case R.id.tv_profile:
-            default:
+            case R.id.iv_newpost:{
+                Log.e("wjj", "touched plus");
+                break;
+            }
+            case R.id.tv_main_page:{
+                Log.e("wjj", "touched main page");
+                clearSelectState();
+                mTextViewMainPage.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                break;
+            }
+            case R.id.tv_recommand:{
+                Log.e("wjj", "touched recommand");
+                clearSelectState();
+                mTextViewRecommand.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                break;
+            }
+            case R.id.tv_following:{
+                Log.e("wjj", "touched following");
+                clearSelectState();
+                mTextViewFollowing.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                break;
+
+            }
+            case R.id.tv_profile:{
+                Log.e("wjj", "touched profile");
+                clearSelectState();
+                mTextViewProfile.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                break;
+            }
+            default:{break;}
         }
     }
+
+    @SuppressLint("ResourceAsColor")
+    private void clearSelectState(){
+        mTextViewMainPage.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.bottom_textcolor));
+        mTextViewRecommand.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.bottom_textcolor));
+        mTextViewProfile.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.bottom_textcolor));
+        mTextViewFollowing.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.bottom_textcolor));
+    }
+
 }

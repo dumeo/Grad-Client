@@ -1,5 +1,8 @@
 package com.grad.information.mainpage;
 
+import static com.grad.util.DefaultVals.FETCH_DATA_COMPLETED;
+import static com.grad.util.DefaultVals.REFETCH_DATA_COMPLETED;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,14 +13,27 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonObject;
 import com.grad.databinding.FragmentMainPageBinding;
+import com.grad.http.GetPost;
 import com.grad.pojo.PostItem;
+import com.grad.util.DefaultVals;
+import com.grad.util.JsonUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainPageFragment extends Fragment {
@@ -28,8 +44,8 @@ public class MainPageFragment extends Fragment {
     private Handler mHandler;
     private boolean mIsLodaing = false;
     private ItemAdapter mItemAdapter;
-    private List<PostItem> mPosts;
-
+    private List<PostItem> mPostItems;
+    private long CURRENT_POST_ID = 0;
 
 
     @Override
@@ -49,8 +65,9 @@ public class MainPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        mContext = view.getContext();
+        binding.swipeRefresh.setEnabled(false);
         initView();
+        fetchData();
         setUpRefreshListener();
         return view;
     }
@@ -67,23 +84,55 @@ public class MainPageFragment extends Fragment {
     }
 
     private void initView(){
-        mHandler = new Handler();
-        mItemAdapter = new ItemAdapter(mContext);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        binding.recyclerviewMainPage.setLayoutManager(mLayoutManager);
-        binding.recyclerviewMainPage.setPadding(5, 5, 5, 5);
-        ItemSpaceDecoration decoration = new ItemSpaceDecoration(10);
-        binding.recyclerviewMainPage.addItemDecoration(decoration);
-        binding.recyclerviewMainPage.setAdapter(mItemAdapter);
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                switch (msg.what){
+                    case FETCH_DATA_COMPLETED:  {
+                        CURRENT_POST_ID = mPostItems.get(mPostItems.size() - 1).getPostId();
+                        mItemAdapter = new ItemAdapter(mContext, mPostItems);
+                        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        mLayoutManager.invalidateSpanAssignments();
+                        binding.recyclerviewMainPage.setLayoutManager(mLayoutManager);
+                        binding.recyclerviewMainPage.setPadding(5, 5, 5, 5);
+                        ItemSpaceDecoration decoration = new ItemSpaceDecoration(10);
+                        binding.recyclerviewMainPage.addItemDecoration(decoration);
+                        binding.recyclerviewMainPage.setAdapter(mItemAdapter);
+                        binding.swipeRefresh.setEnabled(true);
+                    }
+
+                    case REFETCH_DATA_COMPLETED:{
+                        ItemAdapter adapter = (ItemAdapter) binding.recyclerviewMainPage.getAdapter();
+                        assert adapter != null;
+                        adapter.notifyDataSetChanged();
+                    }
+
+                }
+                return false;
+            }
+        });
+
+
+
     }
 
+    private void fetchData(){
+        if(mPostItems == null) mPostItems = new ArrayList<>();
+        DataFetcher.fetcheData(mHandler, mPostItems);
+    }
+
+
+
+
+
+
     private void setUpRefreshListener(){
-        binding.swipeLoadMore.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //load more data
-
-                binding.swipeLoadMore.setRefreshing(false);
+                //load new data
+                DataFetcher.reFetchData(mHandler, mPostItems);
+                binding.swipeRefresh.setRefreshing(false);
             }
         });
 
@@ -97,9 +146,10 @@ public class MainPageFragment extends Fragment {
 
                 if(!mIsLodaing && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
                     mIsLodaing = true;
-                    binding.progressbarLoadMore.setVisibility(View.VISIBLE);
+//                    binding.progressbarLoadMore.setVisibility(View.VISIBLE);
 
                     //load more data...
+
                 }
 
             }

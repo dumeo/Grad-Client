@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
 }
 
+
+
 android {
     namespace 'com.grad'
     compileSdk 33
@@ -10,6 +12,8 @@ android {
         dataBinding true
         viewBinding true
     }
+
+
 
     defaultConfig {
         applicationId "com.grad"
@@ -57,5 +61,7 @@ dependencies {
 // https://mvnrepository.com/artifact/cn.hutool/hutool-all
     implementation group: 'cn.hutool', name: 'hutool-all', version: '5.8.15'
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+// https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.15.1'
 
 }

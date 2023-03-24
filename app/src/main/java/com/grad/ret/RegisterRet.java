@@ -1,5 +1,7 @@
 package com.grad.ret;
 
+import com.grad.pojo.User;
+
 import java.lang.annotation.Retention;
 
 import lombok.AllArgsConstructor;
@@ -8,15 +10,16 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 public class RegisterRet {
+    private User user;
+    private int statusCode;
+    private String Msg;
 
-    private int uid;
-
-    public int getUid() {
-        return uid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getStatusCode() {
@@ -35,17 +38,12 @@ public class RegisterRet {
         Msg = msg;
     }
 
-    private int statusCode;
-
     @Override
     public String toString() {
         return "RegisterRet{" +
-                "uid=" + uid +
+                "user=" + user.toString() +
                 ", statusCode=" + statusCode +
                 ", Msg='" + Msg + '\'' +
                 '}';
     }
-
-    private String Msg;
-
 }

@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/username2"
                 android:layout_width="200dp"
-                android:layout_height="15dp"
+                android:layout_height="wrap_content"
                 android:text="俄国人给你"
                 android:layout_marginTop="@dimen/item_username_marginTop"
                 android:maxLines="1"

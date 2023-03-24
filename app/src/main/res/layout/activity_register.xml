@@ -79,7 +79,7 @@
                     android:layout_below="@id/houseaddr_register"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/button_bg1"
-                    android:onClick="@{userViewModel.onRegisterClicked}"/>
+                    android:onClick="@{userViewModel::onRegisterClicked}"/>
 
             </RelativeLayout>
 

@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="temp_backgroud">#C3DBA3</color>
     <color name="item_main_page_content_textcolor">#CAC7C7</color>
+    <color name="bottom_textcolor">#737272</color>
 
 </resources>

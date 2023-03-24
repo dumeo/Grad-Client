@@ -31,6 +31,7 @@
         android:padding="5dp"
         android:layout_marginBottom="6dp"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         >
 
         <TextView
@@ -39,6 +40,7 @@
             android:layout_height="match_parent"
             android:textSize="@dimen/main_page_bottom_textSize"
             android:text="首页"
+            android:textColor="@color/black"
             android:gravity="center"
             android:layout_weight="1"
             ></TextView>
@@ -50,7 +52,6 @@
             android:textSize="@dimen/main_page_bottom_textSize"
             android:text="推荐"
             android:gravity="center"
-            android:textColor="@color/black"
             android:layout_weight="1"
             ></TextView>
 
@@ -60,10 +61,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="1dp"
             android:src="@mipmap/ic_newpost"
             app:shapeAppearance="@style/circleStyle"
-            android:shadowColor="@android:color/holo_blue_bright"
+            android:clickable="true"
             />
 
         <TextView
