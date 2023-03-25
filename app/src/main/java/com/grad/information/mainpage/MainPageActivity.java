@@ -58,7 +58,7 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         mTextViewRecommand = findViewById(R.id.tv_recommand);
         mTextViewFollowing = findViewById(R.id.tv_following);
         mTextViewProfile = findViewById(R.id.tv_profile);
-        mNewPostImageView = findViewById(R.id.iv_newpost);
+        mNewPostImageView = findViewById(R.id.iv_addpost);
         mTextViewMainPage.setOnClickListener(this);
         mTextViewRecommand.setOnClickListener(this);
         mTextViewFollowing.setOnClickListener(this);
@@ -91,7 +91,7 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_newpost:{
+            case R.id.iv_addpost:{
                 Log.e("wjj", "touched plus");
                 break;
             }

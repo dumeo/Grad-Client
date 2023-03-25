@@ -78,23 +78,30 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithContent)holder).userUnit.setText(mPostItems.get(position).getUserHouseAddr());
             ((ViewHolderWithContent)holder).postTitle.setText(mPostItems.get(position).getPostTitle());
             ((ViewHolderWithContent)holder).postContent.setText(mPostItems.get(position).getPostContent());
-            ((ViewHolderWithContent)holder).postTag.setText(mPostItems.get(position).getPostTag());
+
+            if(mPostItems.get(position).getPostTag().equals("无标签"))
+                ((ViewHolderWithContent)holder).postTag.setVisibility(View.INVISIBLE);
+            else
+                ((ViewHolderWithContent)holder).postTag.setText(mPostItems.get(position).getPostTag());
+
             ((ViewHolderWithContent)holder).postDate.setText(mPostItems.get(position).getPostDate());
         }
 
         else{
-//            ((ViewHolderWithImg)holder).userAvatar.setImageResource(R.drawable.ic_launcher_background);
             GlideUtil.loadShapeableImageView(mContext, mPostItems.get(position).getAvatarUrl(),
                     (ShapeableImageView) ((ViewHolderWithImg)holder).userAvatar,
                     mRequestOptions);
             ((ViewHolderWithImg)holder).username.setText(mPostItems.get(position).getUsername());
             ((ViewHolderWithImg)holder).userUnit.setText(mPostItems.get(position).getUserHouseAddr());
             ((ViewHolderWithImg)holder).postTitle.setText(mPostItems.get(position).getPostTitle());
-//            ((ViewHolderWithImg)holder).postImage.setImageResource(R.mipmap.test_img);
             GlideUtil.loadImageView(mContext, mPostItems.get(position).getMediaUrl().get(0),
                     (ImageView) ((ViewHolderWithImg)holder).postImage, mRequestOptions);
 
-            ((ViewHolderWithImg)holder).postTag.setText(mPostItems.get(position).getPostTag());
+            if(mPostItems.get(position).getPostTag().equals("无标签"))
+                ((ViewHolderWithContent)holder).postTag.setVisibility(View.INVISIBLE);
+            else
+                ((ViewHolderWithContent)holder).postTag.setText(mPostItems.get(position).getPostTag());
+
             ((ViewHolderWithImg)holder).postDate.setText(mPostItems.get(position).getPostDate());
         }
 

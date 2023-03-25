@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -36,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     mProgressBar.setVisibility(View.INVISIBLE);
                     if(status.equals(DefaultVals.REGISTERING_SUCCESS)){
-                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getBaseContext(), DefaultVals.SHARED_USER_INFO);
+                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getBaseContext(), DefaultVals.USER_INFO_DATABASE);
                         sharedPreferenceUtil.writeString("user", JsonUtil.objectToJson(mUserViewModel.getUser()));
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         finish();

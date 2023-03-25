@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner">
+        <item>无标签</item>
+        <item>跑腿</item>
+        <item>寻人寻物</item>
+        <item>二手交易</item>
+        <item>家电维修</item>
+        <item>政策讨论</item>
+        <item>新闻娱乐</item>
+        <item>家庭琐事</item>
+    </string-array>
+</resources>
