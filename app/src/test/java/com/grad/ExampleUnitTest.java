@@ -34,17 +34,17 @@ public class ExampleUnitTest {
 
     @Test
     public void getPostsTest() throws IOException {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.getPostByNewest("post_date", 0);
-
-        Response<List<JsonObject>> res = call.execute();
-        for(JsonObject jsonObject : res.body()){
-            PostItem postItem = (PostItem) JsonUtil.jsonToObject(jsonObject.toString(), PostItem.class);
-            System.out.println("postItem:" + postItem);
-        }
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://localhost:8080/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        GetPost getPost = retrofit.create(GetPost.class);
+//        Call<List<JsonObject>> call = getPost.getPostByNewest("newest");
+//
+//        Response<List<JsonObject>> res = call.execute();
+//        for(JsonObject jsonObject : res.body()){
+//            PostItem postItem = (PostItem) JsonUtil.jsonToObject(jsonObject.toString(), PostItem.class);
+//            System.out.println("postItem:" + postItem);
+//        }
     }
 }

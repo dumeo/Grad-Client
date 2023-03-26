@@ -16,9 +16,8 @@ public class DefaultVals {
     public static final int FETCH_DATA_COMPLETED = 1;
     public static final int REFETCH_DATA_COMPLETED = 2;
 
-    public static final int ADD_POST_EDITING = 1;
-    public static final int ADD_POST_EDIT_COMPLETED = 2;
-    public static final int ADD_POST_POSTING = 3;
-    public static final int ADD_POST_SUCCESS = 4;
-    public static final int ADD_POST_FAILED =  5;
+    public static final int ADD_POST_TEXT_SUCCESS =  1;
+    public static final int ADD_POST_SUCCESS =  2;
+    public static final int ADD_IMG_SUCCESS =  3;
+    public static final int ADD_IMG_FAILED =  4;
 }

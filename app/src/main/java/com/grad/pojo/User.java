@@ -1,12 +1,8 @@
 package com.grad.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 public class User {
 
-    private long uid;
+    private String uid;
     private long utype;
     private String username;
     private String password;
@@ -20,7 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(long uid, long utype, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, long emailValid, String createDate) {
+    public User(String uid, long utype, String username, String password, String email, String communityName, String houseAddr, String avatarUrl, long emailValid, String createDate) {
         this.uid = uid;
         this.utype = utype;
         this.username = username;
@@ -45,11 +41,11 @@ public class User {
         this.createDate = createDate;
     }
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

@@ -43,7 +43,6 @@ public class UserViewModel{
         this.registerStatus = registerStatus;
     }
 
-    public int getUid(){return (int) userObservableField.get().getUid();}
 
     public String getUsername(){
         return userObservableField.get().getUsername();

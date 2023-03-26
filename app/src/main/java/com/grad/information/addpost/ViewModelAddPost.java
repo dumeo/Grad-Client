@@ -16,14 +16,12 @@ public class ViewModelAddPost {
     private MutableLiveData<String> mTitle;
     private MutableLiveData<String> mContent;
     private MutableLiveData<String> mTag;
-    private MutableLiveData<Integer> mStatus;
     public final AdapterView.OnItemSelectedListener mOnItemSelectedListener;
 
     public ViewModelAddPost() {
         mTitle = new MutableLiveData<>();
         mContent = new MutableLiveData<>();
         mTag = new MutableLiveData<>();
-        mStatus = new MutableLiveData<>(DefaultVals.ADD_POST_EDITING);
         mOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -41,6 +39,9 @@ public class ViewModelAddPost {
 
     public String getTitle() {
         return mTitle.getValue();
+    }
+    public String getTag() {
+        return mTag.getValue();
     }
 
     public void setTitle(String title) {

@@ -29,7 +29,7 @@ public class DataFetcher {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.getPostByNewest(0,"newest");
+        Call<List<JsonObject>> call = getPost.getPostByNewest();
         call.enqueue(new Callback<List<JsonObject>>() {
             @Override
             public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
@@ -59,7 +59,7 @@ public class DataFetcher {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.getPostByNewest(0,"newest");
+        Call<List<JsonObject>> call = getPost.getPostByNewest();
         call.enqueue(new Callback<List<JsonObject>>() {
             @Override
             public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {

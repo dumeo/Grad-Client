@@ -1,28 +1,26 @@
-package com.grad.information.mainpage;
+package com.grad.information;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SurfaceControl;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.grad.R;
+import com.grad.databinding.ActivityMainPageBinding;
+import com.grad.information.addpost.AddPostActivity;
+import com.grad.information.mainpage.MainPageFragment;
 
 public class MainPageActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar mToolbar;
@@ -31,17 +29,26 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewFollowing;
     private TextView mTextViewProfile;
     private ShapeableImageView mNewPostImageView;
+    ActivityMainPageBinding mBinding;
 
     private FragmentManager mFragmentManager;
     private MainPageFragment mMainPageFragment;
     Fragment mCurrentFragment;
+    private boolean mIsFirstOpened = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        mBinding = ActivityMainPageBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
         initView();
     }
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +99,7 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_addpost:{
-                Log.e("wjj", "touched plus");
+                startActivity(new Intent(this, AddPostActivity.class));
                 break;
             }
             case R.id.tv_main_page:{

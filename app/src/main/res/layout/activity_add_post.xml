@@ -117,6 +117,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/image_text_margin"
                     android:visibility="invisible"></ProgressBar>
+
             </RelativeLayout>
 
 

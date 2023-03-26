@@ -1,8 +1,8 @@
 package com.grad.pojo;
 
 public class Post {
-    private long postId;
-    private long uid;
+    private String postId;
+    private String uid;
     private long postType;
     private String postTitle;
     private String postContent;
@@ -10,7 +10,7 @@ public class Post {
     private long viewTimes;
     private String postDate;
 
-    public Post(long postId, long uid, long postType, String postTitle, String postContent, String postTag, long viewTimes, String postDate) {
+    public Post(String postId, String uid, long postType, String postTitle, String postContent, String postTag, long viewTimes, String postDate) {
         this.postId = postId;
         this.uid = uid;
         this.postType = postType;
@@ -21,20 +21,20 @@ public class Post {
         this.postDate = postDate;
     }
 
-    public long getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(String postId) {
         this.postId = postId;
     }
 
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

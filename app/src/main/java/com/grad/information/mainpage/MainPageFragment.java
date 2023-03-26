@@ -14,26 +14,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonObject;
 import com.grad.databinding.FragmentMainPageBinding;
-import com.grad.http.GetPost;
 import com.grad.pojo.PostItem;
-import com.grad.util.DefaultVals;
-import com.grad.util.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainPageFragment extends Fragment {
@@ -45,7 +34,7 @@ public class MainPageFragment extends Fragment {
     private boolean mIsLodaing = false;
     private ItemAdapter mItemAdapter;
     private List<PostItem> mPostItems;
-    private long CURRENT_POST_ID = 0;
+    private boolean mIsFirstOpened = true;
 
 
     @Override
@@ -71,6 +60,20 @@ public class MainPageFragment extends Fragment {
         setUpRefreshListener();
         return view;
     }
+
+    @Override
+    public void onResume() {//??????????????????????????????????????????????
+        super.onResume();
+        if(mIsFirstOpened) mIsFirstOpened = false;
+        else {
+            binding.swipeRefresh.setRefreshing(true);
+            DataFetcher.reFetchData(mHandler, mPostItems);
+        }
+    }
+
+
+
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -89,7 +92,6 @@ public class MainPageFragment extends Fragment {
             public boolean handleMessage(@NonNull Message msg) {
                 switch (msg.what){
                     case FETCH_DATA_COMPLETED:  {
-                        CURRENT_POST_ID = mPostItems.get(mPostItems.size() - 1).getPostId();
                         mItemAdapter = new ItemAdapter(mContext, mPostItems);
                         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                         mLayoutManager.invalidateSpanAssignments();
@@ -105,6 +107,7 @@ public class MainPageFragment extends Fragment {
                         ItemAdapter adapter = (ItemAdapter) binding.recyclerviewMainPage.getAdapter();
                         assert adapter != null;
                         adapter.notifyDataSetChanged();
+                        binding.swipeRefresh.setRefreshing(false);
                     }
 
                 }

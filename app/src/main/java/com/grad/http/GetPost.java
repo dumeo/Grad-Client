@@ -12,6 +12,6 @@ import retrofit2.http.Query;
 public interface GetPost {
 
     @GET("/posts")
-    Call<List<JsonObject>> getPostByNewest( @Query("startId") long startId, @Query("sort") String sort);
+    Call<List<JsonObject>> getPostByNewest();
 
 }
