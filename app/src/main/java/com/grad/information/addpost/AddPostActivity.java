@@ -131,7 +131,7 @@ public class AddPostActivity extends AppCompatActivity {
                     getContentResolver().openFileDescriptor(uri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-            parcelFileDescriptor.close();
+            parcelFileDescriptor.close();//
             return bitmap;
         } catch (IOException e) {
             e.printStackTrace();
