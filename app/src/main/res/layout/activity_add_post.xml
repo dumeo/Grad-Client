@@ -20,6 +20,31 @@
         android:src="@mipmap/back"
         >
     </ImageView>
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="@dimen/addpost_back"
+        android:layout_height="@dimen/addpost_back"
+        android:layout_marginTop="@dimen/tag_text_margin"
+        android:layout_marginLeft="@dimen/cancel_margin_left"
+        android:layout_toRightOf="@id/back"
+        android:src="@mipmap/cancel"
+        android:clickable="false"
+        android:visibility="invisible"
+        >
+    </ImageView>
+    <ImageView
+        android:id="@+id/delete_img"
+        android:layout_width="@dimen/addpost_back"
+        android:layout_height="@dimen/addpost_back"
+        android:layout_marginTop="@dimen/tag_text_margin"
+        android:layout_marginLeft="@dimen/cancel_margin_left"
+        android:layout_toRightOf="@id/cancel"
+        android:src="@mipmap/delete"
+        android:clickable="false"
+        android:visibility="invisible"
+        >
+    </ImageView>
     <Button
         android:id="@+id/bt_add_post"
         android:layout_width="@dimen/add_button_width"
@@ -44,7 +69,7 @@
             <com.grad.information.addpost.MyHorizontalScrollView
                 android:id="@+id/horizontal_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/img_preview_height"
                 >
 
                 <LinearLayout
@@ -54,7 +79,7 @@
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/add_image"
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/img_preview_width"
                         android:layout_height="match_parent"
                         android:src="@mipmap/addimage"
                         android:layout_gravity="right"></ImageView>

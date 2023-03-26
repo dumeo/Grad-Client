@@ -2,8 +2,11 @@ package com.grad.information.addpost;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,22 +14,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.grad.R;
 import com.grad.databinding.ActivityAddPostBinding;
 import com.grad.pojo.Post;
 import com.grad.pojo.User;
 import com.grad.util.DefaultVals;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
+import com.grad.util.UriUtil;
 
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +44,8 @@ public class AddPostActivity extends AppCompatActivity {
     private Handler mHandler1;
     private String mPostId;
     private final int PICK_IMAGE_REQUEST = 1;
-    private List<Bitmap> mSelectedImages = new ArrayList<>();
+    private List<ImageInfo> mSelectedImages = new ArrayList<>();
+    private int mDeleteImgAt = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,11 @@ public class AddPostActivity extends AppCompatActivity {
                 if(msg.what == DefaultVals.ADD_POST_TEXT_SUCCESS){
                     mPostId = (String) msg.obj;
                     //如果有图片，上传图片
+                    if(mSelectedImages.size() > 0){
+                        for(int i = 0;i < mSelectedImages.size(); i ++){
+                            DataSender.sendImages("fsdf", mHandler1, mSelectedImages.get(i), i);
+                        }
+                    }
                     finish();
                 }
                 else if(msg.what == DefaultVals.ADD_POST_SUCCESS){
@@ -76,14 +87,18 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void initListener(){
+
         mBinding.btAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(StrUtil.isEmpty(mModelAddPost.getTitle()) || StrUtil.isEmpty(mModelAddPost.getContent())){
-                    Toast.makeText(getBaseContext(), "请补充标题或内容", Toast.LENGTH_SHORT).show();
-                    return;
+//                if(StrUtil.isEmpty(mModelAddPost.getTitle()) || StrUtil.isEmpty(mModelAddPost.getContent())){
+//                    Toast.makeText(getBaseContext(), "请补充标题或内容", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                sendPost();
+                for(int i = 0;i < mSelectedImages.size(); i ++){
+                    DataSender.sendImages("fsdf", mHandler1, mSelectedImages.get(i), i);
                 }
-                sendPost();
             }
 
         });
@@ -100,45 +115,104 @@ public class AddPostActivity extends AppCompatActivity {
 
             }
         });
+
+        mBinding.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.deleteImg.setClickable(false);
+                mBinding.deleteImg.setVisibility(View.INVISIBLE);
+                mBinding.cancel.setVisibility(View.INVISIBLE);
+                mBinding.cancel.setClickable(false);
+                mBinding.imgeHolder.getChildAt(mDeleteImgAt + 1)
+                        .setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                mDeleteImgAt = -1;
+            }
+        });
+
+        mBinding.deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mDeleteImgAt != -1) {
+                    mSelectedImages.remove(mDeleteImgAt);
+                    mDeleteImgAt = -1;
+                    mBinding.deleteImg.setClickable(false);
+                    mBinding.deleteImg.setVisibility(View.INVISIBLE);
+                    mBinding.cancel.setVisibility(View.INVISIBLE);
+                    mBinding.cancel.setClickable(false);
+                    updateImageLayout();
+                }
+
+            }
+        });
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        List<ImageInfo> imageInfos = new ArrayList<>();
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    Bitmap bitmap = getBitmapFromUri(imageUri);
-                    mSelectedImages.add(bitmap);
+                    Bitmap bitmap = UriUtil.getBitmapFromUri(imageUri, getApplicationContext());
+                    String fileName = UriUtil.getFileNameFromUri(imageUri, getApplicationContext());
+                    imageInfos.add(new ImageInfo(bitmap, fileName));
                 }
             } else if (data.getData() != null) {
                 Uri imageUri = data.getData();
-                Bitmap bitmap = getBitmapFromUri(imageUri);
-                mSelectedImages.add(bitmap);
+                Bitmap bitmap = UriUtil.getBitmapFromUri(imageUri, getApplicationContext());
+                String fileName = UriUtil.getFileNameFromUri(imageUri, getApplicationContext());
+                imageInfos.add(new ImageInfo(bitmap, fileName));
             }
 
-            Log.e("wjj", "img count = " + mSelectedImages.size());
+            addToImageHolder(imageInfos);
+            mSelectedImages.addAll(imageInfos);
+//            Log.e("wjj", "img count = " + mSelectedImages.size());
 
         }
     }
 
-    private Bitmap getBitmapFromUri(Uri uri) {
-        try {
-            ParcelFileDescriptor parcelFileDescriptor =
-                    getContentResolver().openFileDescriptor(uri, "r");
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-            parcelFileDescriptor.close();
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+
+
+    private void updateImageLayout() {
+        mBinding.imgeHolder.removeAllViews();;
+        mBinding.imgeHolder.addView(mBinding.addImage);
+        addToImageHolder(mSelectedImages);
     }
 
+    private void addToImageHolder(List<ImageInfo> imageInfos){
+        for (ImageInfo imageInfo : imageInfos) {
+            MyImageView imageView = new MyImageView(this);
+            imageView.setImageBitmap(imageInfo.getBitmap());
+            imageView.setPos(mBinding.imgeHolder.getChildCount() - 1);
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    imageView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.them_color));
+                    mDeleteImgAt = imageView.getPos();
+//                    Log.e("wjj", "select index:" + mDeleteImgAt);
+                    mBinding.cancel.setClickable(true);
+                    mBinding.cancel.setVisibility(View.VISIBLE);
+                    mBinding.deleteImg.setClickable(true);
+                    mBinding.deleteImg.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            });
+
+
+            LinearLayout.LayoutParams layoutParams =
+                    new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.img_preview_width),
+                            ViewGroup.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(16, 0, 16, 0);
+            imageView.setLayoutParams(layoutParams);
+            mBinding.imgeHolder.addView(imageView);
+        }
+    }
 
 
 
