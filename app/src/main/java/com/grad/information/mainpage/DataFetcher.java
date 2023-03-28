@@ -109,7 +109,7 @@ public class DataFetcher {
             public void onFailure(Call<List<JsonObject>> call, Throwable t) {
                 Message message = Message.obtain();
                 message.what = LOAD_MORE_DATA_COMPLETED;
-                handler.sendMessage(message);
+                handler.sendMessage(message);//333
             }
         });
     }
