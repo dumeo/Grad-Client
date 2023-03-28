@@ -173,6 +173,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
 
 
 
@@ -180,6 +181,20 @@ public class AddPostActivity extends AppCompatActivity {
         mBinding.imgeHolder.removeAllViews();;
         mBinding.imgeHolder.addView(mBinding.addImage);
         addToImageHolder(mSelectedImages);
+=======
+    private Bitmap getBitmapFromUri(Uri uri) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor =
+                    getContentResolver().openFileDescriptor(uri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            parcelFileDescriptor.close();//
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+>>>>>>> origin/main
     }
 
     private void addToImageHolder(List<ImageInfo> imageInfos){

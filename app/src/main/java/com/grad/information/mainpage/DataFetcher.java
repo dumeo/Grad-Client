@@ -100,7 +100,7 @@ public class DataFetcher {
                     PostItem postItem = (PostItem) JsonUtil.jsonToObject(jsonObject.toString(), PostItem.class);
                     postItems.add(postItem);
                 }
-                Message message = Message.obtain();//
+                Message message = Message.obtain();//for push
                 message.what = LOAD_MORE_DATA_COMPLETED;
                 handler.sendMessage(message);
             }
