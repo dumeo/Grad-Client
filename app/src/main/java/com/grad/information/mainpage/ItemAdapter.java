@@ -99,6 +99,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             if(mPostItems.get(position).getPostTag().equals("无标签"))
                 ((ViewHolderWithImg)holder).postTag.setVisibility(View.INVISIBLE);
+
             else
                 ((ViewHolderWithImg)holder).postTag.setText(mPostItems.get(position).getPostTag());
 

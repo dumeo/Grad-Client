@@ -1,6 +1,8 @@
 package com.grad.information.mainpage;
 
 import static com.grad.util.DefaultVals.FETCH_DATA_COMPLETED;
+import static com.grad.util.DefaultVals.FETCH_DATA_FAILED;
+import static com.grad.util.DefaultVals.LOAD_MORE_DATA_COMPLETED;
 import static com.grad.util.DefaultVals.REFETCH_DATA_COMPLETED;
 
 import android.os.Handler;
@@ -46,7 +48,9 @@ public class DataFetcher {
 
             @Override
             public void onFailure(Call<List<JsonObject>> call, Throwable t) {
-                Log.e("wjj", "Fetch data failed!!!!!!!!");
+                Message message = Message.obtain();
+                message.what = FETCH_DATA_FAILED;
+                handler.sendMessage(message);
             }
         });
     }
@@ -77,6 +81,35 @@ public class DataFetcher {
             @Override
             public void onFailure(Call<List<JsonObject>> call, Throwable t) {
                 Log.e("wjj", "Fetch data failed!!!!!!!!");
+            }
+        });
+    }
+
+    public static void loadMorePosts(Handler handler, String startTime, List<PostItem> postItems){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GetPost getPost = retrofit.create(GetPost.class);
+        Call<List<JsonObject>> call = getPost.loadMorePosts(startTime);
+        call.enqueue(new Callback<List<JsonObject>>() {
+            @Override
+            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
+                List<JsonObject> res = response.body();
+                for(JsonObject jsonObject : res){
+                    PostItem postItem = (PostItem) JsonUtil.jsonToObject(jsonObject.toString(), PostItem.class);
+                    postItems.add(postItem);
+                }
+                Message message = Message.obtain();
+                message.what = LOAD_MORE_DATA_COMPLETED;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = LOAD_MORE_DATA_COMPLETED;
+                handler.sendMessage(message);
             }
         });
     }

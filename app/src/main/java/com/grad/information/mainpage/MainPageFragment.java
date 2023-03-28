@@ -14,12 +14,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.grad.databinding.FragmentMainPageBinding;
 import com.grad.pojo.PostItem;
+import com.grad.util.DefaultVals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class MainPageFragment extends Fragment {
     private ItemAdapter mItemAdapter;
     private List<PostItem> mPostItems;
     private boolean mIsFirstOpened = true;
+    private int mCurrentCount = 0;
 
 
     @Override
@@ -62,12 +65,12 @@ public class MainPageFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {//??????????????????????????????????????????????
+    public void onResume() {
         super.onResume();
         if(mIsFirstOpened) mIsFirstOpened = false;
         else {
-            binding.swipeRefresh.setRefreshing(true);
             DataFetcher.reFetchData(mHandler, mPostItems);
+            binding.swipeRefresh.setRefreshing(true);
         }
     }
 
@@ -104,10 +107,21 @@ public class MainPageFragment extends Fragment {
                     }
 
                     case REFETCH_DATA_COMPLETED:{
-                        ItemAdapter adapter = (ItemAdapter) binding.recyclerviewMainPage.getAdapter();
-                        assert adapter != null;
-                        adapter.notifyDataSetChanged();
+                        mItemAdapter.notifyDataSetChanged();
+                        binding.recyclerviewMainPage.requestLayout();
                         binding.swipeRefresh.setRefreshing(false);
+                    }
+                    case DefaultVals.FETCH_DATA_FAILED:{
+                        binding.swipeRefresh.setEnabled(true);
+                        binding.swipeRefresh.setRefreshing(false);
+                        break;
+                    }
+
+                    case DefaultVals.LOAD_MORE_DATA_COMPLETED:{
+                        mIsLodaing = false;
+                        binding.progressbarLoadMore.setVisibility(View.INVISIBLE);
+                        mItemAdapter.notifyItemRangeChanged(mCurrentCount, mItemAdapter.getItemCount() - 1);
+                        break;
                     }
 
                 }
@@ -115,9 +129,8 @@ public class MainPageFragment extends Fragment {
             }
         });
 
-
-
     }
+
 
     private void fetchData(){
         if(mPostItems == null) mPostItems = new ArrayList<>();
@@ -135,7 +148,6 @@ public class MainPageFragment extends Fragment {
             public void onRefresh() {
                 //load new data
                 DataFetcher.reFetchData(mHandler, mPostItems);
-                binding.swipeRefresh.setRefreshing(false);
             }
         });
 
@@ -146,13 +158,16 @@ public class MainPageFragment extends Fragment {
 
                 int[] lastVisiblePositions = mLayoutManager.findLastVisibleItemPositions(null);
                 int lastVisiblePosition = getLastVisiblePosition(lastVisiblePositions);
-
-                if(!mIsLodaing && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
+//                Log.e("wjj", "lastVisiblePosition:" + lastVisiblePosition);
+                if(!binding.swipeRefresh.isRefreshing() && !mIsLodaing && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
                     mIsLodaing = true;
-//                    binding.progressbarLoadMore.setVisibility(View.VISIBLE);
-
+                    binding.progressbarLoadMore.setVisibility(View.VISIBLE);
                     //load more data...
-
+                    mCurrentCount = mItemAdapter.getItemCount();
+                    Log.e("wjj", "current count = " + mCurrentCount);
+                    String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPostDate();
+                    Log.e("wjj", "startTime = " + startTime);
+                    DataFetcher.loadMorePosts(mHandler, startTime, mPostItems);
                 }
 
             }

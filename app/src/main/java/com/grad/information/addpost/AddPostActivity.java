@@ -66,7 +66,7 @@ public class AddPostActivity extends AppCompatActivity {
                     //如果有图片，上传图片
                     if(mSelectedImages.size() > 0){
                         for(int i = 0;i < mSelectedImages.size(); i ++){
-                            DataSender.sendImages("fsdf", mHandler1, mSelectedImages.get(i), i);
+                            DataSender.sendImages(mPostId, mHandler1, mSelectedImages.get(i), i);
                         }
                     }
                     finish();
@@ -91,14 +91,11 @@ public class AddPostActivity extends AppCompatActivity {
         mBinding.btAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(StrUtil.isEmpty(mModelAddPost.getTitle()) || StrUtil.isEmpty(mModelAddPost.getContent())){
-//                    Toast.makeText(getBaseContext(), "请补充标题或内容", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                sendPost();
-                for(int i = 0;i < mSelectedImages.size(); i ++){
-                    DataSender.sendImages("fsdf", mHandler1, mSelectedImages.get(i), i);
+                if(StrUtil.isEmpty(mModelAddPost.getTitle()) || StrUtil.isEmpty(mModelAddPost.getContent())){
+                    Toast.makeText(getBaseContext(), "请补充标题或内容", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                sendPost();
             }
 
         });
@@ -223,6 +220,8 @@ public class AddPostActivity extends AppCompatActivity {
         Post post = new Post("", user.getUid(), 0,
                 mModelAddPost.getTitle(), mModelAddPost.getContent(),
                 mModelAddPost.getTag(), 0, "");
+        Log.e("wjj", "post Tag:" + post.getPostTag());
+
         DataSender.newPost(post, mHandler1);
     }
 

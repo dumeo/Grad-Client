@@ -64,10 +64,7 @@ public class DataSender {
     }
 
 
-    public static void sendImages(String mPostId, Handler mHandler1, ImageInfo imageInfo, int pos) {
-//        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(context, DefaultVals.USER_INFO_DATABASE);
-//        User user = JsonUtil.jsonToObject(sharedPreferenceUtil.readString("user", "null"), User.class);
-//        String uid = user.getUid();
+    public static void sendImages(String postId, Handler mHandler1, ImageInfo imageInfo, int pos) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         Bitmap bitmap = imageInfo.getBitmap();
@@ -75,7 +72,8 @@ public class DataSender {
         byte[] byteArray = stream.toByteArray();
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), byteArray);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", imageInfo.getFileName(), requestFile);
+        String fileName = postId + ":" + pos + ":" + imageInfo.getFileName();
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", fileName, requestFile);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
