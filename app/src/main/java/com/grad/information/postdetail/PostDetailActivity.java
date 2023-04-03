@@ -39,7 +39,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private User mUser;
     MyViewPagerAdapter mViewPagerAdapter;
     List<CommentItem> mCommentItems = new ArrayList<>();
-    private CommentAdapter mCommentAdapter;
+    private CommentAdapter mCommentAdapter;//
 
     @Override
     public void onBackPressed() {
