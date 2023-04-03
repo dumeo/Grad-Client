@@ -57,11 +57,12 @@
 
     <ImageView
         android:id="@+id/post_image"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_width="@dimen/item_img_width"
+        android:layout_height="270dp"
         android:layout_below="@id/top_linearlayout"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/image_text_margin"
+        android:scaleType="fitXY"
         android:src="@mipmap/test_img"></ImageView>
 
     <TextView

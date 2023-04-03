@@ -1,4 +1,4 @@
-package com.grad.information.addpost;
+package com.grad.http;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.grad.http.PostNewPost;
+import com.grad.information.addpost.ImageInfo;
 import com.grad.pojo.Post;
 import com.grad.pojo.User;
 import com.grad.util.DefaultVals;

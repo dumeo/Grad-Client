@@ -13,8 +13,8 @@
         >
     <ImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/addpost_back"
-        android:layout_height="@dimen/addpost_back"
+        android:layout_width="@dimen/back_size"
+        android:layout_height="@dimen/back_size"
         android:layout_marginTop="@dimen/tag_text_margin"
         android:layout_marginLeft="@dimen/tag_text_margin"
         android:src="@mipmap/back"
@@ -23,8 +23,8 @@
 
     <ImageView
         android:id="@+id/cancel"
-        android:layout_width="@dimen/addpost_back"
-        android:layout_height="@dimen/addpost_back"
+        android:layout_width="@dimen/back_size"
+        android:layout_height="@dimen/back_size"
         android:layout_marginTop="@dimen/tag_text_margin"
         android:layout_marginLeft="@dimen/cancel_margin_left"
         android:layout_toRightOf="@id/back"
@@ -35,8 +35,8 @@
     </ImageView>
     <ImageView
         android:id="@+id/delete_img"
-        android:layout_width="@dimen/addpost_back"
-        android:layout_height="@dimen/addpost_back"
+        android:layout_width="@dimen/back_size"
+        android:layout_height="@dimen/back_size"
         android:layout_marginTop="@dimen/tag_text_margin"
         android:layout_marginLeft="@dimen/cancel_margin_left"
         android:layout_toRightOf="@id/cancel"

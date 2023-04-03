@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.grad.databinding.FragmentMainPageBinding;
+import com.grad.http.DataFetcher;
 import com.grad.pojo.PostItem;
+import com.grad.service.PostService;
 import com.grad.util.DefaultVals;
 
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class MainPageFragment extends Fragment {
         binding = FragmentMainPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.swipeRefresh.setEnabled(false);
+        Log.e("wjj", "main page fragment onCreateView");
         initView();
         fetchData();
         setUpRefreshListener();
@@ -69,7 +72,7 @@ public class MainPageFragment extends Fragment {
         super.onResume();
         if(mIsFirstOpened) mIsFirstOpened = false;
         else {
-            DataFetcher.reFetchData(mHandler, mPostItems);
+            PostService.reFetchData(mHandler, mPostItems);
             binding.swipeRefresh.setRefreshing(true);
         }
     }
@@ -134,7 +137,7 @@ public class MainPageFragment extends Fragment {
 
     private void fetchData(){
         if(mPostItems == null) mPostItems = new ArrayList<>();
-        DataFetcher.fetcheData(mHandler, mPostItems);
+        PostService.fetcheData(mHandler, mPostItems);
     }
 
 
@@ -147,7 +150,7 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onRefresh() {
                 //load new data
-                DataFetcher.reFetchData(mHandler, mPostItems);
+                PostService.reFetchData(mHandler, mPostItems);
             }
         });
 
@@ -165,9 +168,9 @@ public class MainPageFragment extends Fragment {
                     //load more data...
                     mCurrentCount = mItemAdapter.getItemCount();
                     Log.e("wjj", "current count = " + mCurrentCount);
-                    String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPostDate();
+                    String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPost().getPostDate();
                     Log.e("wjj", "startTime = " + startTime);
-                    DataFetcher.loadMorePosts(mHandler, startTime, mPostItems);
+                    PostService.loadMorePosts(mHandler, startTime, mPostItems);
                 }
 
             }

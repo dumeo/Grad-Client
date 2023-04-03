@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.grad.information.MainPageActivity;
+import com.grad.information.postdetail.PostDetailActivity;
 import com.grad.user.RegisterActivity;
 import com.grad.util.DefaultVals;
 import com.grad.util.SharedPreferenceUtil;

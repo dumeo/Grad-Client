@@ -1,6 +1,5 @@
 package com.grad.user;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.ObservableField;
@@ -9,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.JsonObject;
 import com.grad.http.PostRegister;
 import com.grad.pojo.User;
-import com.grad.ret.RegisterRet;
+import com.grad.pojo.RegisterRet;
 import com.grad.util.DefaultVals;
 import com.grad.util.JsonUtil;
 

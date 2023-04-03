@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".information.postdetail.PostDetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_top_relativelayout">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/back_size"
+            android:layout_height="@dimen/back_size"
+            android:src="@mipmap/back"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            >
+        </ImageView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/avatar_size1"
+            android:layout_height="@dimen/avatar_size1"
+            android:layout_toRightOf="@id/back"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="5dp"
+            android:shadowColor="@android:color/holo_blue_bright"
+            app:shapeAppearance="@style/circleStyle"></com.google.android.material.imageview.ShapeableImageView>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/user_avatar"
+            android:layout_marginLeft="10dp"
+            android:text="用户名gergrtthjrttjr"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+        ></TextView>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/user_avatar"
+            android:layout_below="@id/user_name"
+            android:layout_marginLeft="10dp"
+            android:text="武汉社区"
+            android:textSize="11sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            ></TextView>
+
+        <Button
+            android:id="@+id/bt_follow"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/user_name"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/add_button_bg"
+            android:layout_marginLeft="10dp"
+            android:text="关注"
+            ></Button>
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_viewpager_height"
+                >
+            </androidx.viewpager.widget.ViewPager>
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_pager"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="3dp"
+                app:dotsSize="5dp"
+                app:dotsSpacing="4dp"
+                ></com.tbuonomo.viewpagerdotsindicator.DotsIndicator>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/detail_title_size"
+                android:text="个蓉儿哦不然他弄i突然你还不是都不能日头不能如同hi让他俄国人那个"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/dots_indicator"
+                android:layout_marginTop="5dp"
+                ></TextView>
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/detail_content_size"
+                android:text="个蓉儿哦不然他弄i突然你还不是都不能日头不能如同hi让他俄国人那个"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/title"
+                android:layout_marginTop="3dp"
+                ></TextView>
+
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray"></LinearLayout>
+            <ImageView
+                android:id="@+id/icon_comment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/line1"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/comment"
+                ></ImageView>
+            <TextView
+                android:id="@+id/comment_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@id/icon_comment"
+                android:text="444"
+                android:layout_below="@id/line1"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/black"></TextView>
+
+            <TextView
+                android:id="@+id/post_time"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@id/comment_cnt"
+                android:text="2023-03-22 12:03:21"
+                android:gravity="right"
+                android:layout_below="@id/line1"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon_comment"
+                android:layout_marginTop="8dp"></androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:hint="发表评论"
+            android:gravity="left|center"
+            android:background="@drawable/et_background"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/comment_margin_top"
+            ></TextView>
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="@dimen/like_size"
+            android:layout_height="@dimen/like_size"
+            android:layout_marginTop="@dimen/like_margin_top"
+            android:layout_toRightOf="@id/tv_comment"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/thumb_up"
+            ></ImageView>
+
+        <TextView
+            android:id="@+id/like_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginTop="@dimen/like_cnt_margin_top"
+            android:layout_toRightOf="@id/like"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"
+            android:text="11039"></TextView>
+        <ImageView
+            android:id="@+id/dislike"
+            android:layout_width="@dimen/like_size"
+            android:layout_height="@dimen/like_size"
+            android:layout_marginTop="@dimen/like_margin_top"
+            android:layout_toRightOf="@id/like_cnt"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/thumb_down"
+            ></ImageView>
+
+        <ImageView
+            android:id="@+id/collect"
+            android:layout_width="@dimen/like_size"
+            android:layout_height="@dimen/like_size"
+            android:layout_toRightOf="@id/dislike"
+            android:layout_marginTop="@dimen/like_margin_top"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/star"
+            ></ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pop_up_comment"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/temp_backgroud"
+        android:visibility="invisible"
+        >
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:hint="在此评论..."
+            android:gravity="start"
+            android:background="@drawable/et_background"
+            ></EditText>
+
+        <Button
+            android:id="@+id/bt_commit"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/et_comment"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/add_button_bg"
+            android:text="提交"></Button>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

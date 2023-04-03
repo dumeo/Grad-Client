@@ -6,8 +6,13 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.grad.R;
 
 public class GlideUtil {
+
+    public static final RequestOptions DefaultRequestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background);
 
     public static void loadShapeableImageView(Context context,
                             String url,
@@ -28,5 +33,7 @@ public class GlideUtil {
                 .apply(options)
                 .into(imageView);
     }
+
+
 
 }

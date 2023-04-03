@@ -1,4 +1,4 @@
-package com.grad.ret;
+package com.grad.pojo;
 
 import com.grad.pojo.User;
 

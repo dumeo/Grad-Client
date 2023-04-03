@@ -4,17 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.ParcelFileDescriptor;
-import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +18,7 @@ import android.widget.Toast;
 
 import com.grad.R;
 import com.grad.databinding.ActivityAddPostBinding;
+import com.grad.http.DataSender;
 import com.grad.pojo.Post;
 import com.grad.pojo.User;
 import com.grad.util.DefaultVals;
@@ -30,10 +26,9 @@ import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 import com.grad.util.UriUtil;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import cn.hutool.core.util.StrUtil;
 
@@ -173,29 +168,20 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-<<<<<<< HEAD
 
-
-
-    private void updateImageLayout() {
-        mBinding.imgeHolder.removeAllViews();;
-        mBinding.imgeHolder.addView(mBinding.addImage);
-        addToImageHolder(mSelectedImages);
-=======
-    private Bitmap getBitmapFromUri(Uri uri) {
-        try {
-            ParcelFileDescriptor parcelFileDescriptor =
-                    getContentResolver().openFileDescriptor(uri, "r");
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-            parcelFileDescriptor.close();//
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
->>>>>>> origin/main
-    }
+//    private Bitmap getBitmapFromUri(Uri uri) {
+//        try {
+//            ParcelFileDescriptor parcelFileDescriptor =
+//                    getContentResolver().openFileDescriptor(uri, "r");
+//            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+//            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+//            parcelFileDescriptor.close();//
+//            return bitmap;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private void addToImageHolder(List<ImageInfo> imageInfos){
         for (ImageInfo imageInfo : imageInfos) {
@@ -226,7 +212,11 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
-
+    private void updateImageLayout() {
+        mBinding.imgeHolder.removeAllViews();;
+        mBinding.imgeHolder.addView(mBinding.addImage);
+        addToImageHolder(mSelectedImages);
+    }
 
     private void sendPost(){
         mBinding.progressBar.setVisibility(View.VISIBLE);
@@ -239,8 +229,6 @@ public class AddPostActivity extends AppCompatActivity {
 
         DataSender.newPost(post, mHandler1);
     }
-
-
 
 
 

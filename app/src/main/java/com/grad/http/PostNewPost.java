@@ -12,11 +12,11 @@ import retrofit2.http.Part;
 
 public interface PostNewPost {
 
-    @POST("/posts/new")
+    @POST("/post/new")
     Call<JsonObject> addPost(@Body Post post);
 
     @Multipart
-    @POST("/posts/new/upload-imgs")
+    @POST("/post/new/upload-imgs")
     Call<JsonObject> addImages(@Part MultipartBody.Part images);
 
 }

@@ -6,7 +6,7 @@ public class DefaultVals {
     public static final Integer REGISTERING_SUCCESS = 2;
     public static final Integer REGISTERING_FAILED = 3;
     public static final Integer REGISTER_UNFILL = 4;
-    public static final String BASE_URL = "http://192.168.1.100:8080/";
+    public static final String BASE_URL = "http://192.168.1.101:8080/";
 
     //-------------------SharedPreferences----------------------
     public static final String USER_INFO_DATABASE = "user";
@@ -22,4 +22,14 @@ public class DefaultVals {
     public static final int ADD_POST_SUCCESS =  24;
     public static final int ADD_IMG_SUCCESS =  25;
     public static final int ADD_IMG_FAILED =  26;
+
+    public static final int GET_POST_SUCCESS = 31;
+    public static final int GET_POST_FAILED = 32;
+    public static final int ADD_COMMENT_FAILED = 33;
+    public static final int ADD_COMMENT_SUCCESS = 34;
+    public static final int LOAD_COMMENTS_FAILED = 35;
+    public static final int LOAD_COMMENTS_SUCCESS = 36;
+    public static final int GET_COMMENTCNT_SUCCESS = 37;
+    public static final int GET_COMMENTCNT_FAILED = 38;
+
 }

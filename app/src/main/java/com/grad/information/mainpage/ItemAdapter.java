@@ -1,6 +1,7 @@
 package com.grad.information.mainpage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,11 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.grad.R;
 import com.grad.databinding.ItemTypeImageBinding;
 import com.grad.databinding.ItemTypeTextBinding;
+import com.grad.information.postdetail.PostDetailActivity;
 import com.grad.pojo.PostItem;
 import com.grad.util.DefaultVals;
 import com.grad.util.GlideUtil;
+import com.grad.util.ImageUtil;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         // 返回 View 布局类型, POST_TYPE_TEXT文字贴布局，POST_TYPE_IMG图片贴布局
-        return (int) mPostItems.get(position).getPostType();
+        return (int) mPostItems.get(position).getPost().getPostType();
     }
 
     @NonNull
@@ -67,49 +70,68 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        String userAvatarUrl = mPostItems.get(position).getPostUserInfo().getAvatarUrl();
+        String username = mPostItems.get(position).getPostUserInfo().getUsername();
+        String userHouseAddr = mPostItems.get(position).getPostUserInfo().getUserHouseAddr();
+        String postTitle = mPostItems.get(position).getPost().getPostTitle();
+        String postContent = mPostItems.get(position).getPost().getPostContent();
+        String postTag = mPostItems.get(position).getPost().getPostTag();
+        String postDate = mPostItems.get(position).getPost().getPostDate();
 
         if(getItemViewType(position) == DefaultVals.POST_TYPE_TEXT){
-//            ((ViewHolderWithContent)holder).userAvatar.setImageResource(R.drawable.ic_launcher_background);
-            GlideUtil.loadShapeableImageView(mContext, mPostItems.get(position).getAvatarUrl(),
+            GlideUtil.loadShapeableImageView(mContext, userAvatarUrl,
                     (ShapeableImageView) ((ViewHolderWithContent)holder).userAvatar,
                     mRequestOptions);
 
-            ((ViewHolderWithContent)holder).username.setText(mPostItems.get(position).getUsername());
-            ((ViewHolderWithContent)holder).userUnit.setText(mPostItems.get(position).getUserHouseAddr());
-            ((ViewHolderWithContent)holder).postTitle.setText(mPostItems.get(position).getPostTitle());
-            ((ViewHolderWithContent)holder).postContent.setText(mPostItems.get(position).getPostContent());
+            ((ViewHolderWithContent)holder).username.setText(username);
+            ((ViewHolderWithContent)holder).userUnit.setText(userHouseAddr);
+            ((ViewHolderWithContent)holder).postTitle.setText(postTitle);
+            ((ViewHolderWithContent)holder).postContent.setText(postContent);
 
-            if(mPostItems.get(position).getPostTag().equals("无标签"))
+            if(mPostItems.get(position).getPost().getPostTag().equals("无标签"))
                 ((ViewHolderWithContent)holder).postTag.setVisibility(View.INVISIBLE);
             else
-                ((ViewHolderWithContent)holder).postTag.setText(mPostItems.get(position).getPostTag());
+                ((ViewHolderWithContent)holder).postTag.setText(postTag);
 
-            ((ViewHolderWithContent)holder).postDate.setText(mPostItems.get(position).getPostDate());
+            ((ViewHolderWithContent)holder).postDate.setText(postDate);
         }
 
         else{
-            GlideUtil.loadShapeableImageView(mContext, mPostItems.get(position).getAvatarUrl(),
+            ImageView imageView = ((ViewHolderWithImg)holder).postImage;
+            ViewGroup.LayoutParams params = imageView.getLayoutParams();
+            long imageWidth = mPostItems.get(position).getImageItems().get(0).getWidth();
+            long imageHeight = mPostItems.get(position).getImageItems().get(0).getHeight();
+            int[] imageLayoutSize = ImageUtil.getLayoutSizeByWidth(mContext.getApplicationContext(), imageWidth, imageHeight);
+            params.width = imageLayoutSize[0];
+            params.height = imageLayoutSize[1];
+            imageView.setLayoutParams(params);
+
+            GlideUtil.loadShapeableImageView(mContext, userAvatarUrl,
                     (ShapeableImageView) ((ViewHolderWithImg)holder).userAvatar,
                     mRequestOptions);
-            ((ViewHolderWithImg)holder).username.setText(mPostItems.get(position).getUsername());
-            ((ViewHolderWithImg)holder).userUnit.setText(mPostItems.get(position).getUserHouseAddr());
-            ((ViewHolderWithImg)holder).postTitle.setText(mPostItems.get(position).getPostTitle());
-            GlideUtil.loadImageView(mContext, mPostItems.get(position).getMediaUrl().get(0),
+            ((ViewHolderWithImg)holder).username.setText(username);
+            ((ViewHolderWithImg)holder).userUnit.setText(userHouseAddr);
+            ((ViewHolderWithImg)holder).postTitle.setText(postTitle);
+            GlideUtil.loadImageView(mContext, mPostItems.get(position).getImageItems().get(0).getUrl(),
                     (ImageView) ((ViewHolderWithImg)holder).postImage, mRequestOptions);
 
-            if(mPostItems.get(position).getPostTag().equals("无标签"))
+            if(mPostItems.get(position).getPost().getPostTag().equals("无标签"))
                 ((ViewHolderWithImg)holder).postTag.setVisibility(View.INVISIBLE);
 
             else
-                ((ViewHolderWithImg)holder).postTag.setText(mPostItems.get(position).getPostTag());
+                ((ViewHolderWithImg)holder).postTag.setText(postTag);
 
-            ((ViewHolderWithImg)holder).postDate.setText(mPostItems.get(position).getPostDate());
+            ((ViewHolderWithImg)holder).postDate.setText(postDate);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.e("wjj", "clicked:" + mPostItems.get(holder.getAdapterPosition()).getPost().getPostTitle());
+                String postId = mPostItems.get(holder.getAdapterPosition()).getPost().getPostId();
+                Intent intent = new Intent(mContext, PostDetailActivity.class);
+                intent.putExtra("postId", postId);
+                mContext.startActivity(intent);
             }
         });
 
