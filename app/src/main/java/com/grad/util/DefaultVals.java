@@ -31,5 +31,6 @@ public class DefaultVals {
     public static final int LOAD_COMMENTS_SUCCESS = 36;
     public static final int GET_COMMENTCNT_SUCCESS = 37;
     public static final int GET_COMMENTCNT_FAILED = 38;
+    public static final int REQUEST_ADD_COMMENT = 39;
 
 }

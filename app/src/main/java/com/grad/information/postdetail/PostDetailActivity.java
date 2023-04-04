@@ -40,11 +40,17 @@ public class PostDetailActivity extends AppCompatActivity {
     MyViewPagerAdapter mViewPagerAdapter;
     List<CommentItem> mCommentItems = new ArrayList<>();
     private CommentAdapter mCommentAdapter;//
+    private boolean mIsReplyToChildComment = false;
+    private CommentItem mReplyToCommentItem;
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+//        super.onBackPressed();
+        if(mBinding.popUpComment.getVisibility() == View.VISIBLE){
+            mBinding.popUpComment.setVisibility(View.INVISIBLE);
+            mBinding.etComment.setText("");
+        }
+        else finish();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,13 @@ public class PostDetailActivity extends AppCompatActivity {
                     }
                     case DefaultVals.ADD_COMMENT_FAILED:{
                         Toast.makeText(PostDetailActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case DefaultVals.REQUEST_ADD_COMMENT:{
+                        mReplyToCommentItem = (CommentItem) msg.obj;
+                        mBinding.tvComment.callOnClick();
+                        mBinding.etComment.setHint("回复：\"" + mReplyToCommentItem.getComment().getContent() + "\"");
+                        mIsReplyToChildComment = true;
                         break;
                     }
                 }
@@ -120,6 +133,7 @@ public class PostDetailActivity extends AppCompatActivity {
                         mBinding.commentCnt.setText("" + cnt);
                         break;
                     }
+
                 }
                 return false;
             }
@@ -136,6 +150,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mBinding.title.setText(mPostItem.getPost().getPostTitle());
         mBinding.content.setText(mPostItem.getPost().getPostContent());
         mBinding.postTime.setText(mPostItem.getPost().getPostDate());
+        mBinding.likeCnt.setText("" + mPostItem.getPost().getLikeCnt());
         PostService.getCommentCnt(mHandler, mPostId);
     }
 
@@ -156,10 +171,16 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content = mBinding.etComment.getText().toString();
+                if(content == null || content.equals("")) return;
                 Comment comment = new Comment(
                         null, mUser.getUid(), mPostId,
                         content, 0, null, 0, null
                 );
+                if(mIsReplyToChildComment && mReplyToCommentItem != null){
+                    comment.setCommentLevel(mReplyToCommentItem.getComment().getCommentLevel()+1);
+                    comment.setFatherId(mReplyToCommentItem.getComment().getCommentId());
+                    mIsReplyToChildComment = false;
+                }
                 mBinding.popUpComment.setVisibility(View.INVISIBLE);
                 mBinding.etComment.setText("");
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -186,7 +207,7 @@ public class PostDetailActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailActivity.this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mBinding.rcComments.setLayoutManager(layoutManager);
-        mCommentAdapter = new CommentAdapter(PostDetailActivity.this, mCommentItems);
+        mCommentAdapter = new CommentAdapter(PostDetailActivity.this, mCommentItems, mCommentHandler);
         mBinding.rcComments.setAdapter(mCommentAdapter);
         mBinding.rcComments.setPadding(5, 5, 5, 5);
         ItemSpaceDecoration decoration = new ItemSpaceDecoration(10);

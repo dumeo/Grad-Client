@@ -50,6 +50,7 @@
     <dimen name="detail_title_size">18sp</dimen>
     <dimen name="detail_content_size">15sp</dimen>
     <dimen name="comment_avatar_size">40dp</dimen>
+    <dimen name="child_comment_avatar_size">30dp</dimen>
     <dimen name="comment_vote_size">15dp</dimen>
 
 

@@ -9,6 +9,7 @@ public class Post {
     private String postTag;
     private long viewTimes;
     private String postDate;
+    private long likeCnt;
 
     public Post(String postId, String uid, long postType, String postTitle, String postContent, String postTag, long viewTimes, String postDate) {
         this.postId = postId;
@@ -19,6 +20,18 @@ public class Post {
         this.postTag = postTag;
         this.viewTimes = viewTimes;
         this.postDate = postDate;
+    }
+
+    public Post(String postId, String uid, long postType, String postTitle, String postContent, String postTag, long viewTimes, String postDate, long likeCnt) {
+        this.postId = postId;
+        this.uid = uid;
+        this.postType = postType;
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.postTag = postTag;
+        this.viewTimes = viewTimes;
+        this.postDate = postDate;
+        this.likeCnt = likeCnt;
     }
 
     public String getPostId() {
@@ -90,6 +103,14 @@ public class Post {
 
     public void setPostDate(String postDate) {
         this.postDate = postDate;
+    }
+
+    public long getLikeCnt() {
+        return likeCnt;
+    }
+
+    public void setLikeCnt(long likeCnt) {
+        this.likeCnt = likeCnt;
     }
 
     @Override

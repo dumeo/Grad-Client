@@ -129,18 +129,18 @@
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:layout_below="@id/content"
+                android:layout_below="@id/post_time"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/gray"></LinearLayout>
+
             <ImageView
                 android:id="@+id/icon_comment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_below="@id/line1"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/comment"
-                ></ImageView>
+                android:src="@mipmap/comment"></ImageView>
             <TextView
                 android:id="@+id/comment_cnt"
                 android:layout_width="wrap_content"
@@ -159,7 +159,9 @@
                 android:layout_toRightOf="@id/comment_cnt"
                 android:text="2023-03-22 12:03:21"
                 android:gravity="right"
-                android:layout_below="@id/line1"
+                android:layout_below="@id/content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="50dp"></TextView>
 
