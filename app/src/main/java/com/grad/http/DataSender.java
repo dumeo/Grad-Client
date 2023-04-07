@@ -1,35 +1,21 @@
 package com.grad.http;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
-import com.grad.http.PostNewPost;
 import com.grad.information.addpost.ImageInfo;
 import com.grad.pojo.Post;
-import com.grad.pojo.User;
 import com.grad.util.DefaultVals;
-import com.grad.util.JsonUtil;
-import com.grad.util.SharedPreferenceUtil;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okio.BufferedSink;
-import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,8 +30,8 @@ public class DataSender {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        PostNewPost postNewPost = retrofit.create(PostNewPost.class);
-        Call<JsonObject> call = postNewPost.addPost(post);
+        GPPost GPPost = retrofit.create(GPPost.class);
+        Call<JsonObject> call = GPPost.addPost(post);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -81,8 +67,8 @@ public class DataSender {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        PostNewPost postNewPost = retrofit.create(PostNewPost.class);
-        Call<JsonObject> call = postNewPost.addImages(part);
+        GPPost GPPost = retrofit.create(GPPost.class);
+        Call<JsonObject> call = GPPost.addImages(part);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

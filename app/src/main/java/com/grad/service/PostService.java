@@ -10,11 +10,11 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
-import com.grad.http.GPComment;
 import com.grad.http.GetPost;
-import com.grad.pojo.Comment;
+import com.grad.http.GPPost;
 import com.grad.pojo.CommentCntRet;
 import com.grad.pojo.PostItem;
+import com.grad.pojo.Status;
 import com.grad.util.DefaultVals;
 import com.grad.util.JsonUtil;
 
@@ -117,13 +117,13 @@ public class PostService {
         });
     }
 
-    public static void getPostByid(Handler handler, String postId){
+    public static void getPostByid(Handler handler, String clientUid, String postId){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetPost getPost = retrofit.create(GetPost.class);
-        Call<JsonObject> call = getPost.getPostById(postId);
+        Call<JsonObject> call = getPost.getPostById(clientUid, postId);
         Log.e("wjj", "call url:" + call.request().url());
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -168,6 +168,29 @@ public class PostService {
                 handler.sendMessage(message);
             }
         });
+    }
+
+    public static void setLikeStatus(Handler handler, String clientUid, String postId, int transferType){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+       GPPost gpPost = retrofit.create(GPPost.class);
+       Call<JsonObject> call = gpPost.setLikeStatus(clientUid, postId, transferType);
+       call.enqueue(new Callback<JsonObject>() {
+           @Override
+           public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+               Message message = Message.obtain();
+               message.what = DefaultVals.SET_LIKE_STATUS_SUCCESS;
+               handler.sendMessage(message);
+               message.obj = transferType;
+           }
+
+           @Override
+           public void onFailure(Call<JsonObject> call, Throwable t) {
+
+           }
+       });
     }
 
 

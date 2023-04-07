@@ -34,4 +34,5 @@ public class PostUserInfo {
     public void setUserHouseAddr(String userHouseAddr) {
         this.userHouseAddr = userHouseAddr;
     }
+
 }

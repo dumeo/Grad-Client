@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.grad.R;
 import com.grad.databinding.ActivityPostDetailBinding;
 import com.grad.information.mainpage.ItemSpaceDecoration;
 import com.grad.pojo.Comment;
@@ -42,6 +43,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private CommentAdapter mCommentAdapter;//
     private boolean mIsReplyToChildComment = false;
     private CommentItem mReplyToCommentItem;
+    private int mLikeStatus = -1;
 
     @Override
     public void onBackPressed() {
@@ -58,7 +60,6 @@ public class PostDetailActivity extends AppCompatActivity {
         mBinding = ActivityPostDetailBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         mPostId = getIntent().getStringExtra("postId");
-        Log.e("wjj", "get postId:" + mPostId);
         initHandler();
         initData();
         initListener();
@@ -75,11 +76,9 @@ public class PostDetailActivity extends AppCompatActivity {
                         break;
                     }
                     case DefaultVals.ADD_COMMENT_SUCCESS:{
-                        Comment comment = (Comment) msg.obj;
-                        CommentItem commentItem = new CommentItem(comment, mUser);
-                        mCommentItems.add(0, commentItem);
-                        mCommentAdapter.notifyDataSetChanged();
-                        //after addding comment, update comment cnt
+                        //after addding comment,reload comments
+                        CommentService.reloadCommentsByPostId(mCommentHandler, mUser.getUid(), mPostId, mCommentItems);
+                        //update comment cnt
                         PostService.getCommentCnt(mHandler, mPostId);
                         break;
                     }
@@ -92,6 +91,19 @@ public class PostDetailActivity extends AppCompatActivity {
                         mBinding.tvComment.callOnClick();
                         mBinding.etComment.setHint("回复：\"" + mReplyToCommentItem.getComment().getContent() + "\"");
                         mIsReplyToChildComment = true;
+                        break;
+                    }
+
+                    case DefaultVals.RELOAD_COMMENTS_SUCCESS:{
+                        mBinding.rcComments.getAdapter().notifyDataSetChanged();
+                    }
+
+                    case DefaultVals.SET_LIKE_STATUS_SUCCESS:{
+//                        mBinding.rcComments.getAdapter().notifyDataSetChanged();
+                        break;
+                    }
+                    case DefaultVals.SET_LIKE_STATUS_FAILED:{
+                        Toast.makeText(PostDetailActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -124,13 +136,51 @@ public class PostDetailActivity extends AppCompatActivity {
                         //After fetching post, init view
                         initView();
                         //Load comments
-                        CommentService.getCommentsByPostId(mCommentHandler, mPostId, mCommentItems);
+                        CommentService.getCommentsByPostId( mCommentHandler, mUser.getUid(), mPostId, mCommentItems);
                         break;
                     }
 
                     case DefaultVals.GET_COMMENTCNT_SUCCESS:{
                         long cnt = (long) msg.obj;
                         mBinding.commentCnt.setText("" + cnt);
+                        break;
+                    }
+
+                    case DefaultVals.SET_LIKE_STATUS_SUCCESS:{
+                        long likeCnt = Integer.parseInt(mBinding.likeCnt.getText().toString());
+                        int transferType = (int)msg.obj;
+                        if(transferType == DefaultVals.LIKED_TO_DISLIKE){
+                            mBinding.like.setImageResource(R.mipmap.thumb_up);
+                            mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
+                            mBinding.likeCnt.setText("" + (likeCnt - 2));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_DISLIKED;
+                        }
+                        else if(transferType == DefaultVals.DISLIKED_TO_LIKE){
+                            mBinding.dislike.setImageResource(R.mipmap.thumb_down);
+                            mBinding.like.setImageResource(R.mipmap.c_thumb_up);
+                            mBinding.likeCnt.setText("" + (likeCnt + 2));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_LIKED;
+                        }
+                        else if(transferType == DefaultVals.LIKED_TO_NOSTATUS){
+                            mBinding.like.setImageResource(R.mipmap.thumb_up);
+                            mBinding.likeCnt.setText("" + (likeCnt - 1));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_NOSTATUS;
+                        }
+                        else if(transferType == DefaultVals.DISLIKED_TO_NOSTATUS){
+                            mBinding.dislike.setImageResource(R.mipmap.thumb_down);
+                            mBinding.likeCnt.setText("" + (likeCnt + 1));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_NOSTATUS;
+                        }
+                        else if(transferType == DefaultVals.NOSTATUS_TO_DISLIKE){
+                            mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
+                            mBinding.likeCnt.setText("" + (likeCnt - 1));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_DISLIKED;
+                        }
+                        else if(transferType == DefaultVals.NOSTATUS_TO_LIKE){
+                            mBinding.like.setImageResource(R.mipmap.c_thumb_up);
+                            mBinding.likeCnt.setText("" + (likeCnt + 1));
+                            mLikeStatus = DefaultVals.LIKE_STATUS_LIKED;
+                        }
                         break;
                     }
 
@@ -151,11 +201,46 @@ public class PostDetailActivity extends AppCompatActivity {
         mBinding.content.setText(mPostItem.getPost().getPostContent());
         mBinding.postTime.setText(mPostItem.getPost().getPostDate());
         mBinding.likeCnt.setText("" + mPostItem.getPost().getLikeCnt());
-        PostService.getCommentCnt(mHandler, mPostId);
+        mBinding.commentCnt.setText("" + mPostItem.getPostInfo().getCommentCnt());
+        mLikeStatus = mPostItem.getClientToThisInfo().getLikeStatus();
+        if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED){
+            mBinding.like.setImageResource(R.mipmap.c_thumb_up);
+        }
+        else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
+            mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
+        }
     }
 
 
     private  void initListener(){
+        mBinding.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int transferType = -1;
+                if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED)
+                    transferType = DefaultVals.LIKED_TO_NOSTATUS;
+                else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
+                    transferType = DefaultVals.DISLIKED_TO_LIKE;
+                else if(mLikeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
+                    transferType = DefaultVals.NOSTATUS_TO_LIKE;
+                PostService.setLikeStatus(mHandler, mUser.getUid(), mPostId, transferType);
+            }
+        });
+
+        mBinding.dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int transferType = -1;
+                if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED)
+                    transferType = DefaultVals.LIKED_TO_DISLIKE;
+                else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
+                    transferType = DefaultVals.DISLIKED_TO_NOSTATUS;
+                else if(mLikeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
+                    transferType = DefaultVals.NOSTATUS_TO_DISLIKE;
+                PostService.setLikeStatus(mHandler, mUser.getUid(), mPostId, transferType);
+            }
+        });
+
 
         mBinding.tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,9 +270,17 @@ public class PostDetailActivity extends AppCompatActivity {
                 mBinding.etComment.setText("");
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                mBinding.etComment.setHint("在此评论...");
                 //send comment...
                 CommentService.sendComment(mCommentHandler, comment);
 
+            }
+        });
+
+        mBinding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -197,7 +290,7 @@ public class PostDetailActivity extends AppCompatActivity {
         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), DefaultVals.USER_INFO_DATABASE);
         mUser = JsonUtil.jsonToObject(sharedPreferenceUtil.readString("user", "null"), User.class);
         //Get post
-        PostService.getPostByid(mHandler, mPostId);
+        PostService.getPostByid(mHandler, mUser.getUid(), mPostId);
 
 
     }

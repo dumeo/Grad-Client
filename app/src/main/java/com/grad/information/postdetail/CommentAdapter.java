@@ -1,5 +1,7 @@
 package com.grad.information.postdetail;
 
+import static com.grad.util.DefaultVals.LIKE_STATUS_DISLIKED;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.grad.R;
 import com.grad.databinding.ItemCommentBinding;
 import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;
+import com.grad.service.CommentService;
 import com.grad.util.DefaultVals;
 import com.grad.util.GlideUtil;
 
@@ -27,6 +32,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context mContext;
     ItemCommentBinding mBinding;
     private Handler handler;
+    private String mClientUid;
 
     public CommentAdapter(Context mContext,List<CommentItem> comments, Handler handler) {
         this.mCommentItems = comments;
@@ -53,6 +59,18 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         GlideUtil.loadShapeableImageView(mContext,
                 mCommentItems.get(position).getUser().getAvatarUrl(),
                 userAvatar, GlideUtil.DefaultRequestOptions);
+        int likeStatus = mCommentItems.get(position).getClientToThisInfo().getLikeStatus();
+        switch (likeStatus){
+            case DefaultVals.LIKE_STATUS_DISLIKED:{
+                ((MyViewHolder)holder).downvote.setImageResource(R.mipmap.c_down_arrow);
+                break;
+            }
+            case DefaultVals.LIKE_STATUS_LIKED:{
+                ((MyViewHolder)holder).upvote.setImageResource(R.mipmap.c_up_arrow);
+                break;
+            }
+        }
+
         if(mCommentItems.get(position).getChildComments().size() > 0){
             CommentAdapter childAdapter = new CommentAdapter(mContext, mCommentItems.get(position).getChildComments(), handler);
             RecyclerView childRecyclerView = ((MyViewHolder)holder).rcChildComments;
@@ -75,6 +93,40 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
+        ((MyViewHolder)holder).upvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getAdapterPosition();
+                String commentId = mCommentItems.get(pos).getComment().getCommentId();
+                int likeStatus = mCommentItems.get(pos).getClientToThisInfo().getLikeStatus();
+                int likeCnt = (int) mCommentItems.get(pos).getComment().getLikeCnt();
+                int transferType = -1;
+                if(likeStatus == DefaultVals.LIKE_STATUS_LIKED){
+                    transferType = DefaultVals.LIKED_TO_NOSTATUS;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt - 1));
+                }
+
+                else if(likeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
+                    transferType = DefaultVals.DISLIKED_TO_LIKE;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt + 2));
+                }
+
+                else if(likeStatus == DefaultVals.LIKE_STATUS_NOSTATUS){
+                    transferType = DefaultVals.NOSTATUS_TO_LIKE;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt + 1));
+                }
+
+                CommentService.setLikeStatus(handler, mClientUid, commentId, transferType);
+            }//=========================================================
+        });
+
+        ((MyViewHolder)holder).downvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override
@@ -88,6 +140,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView userUnit;
         TextView content;
         TextView likeCnt;
+        ImageView upvote;
+        ImageView downvote;
         TextView commentDate;
         RecyclerView rcChildComments;
         public MyViewHolder(@NonNull View itemView) {
@@ -99,7 +153,12 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             likeCnt = mBinding.commentLikeCnt;
             commentDate = mBinding.commentDate;
             rcChildComments = mBinding.rvChildComments;
-
+            upvote = mBinding.ivUpvote;
+            downvote = mBinding.ivDownvote;
         }
+    }
+
+    public void setmClientUid(String mClientUid) {
+        this.mClientUid = mClientUid;
     }
 }

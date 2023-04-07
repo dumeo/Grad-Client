@@ -6,7 +6,7 @@ public class DefaultVals {
     public static final Integer REGISTERING_SUCCESS = 2;
     public static final Integer REGISTERING_FAILED = 3;
     public static final Integer REGISTER_UNFILL = 4;
-    public static final String BASE_URL = "http://192.168.1.101:8080/";
+    public static final String BASE_URL = "http://192.168.1.102:8080/";
 
     //-------------------SharedPreferences----------------------
     public static final String USER_INFO_DATABASE = "user";
@@ -32,5 +32,27 @@ public class DefaultVals {
     public static final int GET_COMMENTCNT_SUCCESS = 37;
     public static final int GET_COMMENTCNT_FAILED = 38;
     public static final int REQUEST_ADD_COMMENT = 39;
+
+    public static final int RELOAD_COMMENTS_SUCCESS = 40;
+    public static final int RELOAD_COMMENTS_FAILED = 41;
+    public static final int SET_LIKE_STATUS_SUCCESS = 42;
+    public static final int SET_LIKE_STATUS_FAILED = 43;
+    public static final int LIKE_COMMENT_SUCCESS = 44;
+    public static final int LIKE_COMMENT_FAILED = 45;
+    public static final String STATUS_OK = "ok";
+    public static final String STATUS_FAILED = "failed";
+
+    public static final int CHECK_LIKE_STATUS_SUCCESS = 56;
+    public static final int CHECK_LIKE_STATUS_FAILED = 57;
+    public static final int LIKE_STATUS_DISLIKED = 0;
+    public static final int LIKE_STATUS_LIKED = 1;
+    public static final int LIKE_STATUS_NOSTATUS = 2;
+
+    public static final int LIKED_TO_DISLIKE = 50;
+    public static final int DISLIKED_TO_LIKE = 51;
+    public static final int LIKED_TO_NOSTATUS = 52;
+    public static final int DISLIKED_TO_NOSTATUS = 53;
+    public static final int NOSTATUS_TO_DISLIKE = 54;
+    public static final int NOSTATUS_TO_LIKE = 55;
 
 }

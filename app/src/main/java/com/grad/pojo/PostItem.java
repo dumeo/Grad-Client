@@ -9,6 +9,8 @@ public class PostItem {
     private Post post;
     private PostUserInfo postUserInfo;
     private List<ImageItem> imageItems;
+    private ClientToThisInfo clientToThisInfo;
+    private PostInfo postInfo;
 
     public PostItem(Post post, PostUserInfo postUserInfo, List<ImageItem> imageItems) {
         this.post = post;
@@ -38,5 +40,21 @@ public class PostItem {
 
     public void setImageItems(List<ImageItem> imageItems) {
         this.imageItems = imageItems;
+    }
+
+    public ClientToThisInfo getClientToThisInfo() {
+        return clientToThisInfo;
+    }
+
+    public void setClientToThisInfo(ClientToThisInfo clientToThisInfo) {
+        this.clientToThisInfo = clientToThisInfo;
+    }
+
+    public PostInfo getPostInfo() {
+        return postInfo;
+    }
+
+    public void setPostInfo(PostInfo postInfo) {
+        this.postInfo = postInfo;
     }
 }

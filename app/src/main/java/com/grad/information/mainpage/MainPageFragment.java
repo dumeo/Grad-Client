@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.grad.databinding.FragmentMainPageBinding;
-import com.grad.http.DataFetcher;
 import com.grad.pojo.PostItem;
 import com.grad.service.PostService;
 import com.grad.util.DefaultVals;

@@ -19,8 +19,8 @@ public interface GetPost {
     @GET("/post/load-more")
     Call<List<JsonObject>> loadMorePosts(@Query("startTime") String startTime);
 
-    @GET("/post/{postId}")
-    Call<JsonObject> getPostById(@Path("postId")String postId);
+    @GET("/post?")
+    Call<JsonObject> getPostById(@Query("clientUid")String clientUid,@Query("postId") String postId);
 
     @GET("/post/{postId}/comment-cnt")
     Call<JsonObject> getPostCommentCnt(@Path("postId")String postId);

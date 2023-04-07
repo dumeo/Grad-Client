@@ -4,123 +4,123 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/level_line"
-        android:layout_width="1dp"
-        android:layout_height="100dp"
-        android:background="@color/black"
-        android:orientation="vertical"
-        android:layout_marginLeft="5dp"
-        ></LinearLayout>
-    <RelativeLayout
-        android:id="@+id/comment_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/level_line"
-        >
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/comment_avatar"
-            android:layout_width="@dimen/comment_avatar_size"
-            android:layout_height="@dimen/comment_avatar_size"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="7dp"
-            android:src="@mipmap/ic_launcher"
-            android:shadowColor="@android:color/holo_blue_bright"
-            app:shapeAppearance="@style/circleStyle"
-            ></com.google.android.material.imageview.ShapeableImageView>
 
-        <TextView
-            android:id="@+id/comment_user_name"
-            android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:layout_toRightOf="@id/comment_avatar"
-            android:layout_marginLeft="10dp"
-            android:text="用户名gergrtthjrttjr"
-            android:textSize="15sp"
-            android:layout_marginTop="5dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            ></TextView>
-
-        <TextView
-            android:id="@+id/comment_user_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_toRightOf="@id/comment_user_name"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:text="武汉社区"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            ></TextView>
-
-        <TextView
-            android:id="@+id/comment_content"
-            android:layout_width="250dp"
+        <LinearLayout
+            android:id="@+id/level_line"
+            android:layout_width="1dp"
+            android:layout_height="120dp"
+            android:background="@color/black"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            ></LinearLayout>
+        <RelativeLayout
+            android:id="@+id/comment_top"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/comment_avatar"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/comment_user_name"
-            android:text="二哥和日哦过呢人"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="5dp"
-            ></TextView>
+            android:layout_toRightOf="@id/level_line"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/comment_avatar"
+                android:layout_width="@dimen/comment_avatar_size"
+                android:layout_height="@dimen/comment_avatar_size"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:src="@mipmap/ic_launcher"
+                android:shadowColor="@android:color/holo_blue_bright"
+                app:shapeAppearance="@style/circleStyle"
+                ></com.google.android.material.imageview.ShapeableImageView>
 
-        <ImageView
-            android:id="@+id/iv_upvote"
-            android:layout_width="17dp"
-            android:layout_height="13dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="28dp"
-            android:src="@mipmap/thumb_up"></ImageView>
+            <TextView
+                android:id="@+id/comment_user_name"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@id/comment_avatar"
+                android:layout_marginLeft="10dp"
+                android:text="用户名gergrtthjrttjr"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                ></TextView>
 
-        <TextView
-            android:id="@+id/comment_like_cnt"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/comment_user_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/comment_user_name"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="武汉社区"
+                android:textSize="11sp"></TextView>
+
+            <TextView
+                android:id="@+id/comment_content"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/comment_avatar"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/comment_user_name"
+                android:text="二哥和日哦过呢人"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                ></TextView>
+
+            <ImageView
+                android:id="@+id/iv_upvote"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:src="@mipmap/up_arrow"></ImageView>
+
+            <TextView
+                android:id="@+id/comment_like_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="112"
+                android:layout_below="@id/iv_upvote"
+                android:layout_alignRight="@id/iv_upvote"
+                android:layout_marginTop="5dp"
+                ></TextView>
+
+            <ImageView
+                android:id="@+id/iv_downvote"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/down_arrow"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/comment_like_cnt"
+                android:layout_alignLeft="@id/iv_upvote"
+                ></ImageView>
+
+            <TextView
+                android:id="@+id/comment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignRight="@id/iv_upvote"
+                android:layout_below="@id/comment_content"
+                android:layout_marginTop="16dp"
+                android:text="2023-04-03 12:59:02"
+                android:textSize="11sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                ></TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_child_comments"
+            android:layout_width="375dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:text="112"
-            android:layout_below="@id/iv_upvote"
-            android:layout_alignRight="@id/iv_upvote"
-            android:layout_marginTop="5dp"
-            ></TextView>
-
-        <ImageView
-            android:id="@+id/iv_downvote"
-            android:layout_width="13dp"
-            android:layout_height="13dp"
-            android:src="@mipmap/thumb_down"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/comment_like_cnt"
-            android:layout_alignLeft="@id/iv_upvote"
-            ></ImageView>
-
-        <TextView
-            android:id="@+id/comment_date"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_alignRight="@id/iv_upvote"
-            android:layout_below="@id/comment_content"
-            android:layout_marginTop="13dp"
-            android:text="2023-04-03 12:59:02"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            ></TextView>
-    </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_child_comments"
-        android:layout_width="375dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_top"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        ></androidx.recyclerview.widget.RecyclerView>
+            android:layout_below="@id/comment_top"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            ></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
