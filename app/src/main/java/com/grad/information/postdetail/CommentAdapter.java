@@ -73,6 +73,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if(mCommentItems.get(position).getChildComments().size() > 0){
             CommentAdapter childAdapter = new CommentAdapter(mContext, mCommentItems.get(position).getChildComments(), handler);
+            childAdapter.setmClientUid(mClientUid);
             RecyclerView childRecyclerView = ((MyViewHolder)holder).rcChildComments;
             childRecyclerView.setAdapter(childAdapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -97,6 +98,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onClick(View v) {
                 int pos = holder.getAdapterPosition();
+                CommentItem commentItem = mCommentItems.get(pos);
                 String commentId = mCommentItems.get(pos).getComment().getCommentId();
                 int likeStatus = mCommentItems.get(pos).getClientToThisInfo().getLikeStatus();
                 int likeCnt = (int) mCommentItems.get(pos).getComment().getLikeCnt();
@@ -104,25 +106,67 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(likeStatus == DefaultVals.LIKE_STATUS_LIKED){
                     transferType = DefaultVals.LIKED_TO_NOSTATUS;
                     ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt - 1));
+                    ((MyViewHolder)holder).upvote.setImageResource(R.mipmap.up_arrow);
+                    commentItem.getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
+                    commentItem.getComment().setLikeCnt(likeCnt - 1);
                 }
 
                 else if(likeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
                     transferType = DefaultVals.DISLIKED_TO_LIKE;
                     ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt + 2));
+                    ((MyViewHolder)holder).upvote.setImageResource(R.mipmap.c_up_arrow);
+                    ((MyViewHolder)holder).downvote.setImageResource(R.mipmap.down_arrow);
+                    mCommentItems.get(pos).getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
+                    commentItem.getComment().setLikeCnt(likeCnt + 2);
                 }
 
                 else if(likeStatus == DefaultVals.LIKE_STATUS_NOSTATUS){
                     transferType = DefaultVals.NOSTATUS_TO_LIKE;
                     ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt + 1));
+                    ((MyViewHolder)holder).upvote.setImageResource(R.mipmap.c_up_arrow);
+                    mCommentItems.get(pos).getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
+                    commentItem.getComment().setLikeCnt(likeCnt + 1);
                 }
 
                 CommentService.setLikeStatus(handler, mClientUid, commentId, transferType);
-            }//=========================================================
+            }
         });
 
         ((MyViewHolder)holder).downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int pos = holder.getAdapterPosition();
+                CommentItem commentItem = mCommentItems.get(pos);
+                String commentId = mCommentItems.get(pos).getComment().getCommentId();
+                int likeStatus = mCommentItems.get(pos).getClientToThisInfo().getLikeStatus();
+                int likeCnt = (int) mCommentItems.get(pos).getComment().getLikeCnt();
+                int transferType = -1;
+                if(likeStatus == DefaultVals.LIKE_STATUS_LIKED){
+                    transferType = DefaultVals.LIKED_TO_DISLIKE;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt - 2));
+                    ((MyViewHolder)holder).downvote.setImageResource(R.mipmap.c_down_arrow);
+                    ((MyViewHolder)holder).upvote.setImageResource(R.mipmap.up_arrow);
+                    commentItem.getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
+                    commentItem.getComment().setLikeCnt(likeCnt - 2);
+                }
+
+                else if(likeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
+                    transferType = DefaultVals.DISLIKED_TO_NOSTATUS;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt + 1));
+                    ((MyViewHolder)holder).downvote.setImageResource(R.mipmap.down_arrow);
+                    commentItem.getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
+                    commentItem.getComment().setLikeCnt(likeCnt + 1);
+                }
+
+                else if(likeStatus == DefaultVals.LIKE_STATUS_NOSTATUS){
+                    transferType = DefaultVals.NOSTATUS_TO_DISLIKE;
+                    ((MyViewHolder)holder).likeCnt.setText("" + (likeCnt - 1));
+                    ((MyViewHolder)holder).downvote.setImageResource(R.mipmap.c_down_arrow);
+                    commentItem.getClientToThisInfo().setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
+                    commentItem.getComment().setLikeCnt(likeCnt - 1);
+                }
+                CommentService.setLikeStatus(handler, mClientUid, commentId, transferType);
+
 
             }
         });

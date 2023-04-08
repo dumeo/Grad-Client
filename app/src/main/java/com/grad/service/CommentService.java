@@ -64,6 +64,7 @@ public class CommentService {
             @Override
             public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
                 List<JsonObject> jsonObjects = response.body();
+                if(jsonObjects == null) onFailure(call, new Throwable());
                 for(JsonObject jsonObject : jsonObjects){
                     commentItems.add(JsonUtil.jsonToObject(jsonObject.toString(), CommentItem.class));
                 }

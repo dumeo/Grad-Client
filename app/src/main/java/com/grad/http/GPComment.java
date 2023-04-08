@@ -24,6 +24,4 @@ public interface GPComment {
     @GET("/comments?")
     Call<List<JsonObject>> getCommentsByPostId(@Query("clientUid")String clientUid, @Query("postId") String postId);
 
-    @GET("/comment/check-like?")
-    Call<JsonObject> checkLikeStatus(@Query("uid")String uid, @Query("commentId")String commentId);
 }

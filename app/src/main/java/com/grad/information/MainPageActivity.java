@@ -103,26 +103,22 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.tv_main_page:{
-                Log.e("wjj", "touched main page");
                 clearSelectState();
                 mTextViewMainPage.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
                 break;
             }
             case R.id.tv_recommand:{
-                Log.e("wjj", "touched recommand");
                 clearSelectState();
                 mTextViewRecommand.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
                 break;
             }
             case R.id.tv_following:{
-                Log.e("wjj", "touched following");
                 clearSelectState();
                 mTextViewFollowing.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
                 break;
 
             }
             case R.id.tv_profile:{
-                Log.e("wjj", "touched profile");
                 clearSelectState();
                 mTextViewProfile.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
                 break;

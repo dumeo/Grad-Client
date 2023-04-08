@@ -7,11 +7,15 @@
         android:title="社区新闻"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_second_hand"
-        android:title="二手交易"
+    <item android:id="@+id/action_notes"
+        android:title="社区公告"
         app:showAsAction="never" />
-    <item android:id="@+id/action_logout"
-        android:title="退出登录"
+    <item android:id="@+id/action_booking"
+        android:title="办事预约"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_vote"
+        android:title="社区投票"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_search"

@@ -301,6 +301,7 @@ public class PostDetailActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mBinding.rcComments.setLayoutManager(layoutManager);
         mCommentAdapter = new CommentAdapter(PostDetailActivity.this, mCommentItems, mCommentHandler);
+        mCommentAdapter.setmClientUid(mUser.getUid());
         mBinding.rcComments.setAdapter(mCommentAdapter);
         mBinding.rcComments.setPadding(5, 5, 5, 5);
         ItemSpaceDecoration decoration = new ItemSpaceDecoration(10);
