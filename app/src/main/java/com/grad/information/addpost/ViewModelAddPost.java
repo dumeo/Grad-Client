@@ -1,16 +1,9 @@
 package com.grad.information.addpost;
 
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
-
-import com.grad.util.DefaultVals;
-
-import cn.hutool.core.util.StrUtil;
 
 public class ViewModelAddPost {
     private MutableLiveData<String> mTitle;

@@ -19,7 +19,7 @@ import com.grad.databinding.ItemTypeImageBinding;
 import com.grad.databinding.ItemTypeTextBinding;
 import com.grad.information.postdetail.PostDetailActivity;
 import com.grad.pojo.PostItem;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.GlideUtil;
 import com.grad.util.ImageUtil;
 
@@ -87,11 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithContent)holder).userUnit.setText(userHouseAddr);
             ((ViewHolderWithContent)holder).postTitle.setText(postTitle);
             ((ViewHolderWithContent)holder).postContent.setText(postContent);
-
-            if(mPostItems.get(position).getPost().getPostTag().equals("无标签"))
-                ((ViewHolderWithContent)holder).postTag.setVisibility(View.INVISIBLE);
-            else
-                ((ViewHolderWithContent)holder).postTag.setText(postTag);
+            ((ViewHolderWithContent)holder).postTag.setText(postTag);
 
             ((ViewHolderWithContent)holder).postDate.setText(postDate);
         }
@@ -115,11 +111,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             GlideUtil.loadImageView(mContext, mPostItems.get(position).getImageItems().get(0).getUrl(),
                     (ImageView) ((ViewHolderWithImg)holder).postImage, mRequestOptions);
 
-            if(mPostItems.get(position).getPost().getPostTag().equals("无标签"))
-                ((ViewHolderWithImg)holder).postTag.setVisibility(View.INVISIBLE);
-
-            else
-                ((ViewHolderWithImg)holder).postTag.setText(postTag);
+            ((ViewHolderWithImg)holder).postTag.setText(postTag);
 
             ((ViewHolderWithImg)holder).postDate.setText(postDate);
         }

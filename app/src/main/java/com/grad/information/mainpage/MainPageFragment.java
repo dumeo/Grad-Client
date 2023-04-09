@@ -1,7 +1,7 @@
 package com.grad.information.mainpage;
 
-import static com.grad.util.DefaultVals.FETCH_DATA_COMPLETED;
-import static com.grad.util.DefaultVals.REFETCH_DATA_COMPLETED;
+import static com.grad.constants.DefaultVals.FETCH_DATA_COMPLETED;
+import static com.grad.constants.DefaultVals.REFETCH_DATA_COMPLETED;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import com.grad.databinding.FragmentMainPageBinding;
 import com.grad.pojo.PostItem;
 import com.grad.service.PostService;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class MainPageFragment extends Fragment {
 
                     case REFETCH_DATA_COMPLETED:{
                         mItemAdapter.notifyDataSetChanged();
-                        binding.recyclerviewMainPage.requestLayout();
+//                        binding.recyclerviewMainPage.requestLayout();
                         binding.swipeRefresh.setRefreshing(false);
                     }
                     case DefaultVals.FETCH_DATA_FAILED:{

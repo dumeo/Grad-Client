@@ -17,11 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.grad.R;
+import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityAddPostBinding;
-import com.grad.http.DataSender;
 import com.grad.pojo.Post;
 import com.grad.pojo.User;
-import com.grad.util.DefaultVals;
+import com.grad.service.ImageService;
+import com.grad.service.PostService;
+import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 import com.grad.util.UriUtil;
@@ -61,7 +63,7 @@ public class AddPostActivity extends AppCompatActivity {
                     //如果有图片，上传图片
                     if(mSelectedImages.size() > 0){
                         for(int i = 0;i < mSelectedImages.size(); i ++){
-                            DataSender.sendImages(mPostId, mHandler1, mSelectedImages.get(i), i);
+                            ImageService.sendImages(mPostId, mHandler1, mSelectedImages.get(i), i);
                         }
                     }
                     finish();
@@ -220,14 +222,14 @@ public class AddPostActivity extends AppCompatActivity {
 
     private void sendPost(){
         mBinding.progressBar.setVisibility(View.VISIBLE);
-        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), DefaultVals.USER_INFO_DATABASE);
-        User user = JsonUtil.jsonToObject(sharedPreferenceUtil.readString("user", "null"), User.class);
+        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
+        User user = JsonUtil.jsonToObject(sharedPreferenceUtil.readString(UserConstants.SHARED_PREF_USERINFO_KEY, "null"), User.class);
         Post post = new Post("", user.getUid(), 0,
                 mModelAddPost.getTitle(), mModelAddPost.getContent(),
                 mModelAddPost.getTag(), 0, "");
         Log.e("wjj", "post Tag:" + post.getPostTag());
 
-        DataSender.newPost(post, mHandler1);
+        PostService.newPost(post, mHandler1);
     }
 
 

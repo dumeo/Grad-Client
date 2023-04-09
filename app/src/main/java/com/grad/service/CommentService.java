@@ -2,18 +2,14 @@ package com.grad.service;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.grad.http.GPComment;
-import com.grad.http.GPPost;
 import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;
-import com.grad.pojo.Status;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 
-import java.security.cert.CertPathChecker;
 import java.util.List;
 
 import retrofit2.Call;

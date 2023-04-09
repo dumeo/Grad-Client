@@ -1,15 +1,13 @@
-package com.grad.http;
+package com.grad.service;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.grad.http.GPPost;
 import com.grad.information.addpost.ImageInfo;
-import com.grad.pojo.Post;
-import com.grad.util.DefaultVals;
-
+import com.grad.constants.DefaultVals;
 
 import java.io.ByteArrayOutputStream;
 
@@ -22,35 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DataSender {
-
-    public static void newPost(Post post, Handler handler){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DefaultVals.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GPPost GPPost = retrofit.create(GPPost.class);
-        Call<JsonObject> call = GPPost.addPost(post);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject jsonObject = response.body();
-                String postId = jsonObject.get("postId").getAsString();
-                Message message = Message.obtain();
-                message.what = DefaultVals.ADD_POST_TEXT_SUCCESS;
-                message.obj = postId;
-                handler.sendMessage(message);
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-
-            }
-        });
-    }
-
-
+public class ImageService {
     public static void sendImages(String postId, Handler mHandler1, ImageInfo imageInfo, int pos) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
@@ -83,6 +53,5 @@ public class DataSender {
 
 
     }
-
 
 }

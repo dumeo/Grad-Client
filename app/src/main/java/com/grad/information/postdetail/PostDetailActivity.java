@@ -8,22 +8,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.grad.R;
+import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityPostDetailBinding;
 import com.grad.information.mainpage.ItemSpaceDecoration;
+import com.grad.pojo.ClientToThisInfo;
 import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;
 import com.grad.pojo.PostItem;
 import com.grad.pojo.User;
+import com.grad.service.CollectService;
 import com.grad.service.CommentService;
 import com.grad.service.PostService;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.GlideUtil;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
@@ -149,37 +151,49 @@ public class PostDetailActivity extends AppCompatActivity {
                     case DefaultVals.SET_LIKE_STATUS_SUCCESS:{
                         long likeCnt = Integer.parseInt(mBinding.likeCnt.getText().toString());
                         int transferType = (int)msg.obj;
+                        ClientToThisInfo clientToThisInfo = mPostItem.getClientToThisInfo();
                         if(transferType == DefaultVals.LIKED_TO_DISLIKE){
                             mBinding.like.setImageResource(R.mipmap.thumb_up);
                             mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt - 2));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_DISLIKED;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
                         }
                         else if(transferType == DefaultVals.DISLIKED_TO_LIKE){
                             mBinding.dislike.setImageResource(R.mipmap.thumb_down);
                             mBinding.like.setImageResource(R.mipmap.c_thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt + 2));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_LIKED;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
                         }
                         else if(transferType == DefaultVals.LIKED_TO_NOSTATUS){
                             mBinding.like.setImageResource(R.mipmap.thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt - 1));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_NOSTATUS;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
                         }
                         else if(transferType == DefaultVals.DISLIKED_TO_NOSTATUS){
                             mBinding.dislike.setImageResource(R.mipmap.thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt + 1));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_NOSTATUS;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
                         }
                         else if(transferType == DefaultVals.NOSTATUS_TO_DISLIKE){
                             mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt - 1));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_DISLIKED;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
                         }
                         else if(transferType == DefaultVals.NOSTATUS_TO_LIKE){
                             mBinding.like.setImageResource(R.mipmap.c_thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt + 1));
-                            mLikeStatus = DefaultVals.LIKE_STATUS_LIKED;
+                            clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
+                        }
+                        break;
+                    }
+                    case DefaultVals.ADD_COLLECT_SUCCESS:{
+                        if(mPostItem.getClientToThisInfo().isCollected()){
+                            mBinding.collect.setImageResource(R.mipmap.star);
+                            mPostItem.getClientToThisInfo().setCollected(false);
+                        }
+                        else{
+                            mBinding.collect.setImageResource(R.mipmap.stared);
+                            mPostItem.getClientToThisInfo().setCollected(true);
                         }
                         break;
                     }
@@ -205,23 +219,37 @@ public class PostDetailActivity extends AppCompatActivity {
         mLikeStatus = mPostItem.getClientToThisInfo().getLikeStatus();
         if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED){
             mBinding.like.setImageResource(R.mipmap.c_thumb_up);
-        }
-        else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
+        }else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED){
             mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
+        }
+        if(mPostItem.getClientToThisInfo().isCollected()){
+            mBinding.collect.setImageResource(R.mipmap.stared);
         }
     }
 
 
     private  void initListener(){
+        mBinding.collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mPostItem.getClientToThisInfo().isCollected()){
+                    CollectService.addCollect(mHandler, mUser.getUid(), mPostId, DefaultVals.UNCOLLECT_POST);
+                }
+                else{
+                    CollectService.addCollect(mHandler, mUser.getUid(), mPostId, DefaultVals.COLLECT_POST);
+                }
+            }
+        });
         mBinding.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int transferType = -1;
-                if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED)
+                int likeStatus = mPostItem.getClientToThisInfo().getLikeStatus();
+                if(likeStatus == DefaultVals.LIKE_STATUS_LIKED)
                     transferType = DefaultVals.LIKED_TO_NOSTATUS;
-                else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
+                else if(likeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
                     transferType = DefaultVals.DISLIKED_TO_LIKE;
-                else if(mLikeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
+                else if(likeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
                     transferType = DefaultVals.NOSTATUS_TO_LIKE;
                 PostService.setLikeStatus(mHandler, mUser.getUid(), mPostId, transferType);
             }
@@ -231,11 +259,12 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int transferType = -1;
-                if(mLikeStatus == DefaultVals.LIKE_STATUS_LIKED)
+                int likeStatus = mPostItem.getClientToThisInfo().getLikeStatus();
+                if(likeStatus == DefaultVals.LIKE_STATUS_LIKED)
                     transferType = DefaultVals.LIKED_TO_DISLIKE;
-                else if(mLikeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
+                else if(likeStatus == DefaultVals.LIKE_STATUS_DISLIKED)
                     transferType = DefaultVals.DISLIKED_TO_NOSTATUS;
-                else if(mLikeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
+                else if(likeStatus == DefaultVals.LIKE_STATUS_NOSTATUS)
                     transferType = DefaultVals.NOSTATUS_TO_DISLIKE;
                 PostService.setLikeStatus(mHandler, mUser.getUid(), mPostId, transferType);
             }
@@ -287,8 +316,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void initData(){
 
-        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), DefaultVals.USER_INFO_DATABASE);
-        mUser = JsonUtil.jsonToObject(sharedPreferenceUtil.readString("user", "null"), User.class);
+        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
+        mUser = JsonUtil.jsonToObject(sharedPreferenceUtil.readString(UserConstants.SHARED_PREF_USERINFO_KEY, "null"), User.class);
         //Get post
         PostService.getPostByid(mHandler, mUser.getUid(), mPostId);
 

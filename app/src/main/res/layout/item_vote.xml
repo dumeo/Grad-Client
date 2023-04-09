@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/user_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/avatar_size1"
+            android:layout_height="@dimen/avatar_size1"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="5dp"
+            android:shadowColor="@android:color/holo_blue_bright"
+            app:shapeAppearance="@style/circleStyle"></com.google.android.material.imageview.ShapeableImageView>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/user_avatar"
+            android:layout_marginLeft="10dp"
+            android:text="用户名gergrtthjrttjr"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            ></TextView>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/user_avatar"
+            android:layout_below="@id/user_name"
+            android:layout_marginLeft="10dp"
+            android:text="武汉社区"
+            android:textSize="11sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            ></TextView>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/vote_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_top"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="是否进行居委会换人？"
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+
+    <TextView
+        android:id="@+id/vote_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_title"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="15sp"
+        android:text="当前居委会已到换届时间，应当根据社区选举重新产生居委会成员"
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+
+    <TextView
+        android:id="@+id/tv_participate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="参与人数："
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+
+    <TextView
+        android:id="@+id/vote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_content"
+        android:layout_toRightOf="@id/tv_participate"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="2dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="203"
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_content"
+        android:layout_toRightOf="@id/vote_count"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:background="@drawable/tv_background1"
+        android:text="正在进行"
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+
+    <TextView
+        android:id="@+id/tv_vote_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vote_content"
+        android:layout_toRightOf="@id/tv_status"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"
+        android:text="2023-04-09 23:01:22"
+        android:maxLines="1"
+        android:ellipsize="end"></TextView>
+</RelativeLayout>

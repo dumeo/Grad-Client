@@ -1,11 +1,8 @@
 package com.grad.information.postdetail;
 
-import static com.grad.util.DefaultVals.LIKE_STATUS_DISLIKED;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.grad.R;
 import com.grad.databinding.ItemCommentBinding;
-import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;
 import com.grad.service.CommentService;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.GlideUtil;
 
 import java.util.List;

@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.grad.http.PostRegister;
 import com.grad.pojo.User;
 import com.grad.pojo.RegisterRet;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 
 import cn.hutool.core.util.StrUtil;

@@ -1,9 +1,9 @@
 package com.grad.service;
 
-import static com.grad.util.DefaultVals.FETCH_DATA_COMPLETED;
-import static com.grad.util.DefaultVals.FETCH_DATA_FAILED;
-import static com.grad.util.DefaultVals.LOAD_MORE_DATA_COMPLETED;
-import static com.grad.util.DefaultVals.REFETCH_DATA_COMPLETED;
+import static com.grad.constants.DefaultVals.FETCH_DATA_COMPLETED;
+import static com.grad.constants.DefaultVals.FETCH_DATA_FAILED;
+import static com.grad.constants.DefaultVals.LOAD_MORE_DATA_COMPLETED;
+import static com.grad.constants.DefaultVals.REFETCH_DATA_COMPLETED;
 
 import android.os.Handler;
 import android.os.Message;
@@ -13,9 +13,9 @@ import com.google.gson.JsonObject;
 import com.grad.http.GetPost;
 import com.grad.http.GPPost;
 import com.grad.pojo.CommentCntRet;
+import com.grad.pojo.Post;
 import com.grad.pojo.PostItem;
-import com.grad.pojo.Status;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 
 import java.util.List;
@@ -27,6 +27,34 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostService {
+
+    public static void newPost(Post post, Handler handler){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GPPost GPPost = retrofit.create(GPPost.class);
+        Call<JsonObject> call = GPPost.addPost(post);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject jsonObject = response.body();
+                String postId = jsonObject.get("postId").getAsString();
+                Message message = Message.obtain();
+                message.what = DefaultVals.ADD_POST_TEXT_SUCCESS;
+                message.obj = postId;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+
     public static void fetcheData(Handler handler, List<PostItem> postItems){
         postItems.clear();
         Retrofit retrofit = new Retrofit.Builder()

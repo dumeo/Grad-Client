@@ -1,4 +1,4 @@
-package com.grad.util;
+package com.grad.constants;
 
 public class DefaultVals {
     public static final Integer UNDER_REGISTER = 0;
@@ -12,6 +12,7 @@ public class DefaultVals {
     public static final String USER_INFO_DATABASE = "user";
     public static Integer POST_TYPE_TEXT = 0;
     public static Integer POST_TYPE_IMG = 1;
+    public static Integer POST_TYPE_VOTE = 2;
 
     public static final int FETCH_DATA_COMPLETED = 10;
     public static final int FETCH_DATA_FAILED= 11;
@@ -54,5 +55,16 @@ public class DefaultVals {
     public static final int DISLIKED_TO_NOSTATUS = 53;
     public static final int NOSTATUS_TO_DISLIKE = 54;
     public static final int NOSTATUS_TO_LIKE = 55;
+
+    public static final int ADD_COLLECT_SUCCESS = 60;
+    public static final int ADD_COLLECT_FAILED = 61;
+    public static final int COLLECT_POST = 62;
+    public static final int UNCOLLECT_POST = 63;
+
+    public static final int CHECK_USER_SUCCESS = 67;
+    public static final String MSG_USER_NOT_EXISTS = "User not exists";
+    public static final String MSG_USER_EXISTS = "User exists";
+    public static final String MSG_SERVER_ERROR = "Server error";
+
 
 }

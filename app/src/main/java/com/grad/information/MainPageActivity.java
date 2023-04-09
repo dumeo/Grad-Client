@@ -84,8 +84,9 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.action_news:{}
-                    case R.id.action_second_hand:{}
-                    case R.id.action_logout:{}
+                    case R.id.action_attention:{}
+                    case R.id.action_booking:{}
+                    case R.id.action_vote:{}
                     default:{}
                 }
                 return false;

@@ -4,22 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import android.util.Log;
-
-import com.google.gson.JsonObject;
-import com.grad.http.GetPost;
-import com.grad.pojo.PostItem;
-import com.grad.util.DefaultVals;
-import com.grad.util.JsonUtil;
-
 import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

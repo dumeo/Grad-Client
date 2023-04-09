@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/detail_top_relativelayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/back_size"
+        android:layout_height="@dimen/back_size"
+        android:src="@mipmap/back"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        >
+    </ImageView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="@dimen/avatar_size1"
+        android:layout_height="@dimen/avatar_size1"
+        android:layout_toRightOf="@id/back"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="5dp"
+        android:shadowColor="@android:color/holo_blue_bright"
+        app:shapeAppearance="@style/circleStyle"></com.google.android.material.imageview.ShapeableImageView>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@id/user_avatar"
+        android:layout_marginLeft="10dp"
+        android:text="用户名gergrtthjrttjr"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        ></TextView>
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@id/user_avatar"
+        android:layout_below="@id/user_name"
+        android:layout_marginLeft="10dp"
+        android:text="武汉社区"
+        android:textSize="11sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        ></TextView>
+
+    <Button
+        android:id="@+id/bt_follow"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/user_name"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/add_button_bg"
+        android:layout_marginLeft="10dp"
+        android:text="关注"
+        ></Button>
+
+</RelativeLayout>

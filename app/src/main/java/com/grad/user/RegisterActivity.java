@@ -11,10 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.grad.R;
+import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityRegisterBinding;
 import com.grad.information.MainPageActivity;
 import com.grad.pojo.User;
-import com.grad.util.DefaultVals;
+import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 
@@ -35,8 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     mProgressBar.setVisibility(View.INVISIBLE);
                     if(status.equals(DefaultVals.REGISTERING_SUCCESS)){
-                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), DefaultVals.USER_INFO_DATABASE);
-                        sharedPreferenceUtil.writeString("user", JsonUtil.objectToJson(mUserViewModel.getUser()));
+                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
+                        sharedPreferenceUtil.writeString(UserConstants.SHARED_PREF_USERINFO_KEY, JsonUtil.objectToJson(mUserViewModel.getUser()));
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
                         finish();
                     }
