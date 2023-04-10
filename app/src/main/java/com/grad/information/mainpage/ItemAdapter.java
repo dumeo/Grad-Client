@@ -63,9 +63,10 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(viewType == DefaultVals.POST_TYPE_TEXT){
             return new ViewHolderWithContent( mItemTypeTextBinding.getRoot());
         }
-        else{
+        else if(viewType == DefaultVals.POST_TYPE_IMG){
             return new ViewHolderWithImg(mItemTypeImageBinding.getRoot());
         }
+        return new ViewHolderWithContent( mItemTypeTextBinding.getRoot());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithContent)holder).postDate.setText(postDate);
         }
 
-        else{
+        else if(getItemViewType(position) == DefaultVals.POST_TYPE_VOTE){
             ImageView imageView = ((ViewHolderWithImg)holder).postImage;
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
             long imageWidth = mPostItems.get(position).getImageItems().get(0).getWidth();

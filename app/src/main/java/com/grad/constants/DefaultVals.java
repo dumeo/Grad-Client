@@ -6,7 +6,7 @@ public class DefaultVals {
     public static final Integer REGISTERING_SUCCESS = 2;
     public static final Integer REGISTERING_FAILED = 3;
     public static final Integer REGISTER_UNFILL = 4;
-    public static final String BASE_URL = "http://192.168.1.103:8080/";
+    public static final String BASE_URL = "http://192.168.1.104:8080/";
 
     //-------------------SharedPreferences----------------------
     public static final String USER_INFO_DATABASE = "user";

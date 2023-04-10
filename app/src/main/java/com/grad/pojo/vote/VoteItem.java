@@ -15,6 +15,8 @@ public class VoteItem {
     private ClientToVoteInfo clientToThisInfo;
     private List<VoteOption> voteOptions;
     private int voteCnt = 0;
+    private String status;
+    private String endTime;
 
     public VoteItem() {
     }
@@ -74,5 +76,21 @@ public class VoteItem {
                 ", voteOptions=" + voteOptions +
                 ", voteCnt=" + voteCnt +
                 '}';
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

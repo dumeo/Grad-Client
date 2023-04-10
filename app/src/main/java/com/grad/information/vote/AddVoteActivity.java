@@ -1,9 +1,11 @@
 package com.grad.information.vote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,9 @@ import com.grad.constants.VoteConstants;
 import com.grad.databinding.ActivityAddVoteBinding;
 import com.grad.pojo.Post;
 import com.grad.pojo.User;
-import com.grad.pojo.vote.ClientToVoteInfo;
 import com.grad.pojo.vote.VoteItem;
 import com.grad.pojo.vote.VoteOption;
+import com.grad.service.VoteService;
 import com.grad.util.DimensUtil;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
@@ -39,7 +41,7 @@ public class AddVoteActivity extends AppCompatActivity {
     private Handler mHandler;
     private User mUser;
     private List<AddedOption> mAddedOptions = new ArrayList<>();
-    private String mSelectedDate;
+    private String mEndTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,22 @@ public class AddVoteActivity extends AppCompatActivity {
         initListener();
     }
 
-    private void initHandler(){};
+    private void initHandler(){
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                switch (msg.what){
+                    case VoteConstants.ADD_VOTE_OK:{
+                        Log.e("wjj", "add vote ok");
+                        break;
+                    }
+                }
+
+                return false;
+            }
+        });
+
+    };
 
 
     private void initData(){
@@ -62,6 +79,14 @@ public class AddVoteActivity extends AppCompatActivity {
 
 
     private void initView(){
+        final Calendar calendar = Calendar.getInstance();
+        mEndTime = calendar.get(Calendar.YEAR)
+                + "-"
+                + ((calendar.get(Calendar.MONTH) + 1) < 10 ? "0" + (calendar.get(Calendar.MONTH) + 1) : (calendar.get(Calendar.MONTH) + 1))
+                + "-"
+                + calendar.get(Calendar.DAY_OF_MONTH)
+                + " 00:00:00";
+
         mBinding.btRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +120,8 @@ public class AddVoteActivity extends AppCompatActivity {
                     }
 
                     VoteItem voteItem = new VoteItem(post, mUser, null, voteOptions);
-                    //===================================================
+                    voteItem.setEndTime(mEndTime);
+                    VoteService.addVote(mHandler, voteItem);
 
                 }
             }
@@ -109,20 +135,20 @@ public class AddVoteActivity extends AppCompatActivity {
                 mBinding.nestedScrv.fullScroll(View.FOCUS_DOWN);
             }
         });
-        final Calendar calendar = Calendar.getInstance();
+
         mBinding.datePicker.setMinDate(calendar.getTimeInMillis());
         mBinding.datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                mSelectedDate = year
+                mEndTime = year
                         + "-"
                         + ((monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
                         + "-"
                         + dayOfMonth
                         + " 00:00:00";
-                mBinding.selectedDate.setText(mSelectedDate.substring(0, 10));
+                mBinding.selectedDate.setText(mEndTime.substring(0, 10));
             }
         });
         mBinding.btCalenderOk.setOnClickListener(new View.OnClickListener() {
