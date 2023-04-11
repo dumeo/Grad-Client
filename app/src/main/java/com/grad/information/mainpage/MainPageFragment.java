@@ -36,7 +36,7 @@ public class MainPageFragment extends Fragment {
     private Handler mHandler;
     private boolean mIsLodaing = false;
     private ItemAdapter mItemAdapter;
-    private List<PostItem> mPostItems;
+    private List<PostItem> mPostItems = new ArrayList<>();
     private boolean mIsFirstOpened = true;
     private int mCurrentCount = 0;
 
@@ -59,7 +59,6 @@ public class MainPageFragment extends Fragment {
         binding = FragmentMainPageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.swipeRefresh.setEnabled(false);
-        Log.e("wjj", "main page fragment onCreateView");
         initView();
         fetchData();
         setUpRefreshListener();

@@ -16,12 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.grad.R;
-import com.grad.constants.DefaultVals;
 import com.grad.constants.UserConstants;
 import com.grad.constants.VoteConstants;
 import com.grad.databinding.ActivityAddVoteBinding;
-import com.grad.pojo.Post;
 import com.grad.pojo.User;
+import com.grad.pojo.vote.Vote;
 import com.grad.pojo.vote.VoteItem;
 import com.grad.pojo.vote.VoteOption;
 import com.grad.service.VoteService;
@@ -41,7 +40,7 @@ public class AddVoteActivity extends AppCompatActivity {
     private Handler mHandler;
     private User mUser;
     private List<AddedOption> mAddedOptions = new ArrayList<>();
-    private String mEndTime;
+    private String mEndDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +59,7 @@ public class AddVoteActivity extends AppCompatActivity {
                 switch (msg.what){
                     case VoteConstants.ADD_VOTE_OK:{
                         Log.e("wjj", "add vote ok");
+                        finish();
                         break;
                     }
                 }
@@ -80,12 +80,12 @@ public class AddVoteActivity extends AppCompatActivity {
 
     private void initView(){
         final Calendar calendar = Calendar.getInstance();
-        mEndTime = calendar.get(Calendar.YEAR)
+        mEndDate = calendar.get(Calendar.YEAR)
                 + "-"
                 + ((calendar.get(Calendar.MONTH) + 1) < 10 ? "0" + (calendar.get(Calendar.MONTH) + 1) : (calendar.get(Calendar.MONTH) + 1))
                 + "-"
                 + calendar.get(Calendar.DAY_OF_MONTH)
-                + " 00:00:00";
+                + " 23:59:59";
 
         mBinding.btRelease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +95,11 @@ public class AddVoteActivity extends AppCompatActivity {
                     return;
                 }
                 else{
-                    Post post = new Post(null, mUser.getUid(),
-                            DefaultVals.POST_TYPE_VOTE, mBinding.voteTitle.getText().toString(),
-                            mBinding.voteContent.getText().toString(), VoteConstants.POST_TAG,
-                            0, null, 0);
+                    Vote vote = new Vote(null, mUser.getUid(),
+                            0, mBinding.voteTitle.getText().toString(),
+                            mBinding.voteContent.getText().toString(),
+                            null, 0, 0, null,
+                            null, mEndDate);
                     List<VoteOption> voteOptions = new ArrayList<>();
                     VoteOption voteOption1 = new VoteOption();
                     voteOption1.setOptionContent(mBinding.op1.getText().toString());
@@ -119,10 +120,8 @@ public class AddVoteActivity extends AppCompatActivity {
                         }
                     }
 
-                    VoteItem voteItem = new VoteItem(post, mUser, null, voteOptions);
-                    voteItem.setEndTime(mEndTime);
+                    VoteItem voteItem = new VoteItem(vote, mUser, null, voteOptions);
                     VoteService.addVote(mHandler, voteItem);
-
                 }
             }
         });
@@ -142,13 +141,13 @@ public class AddVoteActivity extends AppCompatActivity {
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                mEndTime = year
+                mEndDate = year
                         + "-"
                         + ((monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
                         + "-"
                         + dayOfMonth
-                        + " 00:00:00";
-                mBinding.selectedDate.setText(mEndTime.substring(0, 10));
+                        + " 23:59:59";
+                mBinding.selectedDate.setText(mEndDate.substring(0, 10));
             }
         });
         mBinding.btCalenderOk.setOnClickListener(new View.OnClickListener() {

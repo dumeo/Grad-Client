@@ -10,30 +10,27 @@ import com.grad.pojo.User;
 import java.util.List;
 
 public class VoteItem {
-    private Post post;
+    private Vote vote;
     private User user;
     private ClientToVoteInfo clientToThisInfo;
     private List<VoteOption> voteOptions;
-    private int voteCnt = 0;
-    private String status;
-    private String endTime;
 
     public VoteItem() {
     }
 
-    public VoteItem(Post post, User user, ClientToVoteInfo clientToThisInfo, List<VoteOption> voteOptions) {
-        this.post = post;
+    public VoteItem(Vote vote, User user, ClientToVoteInfo clientToThisInfo, List<VoteOption> voteOptions) {
+        this.vote = vote;
         this.user = user;
         this.clientToThisInfo = clientToThisInfo;
         this.voteOptions = voteOptions;
     }
 
-    public Post getPost() {
-        return post;
+    public Vote getVote() {
+        return vote;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setVote(Vote vote) {
+        this.vote = vote;
     }
 
     public User getUser() {
@@ -58,39 +55,5 @@ public class VoteItem {
 
     public void setVoteOptions(List<VoteOption> voteOptions) {
         this.voteOptions = voteOptions;
-    }
-    public int getVoteCnt() {
-        return voteCnt;
-    }
-
-    public void setVoteCnt(int voteCnt) {
-        this.voteCnt = voteCnt;
-    }
-
-    @Override
-    public String toString() {
-        return "VoteItem{" +
-                "post=" + post +
-                ", user=" + user +
-                ", clientToThisInfo=" + clientToThisInfo +
-                ", voteOptions=" + voteOptions +
-                ", voteCnt=" + voteCnt +
-                '}';
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 }

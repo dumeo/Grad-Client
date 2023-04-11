@@ -1,6 +1,9 @@
 package com.grad.constants;
 
 public class DefaultVals {
+    public static final int HTTP_CODE_OK = 200;
+    public static final int HTTP_CODE_SERVER_ERROR = 500;
+    public static final int HTTP_CODE_CLIENT_ERROR = 400;
     public static final Integer UNDER_REGISTER = 0;
     public static final Integer REGISTERING = 1;
     public static final Integer REGISTERING_SUCCESS = 2;

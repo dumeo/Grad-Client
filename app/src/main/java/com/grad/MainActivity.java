@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         if(user == "null"){
             startActivity(new Intent(this, RegisterActivity.class));
         }else{
-            startActivity(new Intent(this, AddVoteActivity.class));
+            startActivity(new Intent(this, VoteListActivity.class));
         }
         finish();
 
