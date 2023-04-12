@@ -117,7 +117,24 @@ public class VoteService {
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        GPVote gpVote = retrofit.create(GPVote.class);
+        Call<JsonObject> call = gpVote.getVoteById(clientUid, voteId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK) return;
+                VoteItem voteItem = JsonUtil.jsonToObject(response.body().toString(), VoteItem.class);
+                Message message = Message.obtain();
+                message.what = VoteConstants.GET_VOTE_OK;
+                message.obj = voteItem;
+                handler.sendMessage(message);
+            }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
     }
 
 }

@@ -56,4 +56,14 @@ public class VoteItem {
     public void setVoteOptions(List<VoteOption> voteOptions) {
         this.voteOptions = voteOptions;
     }
+
+    @Override
+    public String toString() {
+        return "VoteItem{" +
+                "vote=" + vote +
+                ", user=" + user +
+                ", clientToThisInfo=" + clientToThisInfo +
+                ", voteOptions=" + voteOptions +
+                '}';
+    }
 }

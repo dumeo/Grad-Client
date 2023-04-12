@@ -10,6 +10,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.grad.constants.PostConstants;
 import com.grad.http.GetPost;
 import com.grad.http.GPPost;
 import com.grad.pojo.CommentCntRet;
@@ -55,7 +56,7 @@ public class PostService {
     }
 
 
-    public static void fetcheData(Handler handler, List<PostItem> postItems){
+    public static void fetchData(Handler handler, List<PostItem> postItems, int fetchType){
         postItems.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
@@ -72,7 +73,11 @@ public class PostService {
                     postItems.add(postItem);
                 }
                 Message message = Message.obtain();
-                message.what = FETCH_DATA_COMPLETED;
+                if(fetchType == PostConstants.TYPE_INIT){
+                    message.what = FETCH_DATA_COMPLETED;
+                }else{
+                    message.what = REFETCH_DATA_COMPLETED;
+                }
                 handler.sendMessage(message);
 
             }

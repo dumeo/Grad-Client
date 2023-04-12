@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.grad.constants.DefaultVals;
 import com.grad.pojo.ImageItem;
 import com.grad.pojo.PostItem;
 import com.grad.util.GlideUtil;

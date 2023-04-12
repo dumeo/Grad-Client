@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
@@ -62,6 +63,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mBinding = ActivityPostDetailBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         mPostId = getIntent().getStringExtra("postId");
+        Log.e("wjj", "postId = " + mPostId);
         initHandler();
         initData();
         initListener();

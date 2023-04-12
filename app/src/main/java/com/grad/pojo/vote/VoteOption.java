@@ -64,4 +64,14 @@ public class VoteOption {
         this.cnt = cnt;
     }
 
+    @Override
+    public String toString() {
+        return "VoteOption{" +
+                "optionId='" + optionId + '\'' +
+                ", voteId='" + voteId + '\'' +
+                ", optionContent='" + optionContent + '\'' +
+                ", optionOrder=" + optionOrder +
+                ", cnt=" + cnt +
+                '}';
+    }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tv_bg3"
+    android:id="@+id/rl_top"
+    >
+    <ImageView
+        android:id="@+id/bt_vote"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/rectangle"
+        android:layout_marginLeft="20dp"></ImageView>
+    <TextView
+        android:id="@+id/option_content"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/bt_vote"
+        android:textSize="20sp"
+        android:layout_marginLeft="6dp"
+        android:text="option 1"
+        android:layout_marginTop="5dp"
+        >
+    </TextView>
+
+</RelativeLayout>

@@ -93,7 +93,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithContent)holder).postDate.setText(postDate);
         }
 
-        else if(getItemViewType(position) == DefaultVals.POST_TYPE_VOTE){
+        else if(getItemViewType(position) == DefaultVals.POST_TYPE_IMG){
             ImageView imageView = ((ViewHolderWithImg)holder).postImage;
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
             long imageWidth = mPostItems.get(position).getImageItems().get(0).getWidth();
@@ -109,9 +109,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithImg)holder).username.setText(username);
             ((ViewHolderWithImg)holder).userUnit.setText(userHouseAddr);
             ((ViewHolderWithImg)holder).postTitle.setText(postTitle);
-            GlideUtil.loadImageView(mContext, mPostItems.get(position).getImageItems().get(0).getUrl(),
+            GlideUtil.loadImageView(mContext,
+                    mPostItems.get(position).getImageItems().get(0).getUrl(),
                     (ImageView) ((ViewHolderWithImg)holder).postImage, mRequestOptions);
-
             ((ViewHolderWithImg)holder).postTag.setText(postTag);
 
             ((ViewHolderWithImg)holder).postDate.setText(postDate);

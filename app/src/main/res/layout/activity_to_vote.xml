@@ -1,9 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".information.vote.ToVoteActivity">
+    <include android:id="@+id/user_top" layout="@layout/user_top_bar"></include>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/user_top"
+        android:layout_marginTop="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/vote_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="是否进行居委会换人？"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/vote_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vote_title"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="15sp"
+                android:text="当前居委会已到换届时间，应当根据社区选举重新产生居委会成员"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/tv_participate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vote_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="参与人数："
+                android:maxLines="1"
+                android:ellipsize="end"></TextView>
+
+            <TextView
+                android:id="@+id/vote_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vote_content"
+                android:layout_toRightOf="@id/tv_participate"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="2dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="203"
+                android:maxLines="1"
+                android:ellipsize="end"></TextView>
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vote_content"
+                android:layout_toRightOf="@id/vote_count"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
+                android:background="@drawable/tv_background1"
+                android:text="正在进行"
+                android:maxLines="1"
+                android:ellipsize="end"></TextView>
+
+            <TextView
+                android:id="@+id/tv_vote_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vote_content"
+                android:layout_toRightOf="@id/tv_status"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:text="2023-04-09 23:01:22"
+                android:maxLines="1"
+                android:ellipsize="end"></TextView>
+            <LinearLayout
+                android:id="@+id/line1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/gray"
+                android:layout_below="@id/tv_vote_date"
+                android:layout_marginTop="10dp"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/option_holder"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line1">
+
+                <com.grad.information.vote.CustomProgressBar
+                    android:id="@+id/op_res1"
+                    android:layout_width="@dimen/vote_progress_width"
+                    android:layout_height="@dimen/vote_progress_height"
+                    android:layout_marginLeft="@dimen/vote_progress_marL"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_marginTop="@dimen/vote_option_mar_top"
+                    android:background="@drawable/progress_bar_bg"
+                    android:visibility="invisible"
+                    ></com.grad.information.vote.CustomProgressBar>
+
+                <com.grad.information.vote.CustomProgressBar
+                    android:id="@+id/op_res2"
+                    android:layout_width="@dimen/vote_progress_width"
+                    android:layout_height="@dimen/vote_progress_height"
+                    android:layout_marginLeft="@dimen/vote_progress_marL"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_marginTop="@dimen/vote_option_mar_top"
+                    android:layout_below="@id/op_res1"
+                    android:background="@drawable/progress_bar_bg"
+                    android:visibility="invisible"
+                    ></com.grad.information.vote.CustomProgressBar>
+                <include
+                    android:id="@+id/rl_op1"
+                    layout="@layout/vote_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/vote_option_mar_top"
+                    ></include>
+
+                <include
+                    android:id="@+id/rl_op2"
+                    layout="@layout/vote_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/rl_op1"
+                    android:layout_marginTop="@dimen/vote_option_mar_top"
+                    ></include>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

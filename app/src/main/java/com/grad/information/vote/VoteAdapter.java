@@ -1,6 +1,7 @@
 package com.grad.information.vote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,11 @@ public class VoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int pos = holder.getAdapterPosition();
+                VoteItem voteItem_ = voteItemList.get(pos);
+                Intent intent = new Intent(context.getApplicationContext(), ToVoteActivity.class);
+                intent.putExtra("voteId", voteItem_.getVote().getVoteId());
+                context.startActivity(intent);
             }
         });
 

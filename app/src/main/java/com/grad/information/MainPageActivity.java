@@ -21,6 +21,7 @@ import com.grad.R;
 import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.mainpage.MainPageFragment;
+import com.grad.information.vote.VoteListActivity;
 
 public class MainPageActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar mToolbar;
@@ -86,7 +87,9 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.action_news:{}
                     case R.id.action_attention:{}
                     case R.id.action_booking:{}
-                    case R.id.action_vote:{}
+                    case R.id.action_vote:{
+                        startActivity(new Intent(MainPageActivity.this, VoteListActivity.class));
+                    }
                     default:{}
                 }
                 return false;

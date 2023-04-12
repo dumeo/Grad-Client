@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.grad.constants.UserConstants;
+import com.grad.information.MainPageActivity;
 import com.grad.information.vote.AddVoteActivity;
+import com.grad.information.vote.ToVoteActivity;
 import com.grad.information.vote.VoteListActivity;
 import com.grad.user.RegisterActivity;
 import com.grad.util.SharedPreferenceUtil;

@@ -55,6 +55,10 @@
     <dimen name="vote_option_width">300dp</dimen>
     <dimen name="vote_option_height">35dp</dimen>
     <dimen name="vote_option_delete_size">70dp</dimen>
+    <dimen name="vote_option_mar_top">15dp</dimen>
+    <dimen name="vote_progress_width">300dp</dimen>
+    <dimen name="vote_progress_height">25dp</dimen>
+    <dimen name="vote_progress_marL">20dp</dimen>
 
 
 

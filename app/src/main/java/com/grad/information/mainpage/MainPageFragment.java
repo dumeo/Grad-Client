@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.grad.constants.PostConstants;
 import com.grad.databinding.FragmentMainPageBinding;
 import com.grad.pojo.PostItem;
 import com.grad.service.PostService;
@@ -32,14 +33,14 @@ public class MainPageFragment extends Fragment {
 
     private Context mContext;
     private FragmentMainPageBinding binding;
-    private StaggeredGridLayoutManager mLayoutManager;
+    private CustomStaggeredGridLayoutManager mLayoutManager;
     private Handler mHandler;
     private boolean mIsLodaing = false;
     private ItemAdapter mItemAdapter;
     private List<PostItem> mPostItems = new ArrayList<>();
     private boolean mIsFirstOpened = true;
     private int mCurrentCount = 0;
-
+    private List<PostItem> mDeltaPostItems = new ArrayList<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -70,7 +71,7 @@ public class MainPageFragment extends Fragment {
         super.onResume();
         if(mIsFirstOpened) mIsFirstOpened = false;
         else {
-            PostService.reFetchData(mHandler, mPostItems);
+            PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_REFETCH);
             binding.swipeRefresh.setRefreshing(true);
         }
     }
@@ -96,8 +97,9 @@ public class MainPageFragment extends Fragment {
             public boolean handleMessage(@NonNull Message msg) {
                 switch (msg.what){
                     case FETCH_DATA_COMPLETED:  {
+                        mPostItems.addAll(mDeltaPostItems);
                         mItemAdapter = new ItemAdapter(mContext, mPostItems);
-                        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        mLayoutManager = new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                         mLayoutManager.invalidateSpanAssignments();
                         binding.recyclerviewMainPage.setLayoutManager(mLayoutManager);
                         binding.recyclerviewMainPage.setPadding(5, 5, 5, 5);
@@ -108,9 +110,16 @@ public class MainPageFragment extends Fragment {
                     }
 
                     case REFETCH_DATA_COMPLETED:{
+                        if(mItemAdapter == null){
+                            fetchData();
+                            break;
+                        }
+                        mPostItems.clear();
                         mItemAdapter.notifyDataSetChanged();
-//                        binding.recyclerviewMainPage.requestLayout();
+                        mPostItems.addAll(mDeltaPostItems);
+                        mItemAdapter.notifyDataSetChanged();
                         binding.swipeRefresh.setRefreshing(false);
+                        break;
                     }
                     case DefaultVals.FETCH_DATA_FAILED:{
                         binding.swipeRefresh.setEnabled(true);
@@ -134,21 +143,15 @@ public class MainPageFragment extends Fragment {
 
 
     private void fetchData(){
-        if(mPostItems == null) mPostItems = new ArrayList<>();
-        PostService.fetcheData(mHandler, mPostItems);
+        PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_INIT);
     }
-
-
-
-
-
 
     private void setUpRefreshListener(){
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //load new data
-                PostService.reFetchData(mHandler, mPostItems);
+                PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_REFETCH);
             }
         });
 
@@ -165,9 +168,9 @@ public class MainPageFragment extends Fragment {
                     binding.progressbarLoadMore.setVisibility(View.VISIBLE);
                     //load more data...
                     mCurrentCount = mItemAdapter.getItemCount();
-                    Log.e("wjj", "current count = " + mCurrentCount);
+//                    Log.e("wjj", "current count = " + mCurrentCount);
                     String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPost().getPostDate();
-                    Log.e("wjj", "startTime = " + startTime);
+//                    Log.e("wjj", "startTime = " + startTime);
                     PostService.loadMorePosts(mHandler, startTime, mPostItems);
                 }
 
