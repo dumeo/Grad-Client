@@ -107,44 +107,44 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/line1">
 
-                <com.grad.information.vote.CustomProgressBar
-                    android:id="@+id/op_res1"
-                    android:layout_width="@dimen/vote_progress_width"
-                    android:layout_height="@dimen/vote_progress_height"
-                    android:layout_marginLeft="@dimen/vote_progress_marL"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_marginTop="@dimen/vote_option_mar_top"
-                    android:background="@drawable/progress_bar_bg"
-                    android:visibility="invisible"
-                    ></com.grad.information.vote.CustomProgressBar>
+<!--                <com.grad.information.vote.CustomProgressBar-->
+<!--                    android:id="@+id/op_res1"-->
+<!--                    android:layout_width="@dimen/vote_progress_width"-->
+<!--                    android:layout_height="@dimen/vote_progress_height"-->
+<!--                    android:layout_marginLeft="@dimen/vote_progress_marL"-->
+<!--                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+<!--                    android:layout_marginTop="@dimen/vote_option_mar_top"-->
+<!--                    android:background="@drawable/progress_bar_bg"-->
+<!--                    android:visibility="invisible"-->
+<!--                    ></com.grad.information.vote.CustomProgressBar>-->
 
-                <com.grad.information.vote.CustomProgressBar
-                    android:id="@+id/op_res2"
-                    android:layout_width="@dimen/vote_progress_width"
-                    android:layout_height="@dimen/vote_progress_height"
-                    android:layout_marginLeft="@dimen/vote_progress_marL"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_marginTop="@dimen/vote_option_mar_top"
-                    android:layout_below="@id/op_res1"
-                    android:background="@drawable/progress_bar_bg"
-                    android:visibility="invisible"
-                    ></com.grad.information.vote.CustomProgressBar>
-                <include
-                    android:id="@+id/rl_op1"
-                    layout="@layout/vote_option"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/vote_option_mar_top"
-                    ></include>
+<!--                <com.grad.information.vote.CustomProgressBar-->
+<!--                    android:id="@+id/op_res2"-->
+<!--                    android:layout_width="@dimen/vote_progress_width"-->
+<!--                    android:layout_height="@dimen/vote_progress_height"-->
+<!--                    android:layout_marginLeft="@dimen/vote_progress_marL"-->
+<!--                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+<!--                    android:layout_marginTop="@dimen/vote_option_mar_top"-->
+<!--                    android:layout_below="@id/op_res1"-->
+<!--                    android:background="@drawable/progress_bar_bg"-->
+<!--                    android:visibility="invisible"-->
+<!--                    ></com.grad.information.vote.CustomProgressBar>-->
+<!--                <include-->
+<!--                    android:id="@+id/rl_op1"-->
+<!--                    layout="@layout/vote_option"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginTop="@dimen/vote_option_mar_top"-->
+<!--                    ></include>-->
 
-                <include
-                    android:id="@+id/rl_op2"
-                    layout="@layout/vote_option"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/rl_op1"
-                    android:layout_marginTop="@dimen/vote_option_mar_top"
-                    ></include>
+<!--                <include-->
+<!--                    android:id="@+id/rl_op2"-->
+<!--                    layout="@layout/vote_option"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_below="@id/rl_op1"-->
+<!--                    android:layout_marginTop="@dimen/vote_option_mar_top"-->
+<!--                    ></include>-->
 
             </RelativeLayout>
 

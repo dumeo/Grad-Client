@@ -28,7 +28,7 @@ public class CustomProgressBar extends ProgressBar {
     }
     @Override
     public synchronized void setProgress(int progress) {
-        mDisplayText = mText + "    " + progress;
+        mDisplayText = mText + "   " + progress;
         super.setProgress(progress);
     }
     @Override
@@ -38,9 +38,9 @@ public class CustomProgressBar extends ProgressBar {
         this.mPaint.setTextSize(50);
         this.mPaint.getTextBounds(mDisplayText, 0, mDisplayText.length(), rect);
 
-        int x = (getWidth() / 2) - rect.centerX();
+        int x = (getWidth()) - rect.centerX();
         int y = (getHeight() / 2) - rect.centerY();
-        canvas.drawText(mDisplayText, 0, y, this.mPaint);
+        canvas.drawText(mDisplayText, 10, y, this.mPaint);
     }
     //初始化，画笔
     private void initPaint(){

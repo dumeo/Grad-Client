@@ -14,5 +14,6 @@ public class VoteConstants {
     public static final String VOTE_STATUS_ENDED = "已结束";
 
     public static final int GET_VOTE_OK = 10;
+    public static final int VOTE_OK = 12;
 
 }

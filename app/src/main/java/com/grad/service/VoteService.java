@@ -119,6 +119,7 @@ public class VoteService {
                 .build();
         GPVote gpVote = retrofit.create(GPVote.class);
         Call<JsonObject> call = gpVote.getVoteById(clientUid, voteId);
+        Log.e("wjj", "url:" + call.request().url());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -137,4 +138,27 @@ public class VoteService {
         });
     }
 
+    public static void vote(Handler handler, String uid, String voteId, String optionId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPVote gpVote = retrofit.create(GPVote.class);
+        Call<JsonObject> call = gpVote.vote(uid, voteId, optionId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK) return;
+                Message message = Message.obtain();
+                message.what = VoteConstants.VOTE_OK;
+                message.obj = JsonUtil.jsonToObject(response.body().toString(), VoteItem.class);
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
 }

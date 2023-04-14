@@ -1,10 +1,5 @@
 package com.grad.pojo.vote;
 
-import com.grad.pojo.ClientToThisInfo;
-import com.grad.pojo.ImageItem;
-import com.grad.pojo.Post;
-import com.grad.pojo.PostInfo;
-import com.grad.pojo.PostUserInfo;
 import com.grad.pojo.User;
 
 import java.util.List;
@@ -12,16 +7,16 @@ import java.util.List;
 public class VoteItem {
     private Vote vote;
     private User user;
-    private ClientToVoteInfo clientToThisInfo;
+    private ClientToVoteInfo clientToVoteInfo;
     private List<VoteOption> voteOptions;
 
     public VoteItem() {
     }
 
-    public VoteItem(Vote vote, User user, ClientToVoteInfo clientToThisInfo, List<VoteOption> voteOptions) {
+    public VoteItem(Vote vote, User user, ClientToVoteInfo clientToVoteInfo, List<VoteOption> voteOptions) {
         this.vote = vote;
         this.user = user;
-        this.clientToThisInfo = clientToThisInfo;
+        this.clientToVoteInfo = clientToVoteInfo;
         this.voteOptions = voteOptions;
     }
 
@@ -41,12 +36,12 @@ public class VoteItem {
         this.user = user;
     }
 
-    public ClientToVoteInfo getClientToThisInfo() {
-        return clientToThisInfo;
+    public ClientToVoteInfo getClientToVoteInfo() {
+        return clientToVoteInfo;
     }
 
-    public void setClientToThisInfo(ClientToVoteInfo clientToThisInfo) {
-        this.clientToThisInfo = clientToThisInfo;
+    public void setClientToVoteInfo(ClientToVoteInfo clientToVoteInfo) {
+        this.clientToVoteInfo = clientToVoteInfo;
     }
 
     public List<VoteOption> getVoteOptions() {
@@ -62,7 +57,7 @@ public class VoteItem {
         return "VoteItem{" +
                 "vote=" + vote +
                 ", user=" + user +
-                ", clientToThisInfo=" + clientToThisInfo +
+                ", clientToThisInfo=" + clientToVoteInfo +
                 ", voteOptions=" + voteOptions +
                 '}';
     }

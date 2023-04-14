@@ -1,11 +1,10 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-        <variable
-            name="userViewModel"
-            type="com.grad.user.UserViewModel" />
-    </data>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.RealRegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,44 +35,35 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 >
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="@dimen/edittext_height"
+                    android:hint="邮箱地址"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/et_background"
+                    />
 
                 <EditText
-                    android:id="@+id/username_register"
+                    android:id="@+id/username"
                     android:layout_width="@dimen/edittext_width"
                     android:layout_height="@dimen/edittext_height"
                     android:hint="用户名"
+                    android:layout_below="@id/email"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/et_background"
-                    android:text="@={userViewModel.username}" />
+                    />
 
                 <EditText
-                    android:id="@+id/password_register"
+                    android:id="@+id/password"
                     android:layout_width="@dimen/edittext_width"
                     android:layout_height="@dimen/edittext_height"
                     android:hint="密码"
                     android:inputType="textPassword"
-                    android:layout_below="@id/username_register"
+                    android:layout_below="@id/username"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/et_background"
-                    android:text="@={userViewModel.password}" />
-                <EditText
-                    android:id="@+id/community_register"
-                    android:layout_width="@dimen/edittext_width"
-                    android:layout_height="@dimen/edittext_height"
-                    android:hint="所在社区"
-                    android:layout_below="@id/password_register"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/et_background"
-                    android:text="@={userViewModel.CommunityName}" />
-
-                <EditText
-                    android:id="@+id/houseaddr_register"
-                    android:layout_width="@dimen/edittext_width"
-                    android:layout_height="@dimen/edittext_height"
-                    android:hint="家庭地址"
-                    android:layout_below="@id/community_register"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/et_background"
-                    android:text="@={userViewModel.HouseAddr}" />
+                    />
 
 
                 <Button
@@ -81,10 +71,10 @@
                     android:layout_width="@dimen/edittext_width"
                     android:layout_height="50dp"
                     android:text="注册"
-                    android:layout_below="@id/houseaddr_register"
+                    android:layout_below="@id/password"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/button_bg1"
-                    android:onClick="@{userViewModel::onRegisterClicked}"/>
+                    />
 
                 <TextView
                     android:id="@+id/tv_login"
@@ -92,7 +82,7 @@
                     android:layout_height="30dp"
                     android:text="已有账号？去登录"
                     android:layout_below="@id/register_button"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="80dp"></TextView>
             </RelativeLayout>
 
@@ -105,10 +95,7 @@
                 android:visibility="visible"
                 android:layout_marginTop="30dp"></ProgressBar>
 
-
-
         </LinearLayout>
 
     </ScrollView>
-
-</layout>
+</RelativeLayout>

@@ -72,11 +72,14 @@ public class VoteListActivity extends AppCompatActivity {
                         break;
                     }
                     case VoteConstants.REFETCH_VOTES_OK:{
-                        mVoteItems.clear();
-                        mVoteAdapter.notifyDataSetChanged();
-                        mVoteItems.addAll(mDeltaVoteItems);
-                        mVoteAdapter.notifyDataSetChanged();
-                        mBinding.swipeRefresh.setRefreshing(false);
+                        if(mVoteAdapter == null) initData();
+                        else{
+                            mVoteItems.clear();
+                            mVoteAdapter.notifyDataSetChanged();
+                            mVoteItems.addAll(mDeltaVoteItems);
+                            mVoteAdapter.notifyDataSetChanged();
+                            mBinding.swipeRefresh.setRefreshing(false);
+                        }
                         break;
                     }
                     case VoteConstants.LOAD_MORE_VOTES_OK:{

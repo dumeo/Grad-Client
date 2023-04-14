@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        >
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:hint="用户名"
+            android:background="@drawable/et_background"
+            />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:layout_below="@id/username"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/et_background"
+            />
+<!--        -->
+<!--        <CheckBox-->
+<!--            android:id="@+id/gb_gwh"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_below="@id/password_register"-->
+<!--            android:layout_marginLeft="90dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            ></CheckBox>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_toRightOf="@id/gb_gwh"-->
+<!--            android:textSize="20sp"-->
+<!--            android:text="居委会登录"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_below="@id/password_register"></TextView>-->
+<!--        -->
+        <Button
+            android:id="@+id/login"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="50dp"
+            android:text="登录"
+            android:layout_below="@id/password"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_bg1"
+            />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="忘记密码？"
+            android:layout_below="@id/login"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="130dp"></TextView>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

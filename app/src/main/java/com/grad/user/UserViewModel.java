@@ -6,13 +6,16 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonObject;
+import com.grad.http.GPUser;
 import com.grad.http.PostRegister;
 import com.grad.pojo.User;
 import com.grad.pojo.RegisterRet;
 import com.grad.constants.DefaultVals;
+import com.grad.util.HttpUtil;
 import com.grad.util.JsonUtil;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpStatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,14 +95,16 @@ public class UserViewModel{
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        PostRegister post = retrofit.create(PostRegister.class);
-       Call<JsonObject> call = post.registerUser(userObservableField.get());
+        GPUser gpUser = retrofit.create(GPUser.class);
+       Call<JsonObject> call = gpUser.registerUser(userObservableField.get());
        call.enqueue(new Callback<JsonObject>() {
            @Override
            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                registerStatus.postValue(DefaultVals.REGISTERING_SUCCESS);
-               RegisterRet registerRet = JsonUtil.jsonToObject(response.body().toString(), RegisterRet.class);
-               userObservableField.set(registerRet.getUser());
+               if(response.code() == HttpStatus.HTTP_OK){
+                   User user = JsonUtil.jsonToObject(response.body().toString(), User.class);
+                   userObservableField.set(user);
+               }
            }
 
            @Override

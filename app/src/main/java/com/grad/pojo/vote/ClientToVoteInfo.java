@@ -27,4 +27,12 @@ public class ClientToVoteInfo {
     public void setOptionId(String optionId) {
         this.optionId = optionId;
     }
+
+    @Override
+    public String toString() {
+        return "ClientToVoteInfo{" +
+                "isVoted=" + isVoted +
+                ", optionId='" + optionId + '\'' +
+                '}';
+    }
 }
