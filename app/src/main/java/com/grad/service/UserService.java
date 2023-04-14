@@ -53,6 +53,39 @@ public class UserService {
         });
     }
 
+    public static void registerUser(Handler handler, User user) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.registerUser(user);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    Message message = Message.obtain();
+                    message.what = UserConstants.REGISTER_USER_FAILED;
+                    message.obj = UserConstants.EMAIL_EXISTS;
+                    handler.sendMessage(message);
+                }else{
+                    User user1 = JsonUtil.jsonToObject(response.body().toString(), User.class);
+                    Message message = Message.obtain();
+                    message.what = UserConstants.REGISTER_USER_OK;
+                    message.obj = JsonUtil.objectToJson(user1);
+                    handler.sendMessage(message);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+
     public static void loginUser(Handler handler, String username, String password) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
@@ -82,5 +115,8 @@ public class UserService {
 
             }
         });
+    }
+
+    public static void checkEmailExists(String email) {
     }
 }

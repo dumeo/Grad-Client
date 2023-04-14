@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MainActivity</string>
+    <string name="app_name">执剑之刻</string>
     <string name="default_avatar">https://www.nicepng.com/png/detail/804-8049853_med-boukrima-specialist-webmaster-php-e-commerce-web.png</string>
     <string name="title_activity_main_page">MainPageActivity</string>
     <string name="title_home">Home</string>

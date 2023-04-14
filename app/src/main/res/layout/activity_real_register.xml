@@ -65,13 +65,32 @@
                     android:background="@drawable/et_background"
                     />
 
+                <CheckBox
+                    android:id="@+id/gb_gwh"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/password"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="90dp"
+                    ></CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/password"
+                    android:layout_toRightOf="@id/gb_gwh"
+                    android:text="我是居委会"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp">
+
+                </TextView>
 
                 <Button
                     android:id="@+id/register_button"
                     android:layout_width="@dimen/edittext_width"
                     android:layout_height="50dp"
                     android:text="注册"
-                    android:layout_below="@id/password"
+                    android:layout_below="@id/gb_gwh"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/button_bg1"
                     />
@@ -92,7 +111,7 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/tv_login"
                 android:layout_gravity="center"
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:layout_marginTop="30dp"></ProgressBar>
 
         </LinearLayout>
