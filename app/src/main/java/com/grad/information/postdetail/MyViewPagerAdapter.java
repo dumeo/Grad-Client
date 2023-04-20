@@ -23,7 +23,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
     public MyViewPagerAdapter(Context mContext, PostItem mPostItem) {
         this.mPostItem = mPostItem;
         this.mContext = mContext;
-        imgs = mPostItem.getImageItems();
+        imgs = mPostItem.getPostInfo().getImageItems();
     }
 
     @Override

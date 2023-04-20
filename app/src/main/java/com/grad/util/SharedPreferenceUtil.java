@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.grad.pojo.User;
+
 public class SharedPreferenceUtil {
     private static SharedPreferenceUtil instance;
     private Context context;
@@ -50,4 +52,5 @@ public class SharedPreferenceUtil {
             instance = null;
         }
     }
+
 }

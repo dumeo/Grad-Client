@@ -71,9 +71,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        String userAvatarUrl = mPostItems.get(position).getPostUserInfo().getAvatarUrl();
-        String username = mPostItems.get(position).getPostUserInfo().getUsername();
-        String userHouseAddr = mPostItems.get(position).getPostUserInfo().getUserHouseAddr();
+        String userAvatarUrl = mPostItems.get(position).getUser().getAvatarUrl();
+        String username = mPostItems.get(position).getUser().getUsername();
+        String userHouseAddr = mPostItems.get(position).getUser().getHouseAddr();
         String postTitle = mPostItems.get(position).getPost().getPostTitle();
         String postContent = mPostItems.get(position).getPost().getPostContent();
         String postTag = mPostItems.get(position).getPost().getPostTag();
@@ -96,8 +96,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else if(getItemViewType(position) == DefaultVals.POST_TYPE_IMG){
             ImageView imageView = ((ViewHolderWithImg)holder).postImage;
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
-            long imageWidth = mPostItems.get(position).getImageItems().get(0).getWidth();
-            long imageHeight = mPostItems.get(position).getImageItems().get(0).getHeight();
+            long imageWidth = mPostItems.get(position).getPostInfo().getImageItems().get(0).getWidth();
+            long imageHeight = mPostItems.get(position).getPostInfo().getImageItems().get(0).getHeight();
             int[] imageLayoutSize = ImageUtil.getLayoutSizeByWidth(mContext.getApplicationContext(), imageWidth, imageHeight);
             params.width = imageLayoutSize[0];
             params.height = imageLayoutSize[1];
@@ -110,7 +110,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ViewHolderWithImg)holder).userUnit.setText(userHouseAddr);
             ((ViewHolderWithImg)holder).postTitle.setText(postTitle);
             GlideUtil.loadImageView(mContext,
-                    mPostItems.get(position).getImageItems().get(0).getUrl(),
+                    mPostItems.get(position).getPostInfo().getImageItems().get(0).getUrl(),
                     (ImageView) ((ViewHolderWithImg)holder).postImage, mRequestOptions);
             ((ViewHolderWithImg)holder).postTag.setText(postTag);
 

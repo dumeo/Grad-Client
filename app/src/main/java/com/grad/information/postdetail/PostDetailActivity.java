@@ -220,8 +220,8 @@ public class PostDetailActivity extends AppCompatActivity {
     private void initView(){
         GlideUtil.loadShapeableImageView(PostDetailActivity.this, mUser.getAvatarUrl(),
                 mBinding.userAvatar, GlideUtil.DefaultRequestOptions);
-        mBinding.userName.setText(mPostItem.getPostUserInfo().getUsername());
-        mBinding.houseAddr.setText(mPostItem.getPostUserInfo().getUserHouseAddr());
+        mBinding.userName.setText(mPostItem.getUser().getUsername());
+        mBinding.houseAddr.setText(mPostItem.getUser().getHouseAddr());
         mBinding.title.setText(mPostItem.getPost().getPostTitle());
         mBinding.content.setText(mPostItem.getPost().getPostContent());
         mBinding.postTime.setText(mPostItem.getPost().getPostDate());

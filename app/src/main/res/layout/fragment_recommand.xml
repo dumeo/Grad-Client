@@ -6,6 +6,7 @@
     tools:context=".information.recommand.RecommandFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,7 +18,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/load_more"
+        android:id="@+id/progress_load_more"
         android:layout_width="@dimen/progressBarSize"
         android:layout_height="@dimen/progressBarSize"
         android:visibility="invisible"

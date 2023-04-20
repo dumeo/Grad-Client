@@ -22,6 +22,7 @@ import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.mainpage.MainPageFragment;
 import com.grad.information.me.UserProfileFragment;
+import com.grad.information.recommand.RecommandFragment;
 import com.grad.information.vote.VoteListActivity;
 
 public class MainPageActivity extends AppCompatActivity implements View.OnClickListener{
@@ -34,10 +35,12 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     ActivityMainPageBinding mBinding;
     private final String mMainPageTag = "main page";
     private final String mProfilePageTag = "profile page";
+    private final String mRecommendPageTag = "recommend page";
 
     private FragmentManager mFragmentManager;
     private MainPageFragment mMainPageFragment;
     private UserProfileFragment mUserProfileFragment;
+    private RecommandFragment mRecommandFragment;
     Fragment mCurrentFragment;
     private boolean mIsFirstOpened = true;
 
@@ -67,6 +70,7 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     private void initData(){
         mMainPageFragment = new MainPageFragment();
         mUserProfileFragment = new UserProfileFragment();
+        mRecommandFragment = new RecommandFragment();
     }
     private void initView(){
         mToolbar = findViewById(R.id.toolbar);
@@ -133,7 +137,15 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.tv_recommand:{
                 clearSelectState();
+                hideAllFragments();
                 mTextViewRecommand.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                Fragment recommendFragment = getSupportFragmentManager().findFragmentByTag(mRecommendPageTag);
+                if(recommendFragment != null){
+                    getSupportFragmentManager().beginTransaction().show(recommendFragment).commit();
+                }
+                else{
+                    getSupportFragmentManager().beginTransaction().add(R.id.main_frames, mRecommandFragment, mRecommendPageTag).commit();
+                }
                 break;
             }
             case R.id.tv_following:{
@@ -164,6 +176,9 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         if(fragment != null && fragment.isAdded()) getSupportFragmentManager().beginTransaction().hide(fragment).commit();
         fragment = getSupportFragmentManager().findFragmentByTag(mProfilePageTag);
         if(fragment != null && fragment.isAdded()) getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        fragment = getSupportFragmentManager().findFragmentByTag(mRecommendPageTag);
+        if(fragment != null && fragment.isAdded()) getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+
     }
 
     @SuppressLint("ResourceAsColor")
