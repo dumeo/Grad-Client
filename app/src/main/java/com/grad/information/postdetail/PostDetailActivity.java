@@ -81,6 +81,8 @@ public class PostDetailActivity extends AppCompatActivity {
                     }
                     case DefaultVals.ADD_COMMENT_SUCCESS:{
                         //after addding comment,reload comments
+                        mCommentItems.clear();
+                        mBinding.rcComments.getAdapter().notifyDataSetChanged();
                         CommentService.reloadCommentsByPostId(mCommentHandler, mUser.getUid(), mPostId, mCommentItems);
                         //update comment cnt
                         PostService.getCommentCnt(mHandler, mPostId);
@@ -155,33 +157,39 @@ public class PostDetailActivity extends AppCompatActivity {
                         int transferType = (int)msg.obj;
                         ClientToThisInfo clientToThisInfo = mPostItem.getClientToThisInfo();
                         if(transferType == DefaultVals.LIKED_TO_DISLIKE){
+                            Log.e("wjj", "LIKED_TO_DISLIKE");
                             mBinding.like.setImageResource(R.mipmap.thumb_up);
                             mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt - 2));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
                         }
                         else if(transferType == DefaultVals.DISLIKED_TO_LIKE){
+                            Log.e("wjj", "DISLIKED_TO_LIKE");
                             mBinding.dislike.setImageResource(R.mipmap.thumb_down);
                             mBinding.like.setImageResource(R.mipmap.c_thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt + 2));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
                         }
                         else if(transferType == DefaultVals.LIKED_TO_NOSTATUS){
+                            Log.e("wjj", "LIKED_TO_NOSTATUS");
                             mBinding.like.setImageResource(R.mipmap.thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt - 1));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
                         }
                         else if(transferType == DefaultVals.DISLIKED_TO_NOSTATUS){
+                            Log.e("wjj", "DISLIKED_TO_NOSTATUS");
                             mBinding.dislike.setImageResource(R.mipmap.thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt + 1));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_NOSTATUS);
                         }
                         else if(transferType == DefaultVals.NOSTATUS_TO_DISLIKE){
+                            Log.e("wjj", "NOSTATUS_TO_DISLIKE");
                             mBinding.dislike.setImageResource(R.mipmap.c_thumb_down);
                             mBinding.likeCnt.setText("" + (likeCnt - 1));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_DISLIKED);
                         }
                         else if(transferType == DefaultVals.NOSTATUS_TO_LIKE){
+                            Log.e("wjj", "NOSTATUS_TO_LIKE");
                             mBinding.like.setImageResource(R.mipmap.c_thumb_up);
                             mBinding.likeCnt.setText("" + (likeCnt + 1));
                             clientToThisInfo.setLikeStatus(DefaultVals.LIKE_STATUS_LIKED);
@@ -213,6 +221,7 @@ public class PostDetailActivity extends AppCompatActivity {
         GlideUtil.loadShapeableImageView(PostDetailActivity.this, mUser.getAvatarUrl(),
                 mBinding.userAvatar, GlideUtil.DefaultRequestOptions);
         mBinding.userName.setText(mPostItem.getPostUserInfo().getUsername());
+        mBinding.houseAddr.setText(mPostItem.getPostUserInfo().getUserHouseAddr());
         mBinding.title.setText(mPostItem.getPost().getPostTitle());
         mBinding.content.setText(mPostItem.getPost().getPostContent());
         mBinding.postTime.setText(mPostItem.getPost().getPostDate());

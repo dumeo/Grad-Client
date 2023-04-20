@@ -20,6 +20,7 @@ import com.grad.pojo.vote.VoteItem;
 import com.grad.pojo.vote.VoteOption;
 import com.grad.service.VoteService;
 import com.grad.util.DimensUtil;
+import com.grad.util.GlideUtil;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 
@@ -78,11 +79,18 @@ public class ToVoteActivity extends AppCompatActivity {
 
     };
     private void initView(){
+        GlideUtil.loadShapeableImageView(getApplicationContext(),
+                mVoteItem.getUser().getAvatarUrl(), mBinding.userTop.userAvatar,
+                GlideUtil.DefaultRequestOptions);
         mBinding.userTop.userName.setText(mVoteItem.getUser().getUsername());
         mBinding.userTop.userAddr.setText(mVoteItem.getUser().getHouseAddr());
         mBinding.voteTitle.setText(mVoteItem.getVote().getVoteTitle());
         mBinding.voteContent.setText(mVoteItem.getVote().getVoteContent());
         mBinding.voteCount.setText(mVoteItem.getVote().getVoteCnt() + "");
+        mBinding.tvStatus.setText(mVoteItem.getVote().getVoteStatus());
+        if(mVoteItem.getVote().getVoteStatus().equals(VoteConstants.VOTE_STATUS_ENDED))
+            mBinding.tvStatus.setBackgroundResource(R.drawable.tv_background2);
+        else mBinding.tvStatus.setBackgroundResource(R.drawable.tv_background1);
         if(mVoteItem.getClientToVoteInfo().getOptionId() != null ||
                 mVoteItem.getVote().getVoteStatus().equals(VoteConstants.VOTE_STATUS_ENDED))
         {

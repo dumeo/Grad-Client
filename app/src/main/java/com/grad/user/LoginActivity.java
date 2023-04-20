@@ -30,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         mBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         initHandler();
+        initView();
+        initListener();
     }
 
     private void initHandler(){
@@ -64,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         mBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = mBinding.username.getText().toString();
+                String email = mBinding.email.getText().toString();
                 String password = mBinding.password.getText().toString();
-                UserService.loginUser(mHandler, username, password);
+                UserService.loginUser(mHandler, email, password);
             }
         });
     }

@@ -21,6 +21,7 @@ import com.grad.R;
 import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.mainpage.MainPageFragment;
+import com.grad.information.me.UserProfileFragment;
 import com.grad.information.vote.VoteListActivity;
 
 public class MainPageActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,9 +32,12 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewProfile;
     private ShapeableImageView mNewPostImageView;
     ActivityMainPageBinding mBinding;
+    private final String mMainPageTag = "main page";
+    private final String mProfilePageTag = "profile page";
 
     private FragmentManager mFragmentManager;
     private MainPageFragment mMainPageFragment;
+    private UserProfileFragment mUserProfileFragment;
     Fragment mCurrentFragment;
     private boolean mIsFirstOpened = true;
 
@@ -42,6 +46,7 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         mBinding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
+        initData();
         initView();
     }
 
@@ -59,7 +64,10 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-
+    private void initData(){
+        mMainPageFragment = new MainPageFragment();
+        mUserProfileFragment = new UserProfileFragment();
+    }
     private void initView(){
         mToolbar = findViewById(R.id.toolbar);
         mTextViewMainPage = findViewById(R.id.tv_main_page);
@@ -74,9 +82,9 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
         mNewPostImageView.setOnClickListener(this);
 
         mFragmentManager = getSupportFragmentManager();
-        mMainPageFragment = new MainPageFragment();
+
         //增加首页fragment
-        mFragmentManager.beginTransaction().add(R.id.main_frames, mMainPageFragment).commit();
+        mFragmentManager.beginTransaction().add(R.id.main_frames, mMainPageFragment, mMainPageTag).commit();
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -84,11 +92,18 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
-                    case R.id.action_news:{}
-                    case R.id.action_attention:{}
-                    case R.id.action_booking:{}
+                    case R.id.action_news:{
+                        break;
+                    }
+                    case R.id.action_attention:{
+                        break;
+                    }
+                    case R.id.action_booking:{
+                        break;
+                    }
                     case R.id.action_vote:{
                         startActivity(new Intent(MainPageActivity.this, VoteListActivity.class));
+                        break;
                     }
                     default:{}
                 }
@@ -108,7 +123,12 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.tv_main_page:{
                 clearSelectState();
+                hideAllFragments();
                 mTextViewMainPage.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                Fragment mainPageFragment = getSupportFragmentManager().findFragmentByTag(mMainPageTag);
+                if(mainPageFragment != null) {
+                    getSupportFragmentManager().beginTransaction().show(mainPageFragment).commit();
+                }
                 break;
             }
             case R.id.tv_recommand:{
@@ -124,11 +144,26 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.tv_profile:{
                 clearSelectState();
+                hideAllFragments();
                 mTextViewProfile.setTextColor(ContextCompat.getColor(MainPageActivity.this, R.color.black));
+                Fragment profileFragment = getSupportFragmentManager().findFragmentByTag(mProfilePageTag);
+                if(profileFragment != null){
+                    getSupportFragmentManager().beginTransaction().show(profileFragment).commit();
+                }
+                else{
+                    getSupportFragmentManager().beginTransaction().add(R.id.main_frames, mUserProfileFragment, mProfilePageTag).commit();
+                }
                 break;
             }
             default:{break;}
         }
+    }
+
+    private void hideAllFragments(){
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mMainPageTag);
+        if(fragment != null && fragment.isAdded()) getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        fragment = getSupportFragmentManager().findFragmentByTag(mProfilePageTag);
+        if(fragment != null && fragment.isAdded()) getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
     @SuppressLint("ResourceAsColor")

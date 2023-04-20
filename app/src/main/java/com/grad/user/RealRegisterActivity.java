@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -82,6 +84,9 @@ public class RealRegisterActivity extends AppCompatActivity {
     }
 
     private void initView(){
+        SpannableString spannableString = new SpannableString(mBinding.tvLogin.getText());
+        spannableString.setSpan(new UnderlineSpan(), 0, spannableString.length(), 0);
+        mBinding.tvLogin.setText(spannableString);
 
     }
     private void initListener(){
@@ -89,6 +94,7 @@ public class RealRegisterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) utype = UserConstants.UTYPE_GWH;
+                else utype = UserConstants.UTYPE_USER;
             }
         });
 
@@ -116,6 +122,14 @@ public class RealRegisterActivity extends AppCompatActivity {
                         null, null,
                         null, 0, null);
                 UserService.registerUser(mHandler, user);
+            }
+        });
+
+        mBinding.tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RealRegisterActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }

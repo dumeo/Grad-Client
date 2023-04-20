@@ -28,6 +28,10 @@ public class SharedPreferenceUtil {
         return sharedPreferences.getString(key, defaultValue);
     }
 
+    public void deleteString(String key) {
+        sharedPreferences.edit().remove(key).commit();
+    }
+
     public void writeInt(String key, int value) {
         sharedPreferences.edit().putInt(key, value).apply();
     }

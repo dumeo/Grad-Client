@@ -38,7 +38,6 @@ public class MainPageFragment extends Fragment {
     private boolean mIsLodaing = false;
     private ItemAdapter mItemAdapter;
     private List<PostItem> mPostItems = new ArrayList<>();
-    private boolean mIsFirstOpened = true;
     private int mCurrentCount = 0;
     private List<PostItem> mDeltaPostItems = new ArrayList<>();
 
@@ -65,17 +64,6 @@ public class MainPageFragment extends Fragment {
         setUpRefreshListener();
         return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(mIsFirstOpened) mIsFirstOpened = false;
-        else {
-            PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_REFETCH);
-            binding.swipeRefresh.setRefreshing(true);
-        }
-    }
-
 
 
 

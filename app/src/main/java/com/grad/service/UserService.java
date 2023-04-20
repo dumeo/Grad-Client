@@ -86,20 +86,19 @@ public class UserService {
     }
 
 
-    public static void loginUser(Handler handler, String username, String password) {
+    public static void loginUser(Handler handler, String email, String password) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GPUser gpUser = retrofit.create(GPUser.class);
-        Call<JsonObject> call = gpUser.loginUser(username, password);
+        Call<JsonObject> call = gpUser.loginUser(email, password);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if(response.code() != HttpStatus.HTTP_OK){
                     Message message = Message.obtain();
-                    message.what = UserConstants.LOGIN_USER_OK;
-                    message.obj = UserConstants.LOGIN_USER_FAILED;
+                    message.what = UserConstants.LOGIN_USER_FAILED;
                     handler.sendMessage(message);
                     return;
                 }
@@ -117,6 +116,4 @@ public class UserService {
         });
     }
 
-    public static void checkEmailExists(String email) {
-    }
 }

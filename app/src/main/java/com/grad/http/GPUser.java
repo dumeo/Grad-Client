@@ -21,5 +21,5 @@ public interface GPUser {
 
     @FormUrlEncoded
     @POST("/user/login")
-    Call<JsonObject> loginUser(@Field("username")String username, @Field("password")String psw);
+    Call<JsonObject> loginUser(@Field("email")String email, @Field("password")String psw);
 }
