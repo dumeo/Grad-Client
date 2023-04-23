@@ -7,7 +7,9 @@ import android.util.StateSet;
 
 import com.google.gson.JsonObject;
 import com.grad.constants.UserConstants;
+import com.grad.http.GPCommittee;
 import com.grad.http.GPUser;
+import com.grad.information.note.NoteItem;
 import com.grad.pojo.RegisterRet;
 import com.grad.pojo.Status;
 import com.grad.constants.DefaultVals;
@@ -15,6 +17,7 @@ import com.grad.pojo.User;
 import com.grad.util.HttpUtil;
 import com.grad.util.JsonUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import cn.hutool.http.HttpStatus;
@@ -109,6 +112,58 @@ public class UserService {
                 handler.sendMessage(message);
             }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void getNotes(Handler handler, String communityName, List<NoteItem> noteItemList){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<List<JsonObject>> call = gpUser.getNotes(communityName);
+        call.enqueue(new Callback<List<JsonObject>>() {
+            @Override
+            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                List<JsonObject> jsonObjects = response.body();
+                for(JsonObject jsonObject : jsonObjects){
+                    NoteItem noteItem = JsonUtil.jsonToObject(jsonObject.toString(), NoteItem.class);
+                    noteItemList.add(noteItem);
+                }
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_NOTES_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_NOTES_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void readNote(String noteId){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.readNote(noteId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+            }
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
 

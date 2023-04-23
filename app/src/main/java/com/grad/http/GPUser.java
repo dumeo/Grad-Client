@@ -3,6 +3,8 @@ package com.grad.http;
 import com.google.gson.JsonObject;
 import com.grad.pojo.User;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -22,4 +24,13 @@ public interface GPUser {
     @FormUrlEncoded
     @POST("/user/login")
     Call<JsonObject> loginUser(@Field("email")String email, @Field("password")String psw);
+
+    @GET("/user/notes?")
+    Call<List<JsonObject>> getNotes(@Query("communityName")String communityName);
+
+
+    @POST("/user/read-note?")
+    @FormUrlEncoded
+    Call<JsonObject> readNote(@Field("noteId") String noteId);
+
 }

@@ -22,6 +22,7 @@ import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.mainpage.MainPageFragment;
 import com.grad.information.me.UserProfileFragment;
+import com.grad.information.note.NoteListActivity;
 import com.grad.information.recommand.RecommandFragment;
 import com.grad.information.vote.VoteListActivity;
 
@@ -99,7 +100,8 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.action_news:{
                         break;
                     }
-                    case R.id.action_attention:{
+                    case R.id.action_note:{
+                        startActivity(new Intent(MainPageActivity.this, NoteListActivity.class));
                         break;
                     }
                     case R.id.action_booking:{

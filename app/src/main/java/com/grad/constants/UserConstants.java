@@ -14,4 +14,9 @@ public class UserConstants {
 
     public static final int REGISTER_USER_FAILED = 3;
     public static final int REGISTER_USER_OK = 4;
+
+    public static final int GET_NOTES_OK = 5;
+    public static final int GET_NOTES_FAILED = 6;
+
+    public static final int SHOW_THIS_NOTE = 7;
 }

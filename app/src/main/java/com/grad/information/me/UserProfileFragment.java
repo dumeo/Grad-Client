@@ -7,17 +7,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.ConditionVariable;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.grad.R;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.FragmentUserProfileBinding;
-import com.grad.user.LoginActivity;
-import com.grad.user.RealRegisterActivity;
+import com.grad.user.member.RegisterActivity;
 import com.grad.util.SharedPreferenceUtil;
 
 public class UserProfileFragment extends Fragment {
@@ -64,7 +61,7 @@ public class UserProfileFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(mContext.getApplicationContext(), UserConstants.USER_INFO_DATABASE);
                 sharedPreferenceUtil.deleteString(UserConstants.SHARED_PREF_USERINFO_KEY);
-                startActivity(new Intent(mContext, RealRegisterActivity.class));
+                startActivity(new Intent(mContext, RegisterActivity.class));
                 getActivity().finish();
             }
         });

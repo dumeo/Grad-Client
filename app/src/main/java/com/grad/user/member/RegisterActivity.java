@@ -1,4 +1,4 @@
-package com.grad.user;
+package com.grad.user.member;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,27 +14,27 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.grad.R;
 import com.grad.constants.UserConstants;
-import com.grad.databinding.ActivityRealRegisterBinding;
 import com.grad.databinding.ActivityRegisterBinding;
 import com.grad.information.MainPageActivity;
 import com.grad.pojo.User;
 import com.grad.service.UserService;
+import com.grad.user.commitee.CommiteeActivity;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 import com.grad.util.StringTool;
 
 import cn.hutool.core.util.StrUtil;
 
-public class RealRegisterActivity extends AppCompatActivity {
-    ActivityRealRegisterBinding mBinding;
+public class RegisterActivity extends AppCompatActivity {
+    ActivityRegisterBinding mBinding;
     private Handler mHandler;
     private long utype = UserConstants.UTYPE_USER;
+    private User mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = ActivityRealRegisterBinding.inflate(getLayoutInflater());
+        mBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         initHandler();
         checkUserExists();
@@ -56,14 +56,22 @@ public class RealRegisterActivity extends AppCompatActivity {
                         mBinding.registerProgressbar.setVisibility(View.INVISIBLE);
                         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
                         sharedPreferenceUtil.writeString(UserConstants.SHARED_PREF_USERINFO_KEY, (String)msg.obj);
-                        startActivity(new Intent(RealRegisterActivity.this, MainPageActivity.class));
+                        if(utype == UserConstants.UTYPE_USER){
+                            startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));
+                        }else{
+                            startActivity(new Intent(RegisterActivity.this, CommiteeActivity.class));
+                        }
                         finish();
                         break;
                     }
                     case UserConstants.CHECK_USER_OK:{
                         Log.e("wjj", "handler msg:" + (String)msg.obj);
                         if(((String)msg.obj).equals(UserConstants.USER_EXISTS)) {
-                            startActivity(new Intent(RealRegisterActivity.this, MainPageActivity.class));
+                            if(mUser.getUtype() == UserConstants.UTYPE_USER){
+                                startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));
+                            }else{
+                                startActivity(new Intent(RegisterActivity.this, CommiteeActivity.class));
+                            }
                             finish();
                         }
                         break;
@@ -76,10 +84,10 @@ public class RealRegisterActivity extends AppCompatActivity {
     }
 
     private void checkUserExists(){
-        String user = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE).readString(UserConstants.SHARED_PREF_USERINFO_KEY, null);
-        if(user != null){
-            User user_ = JsonUtil.jsonToObject(user, User.class);
-            UserService.checkIfUserExists(mHandler, user_.getUid());
+        String userStr = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE).readString(UserConstants.SHARED_PREF_USERINFO_KEY, null);
+        if(userStr != null){
+            mUser = JsonUtil.jsonToObject(userStr, User.class);
+            UserService.checkIfUserExists(mHandler, mUser.getUid());
         }
     }
 
@@ -128,7 +136,7 @@ public class RealRegisterActivity extends AppCompatActivity {
         mBinding.tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RealRegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
             }
         });

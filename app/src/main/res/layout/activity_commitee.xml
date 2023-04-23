@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.commitee.CommiteeActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textSize="25sp"
+                android:text="xxx社区居委会中心"
+                android:layout_marginTop="10dp"
+                android:gravity="center"></TextView>
+            <Button
+                android:id="@+id/bt_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_top"
+                android:text="退出"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="50dp"></Button>
+            <HorizontalScrollView
+                android:id="@+id/hrz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_top"
+                android:layout_marginTop="20dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    >
+<!--投诉处理-->
+                    <include
+                        android:id="@+id/report"
+                        layout="@layout/commitee_item"
+                        ></include>
+                    <!--发布新闻-->
+                    <include
+                        android:id="@+id/news"
+                        layout="@layout/commitee_item"
+                        ></include>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/them_color"
+                android:layout_below="@id/hrz"></LinearLayout>
+
+            <EditText
+                android:id="@+id/et_note"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/line1"
+                android:layout_marginTop="10dp"
+                android:gravity="left"
+                android:hint="发布社区公告..."
+                android:background="@drawable/et_bg2"></EditText>
+
+            <Button
+                android:id="@+id/bt_upload_note"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_below="@id/et_note"
+                android:layout_marginLeft="130dp"
+                android:text="发布"></Button>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

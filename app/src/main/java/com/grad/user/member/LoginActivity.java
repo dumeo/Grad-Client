@@ -1,23 +1,18 @@
-package com.grad.user;
+package com.grad.user.member;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.grad.R;
-import com.grad.constants.DefaultVals;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityLoginBinding;
 import com.grad.information.MainPageActivity;
-import com.grad.pojo.User;
 import com.grad.service.UserService;
 import com.grad.util.SharedPreferenceUtil;
 

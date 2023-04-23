@@ -59,8 +59,7 @@
     <dimen name="vote_progress_width">300dp</dimen>
     <dimen name="vote_progress_height">25dp</dimen>
     <dimen name="vote_progress_marL">20dp</dimen>
-
-
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

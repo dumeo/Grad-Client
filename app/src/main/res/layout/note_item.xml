@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tv_bg3"
+    >
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="10dp"
+        android:text="5月21日将在社区广场举行文艺汇演，需要招聘十名志愿者，有意者联系张三1234555">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xxx社区 2023-04-23 13:21:00"
+        android:textSize="15sp"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"></TextView>
+    <TextView
+        android:id="@+id/tv_read_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="233人已读"
+        android:layout_below="@id/tv_content"
+        android:layout_toRightOf="@id/tv_info"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"></TextView>
+</RelativeLayout>

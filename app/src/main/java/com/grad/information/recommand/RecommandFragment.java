@@ -42,7 +42,6 @@ public class RecommandFragment extends Fragment {
     private ItemAdapter mItemAdapter;
     private StaggeredGridLayoutManager mLayoutManager;
     private List<PostItem> mPostItems = new ArrayList<>();
-    private int mCurrentCount = 0;
     private List<PostItem> mDeltaPostItems = new ArrayList<>();
     private User mUser;
 

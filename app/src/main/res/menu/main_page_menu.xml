@@ -7,7 +7,7 @@
         android:title="社区新闻"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_attention"
+    <item android:id="@+id/action_note"
         android:title="社区公告"
         app:showAsAction="never" />
     <item android:id="@+id/action_booking"
