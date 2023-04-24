@@ -137,7 +137,7 @@ public class ReserveListFragment extends Fragment {
                 mBinding.rlQr.setVisibility(View.INVISIBLE);
                 mBinding.rvReserve.setVisibility(View.VISIBLE);
             }
-        });
+        });//
 
         mBinding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
