@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".information.reserve.ToReserveFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/ln1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="预约事项："></TextView>
+                    <EditText
+                        android:id="@+id/et_reserve_content"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_background"
+                        android:textSize="18sp"></EditText>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ln2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ln1"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="电话号码："></TextView>
+                    <EditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_background"
+                        android:textSize="18sp"></EditText>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ln3"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ln2"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="预约时间："></TextView>
+                    <ImageView
+                        android:id="@+id/iv_calender"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:src="@mipmap/calender"
+                        ></ImageView>
+
+                    <TextView
+                        android:id="@+id/tv_selected_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="30dp"
+                        ></TextView>
+                </LinearLayout>
+
+                <DatePicker
+                    android:id="@+id/date_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ln3"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:scrollbars="vertical"
+                    android:visibility="invisible"></DatePicker>
+
+                <ImageView
+                    android:id="@+id/bt_calender_ok"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/date_picker"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:src="@mipmap/dagou"
+                    android:visibility="invisible"></ImageView>
+                <Button
+                    android:id="@+id/bt_submit"
+                    android:layout_width="@dimen/edittext_width"
+                    android:layout_height="50dp"
+                    android:text="提交"
+                    android:layout_below="@id/bt_calender_ok"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/button_bg1"
+                    android:layout_marginLeft="35dp"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        ></ProgressBar>
+
+
+
+
+</RelativeLayout>

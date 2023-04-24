@@ -19,4 +19,12 @@ public class UserConstants {
     public static final int GET_NOTES_FAILED = 6;
 
     public static final int SHOW_THIS_NOTE = 7;
+    public static final int ADD_RESERVE_OK = 8;
+    public static final int ADD_RESERVE_FAILED = 9;
+
+    public static final int SHOW_RESERVE_QR = 10;
+    public static final int GET_RESERVE_OK = 11;
+    public static final int GET_RESERVE_FAILED = 12;
+    public static final int FETCH = 13;
+    public static final int REFETCH = 14;
 }

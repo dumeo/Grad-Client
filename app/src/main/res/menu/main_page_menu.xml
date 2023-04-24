@@ -10,7 +10,7 @@
     <item android:id="@+id/action_note"
         android:title="社区公告"
         app:showAsAction="never" />
-    <item android:id="@+id/action_booking"
+    <item android:id="@+id/action_reserve"
         android:title="办事预约"
         app:showAsAction="never" />
 

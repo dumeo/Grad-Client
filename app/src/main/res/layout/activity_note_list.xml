@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/tv_white"
             android:text="erhtrhrtervre"
+            android:textColor="@color/black"
             android:gravity="left"
             android:textSize="25sp"></TextView>
 
@@ -34,7 +35,7 @@
             android:layout_height="40dp"
             android:layout_below="@id/tv_detail"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="135dp"
             android:text="收起"></Button>
 
     </RelativeLayout>

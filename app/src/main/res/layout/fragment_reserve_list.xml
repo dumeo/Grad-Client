@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".information.reserve.ReserveListFragment">
+
+    <TextView
+        android:id="@+id/tv_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:text="您有0项办事预约"
+        android:textSize="20sp" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_cnt"
+        android:layout_marginTop="30dp"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reserve"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_qr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_cnt"
+        android:layout_marginTop="30dp"
+        android:visibility="invisible"
+        android:background="#E6E6F0"
+        >
+
+        <ImageView
+            android:id="@+id/iv_qr"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher"></ImageView>
+
+        <ImageView
+            android:id="@+id/iv_hide"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/cancel"></ImageView>
+    </RelativeLayout>
+</RelativeLayout>

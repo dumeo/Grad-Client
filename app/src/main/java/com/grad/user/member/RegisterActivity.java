@@ -65,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
                     }
                     case UserConstants.CHECK_USER_OK:{
-                        Log.e("wjj", "handler msg:" + (String)msg.obj);
                         if(((String)msg.obj).equals(UserConstants.USER_EXISTS)) {
                             if(mUser.getUtype() == UserConstants.UTYPE_USER){
                                 startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));

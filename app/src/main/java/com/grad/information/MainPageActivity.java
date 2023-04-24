@@ -24,6 +24,7 @@ import com.grad.information.mainpage.MainPageFragment;
 import com.grad.information.me.UserProfileFragment;
 import com.grad.information.note.NoteListActivity;
 import com.grad.information.recommand.RecommandFragment;
+import com.grad.information.reserve.ReserveActivity;
 import com.grad.information.vote.VoteListActivity;
 
 public class MainPageActivity extends AppCompatActivity implements View.OnClickListener{
@@ -104,7 +105,8 @@ public class MainPageActivity extends AppCompatActivity implements View.OnClickL
                         startActivity(new Intent(MainPageActivity.this, NoteListActivity.class));
                         break;
                     }
-                    case R.id.action_booking:{
+                    case R.id.action_reserve:{
+                        startActivity(new Intent(MainPageActivity.this, ReserveActivity.class));
                         break;
                     }
                     case R.id.action_vote:{

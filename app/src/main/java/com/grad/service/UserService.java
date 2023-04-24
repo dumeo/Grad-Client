@@ -10,6 +10,7 @@ import com.grad.constants.UserConstants;
 import com.grad.http.GPCommittee;
 import com.grad.http.GPUser;
 import com.grad.information.note.NoteItem;
+import com.grad.information.reserve.ReserveItem;
 import com.grad.pojo.RegisterRet;
 import com.grad.pojo.Status;
 import com.grad.constants.DefaultVals;
@@ -20,6 +21,7 @@ import com.grad.util.JsonUtil;
 import java.util.List;
 import java.util.Locale;
 
+import cn.hutool.db.handler.BeanListHandler;
 import cn.hutool.http.HttpStatus;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -167,6 +169,68 @@ public class UserService {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public static void addReserve(Handler handler, ReserveItem reserveItem){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.addReserve(reserveItem);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                Message message = Message.obtain();
+                message.what = UserConstants.ADD_RESERVE_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = UserConstants.ADD_RESERVE_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void getUserReserve(Handler handler, String uid, List<ReserveItem> reserveItemList){
+        reserveItemList.clear();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<List<JsonObject>> call = gpUser.getUserReserve(uid);
+        call.enqueue(new Callback<List<JsonObject>>() {
+            @Override
+            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                List<JsonObject> jsonObjects = response.body();
+                for(JsonObject jsonObject : jsonObjects){
+                    ReserveItem reserveItem = JsonUtil.jsonToObject(jsonObject.toString(), ReserveItem.class);
+                    reserveItemList.add(reserveItem);
+                }
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_RESERVE_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_RESERVE_FAILED;
+                handler.sendMessage(message);
             }
         });
     }

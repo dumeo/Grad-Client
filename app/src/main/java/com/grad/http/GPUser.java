@@ -1,6 +1,7 @@
 package com.grad.http;
 
 import com.google.gson.JsonObject;
+import com.grad.information.reserve.ReserveItem;
 import com.grad.pojo.User;
 
 import java.util.List;
@@ -29,8 +30,14 @@ public interface GPUser {
     Call<List<JsonObject>> getNotes(@Query("communityName")String communityName);
 
 
-    @POST("/user/read-note?")
+    @POST("/user/read-note")
     @FormUrlEncoded
     Call<JsonObject> readNote(@Field("noteId") String noteId);
+
+    @POST("/user/add-reserve")
+    Call<JsonObject> addReserve(@Body ReserveItem reserveItem);
+
+    @GET("/user/reserve?")
+    Call<List<JsonObject>> getUserReserve(@Query("uid")String uid);
 
 }
