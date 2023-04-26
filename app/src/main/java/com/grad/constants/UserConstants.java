@@ -27,4 +27,9 @@ public class UserConstants {
     public static final int GET_RESERVE_FAILED = 12;
     public static final int FETCH = 13;
     public static final int REFETCH = 14;
+
+    public static final int NAVIGATION_GRIDVIEW_ITEM_CNT = 8;
+
+    public static final int GET_LATEST_NOTES_OK = 15;
+    public static final int GET_LATEST_NOTES_FAILED = 16;
 }

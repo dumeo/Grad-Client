@@ -16,13 +16,23 @@
         >
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/main_frames"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="618dp"
         android:layout_below="@id/toolbar"
         android:layout_above="@id/bottom_option"
-        ></FrameLayout>
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/main_frames"
+                android:layout_width="match_parent"
+                android:layout_height="658dp"
+                ></FrameLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/bottom_option"
