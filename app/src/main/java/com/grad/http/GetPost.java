@@ -14,10 +14,10 @@ import retrofit2.http.Query;
 
 public interface GetPost {
 
-    @GET("/posts")
-    Call<List<JsonObject>> getPostByNewest();
-    @GET("/post/load-more")
-    Call<List<JsonObject>> loadMorePosts(@Query("startTime") String startTime);
+    @GET("/posts?")
+    Call<List<JsonObject>> getPostByNewest(@Query("postTag")String postTag);
+    @GET("/post/load-more?")
+    Call<List<JsonObject>> loadMorePosts(@Query("postTag")String postTag, @Query("startTime") String startTime);
 
     @GET("/post?")
     Call<JsonObject> getPostById(@Query("clientUid")String clientUid,@Query("postId") String postId);

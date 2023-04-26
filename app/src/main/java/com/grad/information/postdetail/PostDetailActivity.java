@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.grad.R;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityPostDetailBinding;
-import com.grad.information.mainpage.ItemSpaceDecoration;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.pojo.ClientToThisInfo;
 import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;

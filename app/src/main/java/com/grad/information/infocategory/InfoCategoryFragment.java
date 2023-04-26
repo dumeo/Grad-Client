@@ -1,4 +1,4 @@
-package com.grad.information.mainpage;
+package com.grad.information.infocategory;
 
 import static com.grad.constants.DefaultVals.FETCH_DATA_COMPLETED;
 import static com.grad.constants.DefaultVals.REFETCH_DATA_COMPLETED;
@@ -6,6 +6,8 @@ import static com.grad.constants.DefaultVals.REFETCH_DATA_COMPLETED;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.grad.constants.PostConstants;
-import com.grad.databinding.FragmentMainPageBinding;
+import com.grad.databinding.FragmentInfoCategoryBinding;
+import com.grad.pojo.Post;
 import com.grad.pojo.PostItem;
 import com.grad.service.PostService;
 import com.grad.constants.DefaultVals;
@@ -29,10 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainPageFragment extends Fragment {
+public class InfoCategoryFragment extends Fragment {
 
     private Context mContext;
-    private FragmentMainPageBinding binding;
+    private FragmentInfoCategoryBinding binding;
     private CustomStaggeredGridLayoutManager mLayoutManager;
     private Handler mHandler;
     private boolean mIsLodaing = false;
@@ -40,6 +43,7 @@ public class MainPageFragment extends Fragment {
     private List<PostItem> mPostItems = new ArrayList<>();
     private int mCurrentCount = 0;
     private List<PostItem> mDeltaPostItems = new ArrayList<>();
+    private String mPostTag;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -47,7 +51,17 @@ public class MainPageFragment extends Fragment {
         mContext = context;
     }
 
-    public MainPageFragment() {}
+    public InfoCategoryFragment(String postTag) {mPostTag = postTag;}
+
+    public void reloadPostsByTag(String postTag){
+        mPostTag = postTag;
+        mPostItems.clear();
+        mItemAdapter.notifyDataSetChanged();
+        mCurrentCount = 0;
+        binding.swipeRefresh.setRefreshing(true);
+        PostService.fetchData(mPostTag, mHandler, mDeltaPostItems, PostConstants.TYPE_REFETCH);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +70,11 @@ public class MainPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMainPageBinding.inflate(inflater, container, false);
+        binding = FragmentInfoCategoryBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.swipeRefresh.setEnabled(false);
         initView();
-        fetchData();
+        fetchData(PostConstants.TYPE_INIT);
         setUpRefreshListener();
         return view;
     }
@@ -85,6 +99,7 @@ public class MainPageFragment extends Fragment {
             public boolean handleMessage(@NonNull Message msg) {
                 switch (msg.what){
                     case FETCH_DATA_COMPLETED:  {
+                        Log.e("wjj", "Fetch data ok, size = " + mDeltaPostItems.size());
                         mPostItems.addAll(mDeltaPostItems);
                         mItemAdapter = new ItemAdapter(mContext, mPostItems);
                         mLayoutManager = new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -99,7 +114,7 @@ public class MainPageFragment extends Fragment {
 
                     case REFETCH_DATA_COMPLETED:{
                         if(mItemAdapter == null){
-                            fetchData();
+                            fetchData(PostConstants.TYPE_INIT);
                             break;
                         }
                         mPostItems.clear();
@@ -130,8 +145,9 @@ public class MainPageFragment extends Fragment {
     }
 
 
-    private void fetchData(){
-        PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_INIT);
+    private void fetchData(int fetchType){
+        binding.swipeRefresh.setRefreshing(true);
+        PostService.fetchData(mPostTag, mHandler, mDeltaPostItems, fetchType);
     }
 
     private void setUpRefreshListener(){
@@ -139,7 +155,7 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onRefresh() {
                 //load new data
-                PostService.fetchData(mHandler, mDeltaPostItems, PostConstants.TYPE_REFETCH);
+                fetchData(PostConstants.TYPE_REFETCH);
             }
         });
 
@@ -150,8 +166,11 @@ public class MainPageFragment extends Fragment {
 
                 int[] lastVisiblePositions = mLayoutManager.findLastVisibleItemPositions(null);
                 int lastVisiblePosition = getLastVisiblePosition(lastVisiblePositions);
-//                Log.e("wjj", "lastVisiblePosition:" + lastVisiblePosition);
-                if(!binding.swipeRefresh.isRefreshing() && !mIsLodaing && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
+                Log.e("wjj", "lastVisiblePosition:" + lastVisiblePosition);
+                if(mPostTag != null
+                        && !binding.swipeRefresh.isRefreshing()
+                        && !mIsLodaing
+                        && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
                     mIsLodaing = true;
                     binding.progressbarLoadMore.setVisibility(View.VISIBLE);
                     //load more data...
@@ -159,7 +178,7 @@ public class MainPageFragment extends Fragment {
 //                    Log.e("wjj", "current count = " + mCurrentCount);
                     String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPost().getPostDate();
 //                    Log.e("wjj", "startTime = " + startTime);
-                    PostService.loadMorePosts(mHandler, startTime, mPostItems);
+                    PostService.loadMorePosts(mPostTag, mHandler, startTime, mPostItems);
                 }
 
             }

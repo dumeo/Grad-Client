@@ -56,14 +56,15 @@ public class PostService {
     }
 
 
-    public static void fetchData(Handler handler, List<PostItem> postItems, int fetchType){
+    public static void fetchData(String postTag, Handler handler, List<PostItem> postItems, int fetchType){
+        Log.e("wjj", "Fragment fetching data....");
         postItems.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.getPostByNewest();
+        Call<List<JsonObject>> call = getPost.getPostByNewest(postTag);
         call.enqueue(new Callback<List<JsonObject>>() {
             @Override
             public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
@@ -92,42 +93,13 @@ public class PostService {
     }
 
 
-    public static void reFetchData(Handler handler, List<PostItem> postItems){
-        postItems.clear();
+    public static void loadMorePosts(String postTag, Handler handler, String startTime, List<PostItem> postItems){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.getPostByNewest();
-        call.enqueue(new Callback<List<JsonObject>>() {
-            @Override
-            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
-                List<JsonObject> res = response.body();
-                for(JsonObject jsonObject : res){
-                    PostItem postItem = (PostItem) JsonUtil.jsonToObject(jsonObject.toString(), PostItem.class);
-                    postItems.add(postItem);
-                }
-                Message message = Message.obtain();
-                message.what = REFETCH_DATA_COMPLETED;
-                handler.sendMessage(message);
-
-            }
-
-            @Override
-            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
-                Log.e("wjj", "Fetch data failed!!!!!!!!");
-            }
-        });
-    }
-
-    public static void loadMorePosts(Handler handler, String startTime, List<PostItem> postItems){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DefaultVals.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        GetPost getPost = retrofit.create(GetPost.class);
-        Call<List<JsonObject>> call = getPost.loadMorePosts(startTime);
+        Call<List<JsonObject>> call = getPost.loadMorePosts(postTag, startTime);
         call.enqueue(new Callback<List<JsonObject>>() {
             @Override
             public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {

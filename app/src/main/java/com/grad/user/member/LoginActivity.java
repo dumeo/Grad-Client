@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityLoginBinding;
-import com.grad.information.MainPageActivity;
+import com.grad.information.mainpage.MainPageActivity;
 import com.grad.service.UserService;
 import com.grad.util.SharedPreferenceUtil;
 

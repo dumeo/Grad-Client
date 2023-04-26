@@ -16,4 +16,18 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="tag_wbq">无标签</string>
+    <string name="tag_paotui">跑腿</string>
+    <string name="tag_xrxw">寻人寻物</string>
+    <string name="tag_esjy">二手交易</string>
+    <string name="tag_jdwx">家电维修</string>
+    <string name="tag_zctl">政策讨论</string>
+    <string name="tag_xwyl">新闻娱乐</string>
+    <string name="tag_jtss">家庭琐事</string>
+    <string name="tag_bsyy">办事预约</string>
+    <string name="tag_sqtp">社区投票</string>
+
+
+
 </resources>

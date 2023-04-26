@@ -1,5 +1,6 @@
-package com.grad.information.mainpage2;
+package com.grad.information.mainpage;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 

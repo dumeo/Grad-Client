@@ -9,14 +9,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityRegisterBinding;
-import com.grad.information.MainPageActivity;
+import com.grad.information.mainpage.MainPageActivity;
 import com.grad.pojo.User;
 import com.grad.service.UserService;
 import com.grad.user.commitee.CommiteeActivity;

@@ -98,7 +98,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".information.MainPageActivity"
+            android:name=".information.mainpage.MainPageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

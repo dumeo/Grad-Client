@@ -12,10 +12,9 @@ import android.widget.Toast;
 
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityNoteListBinding;
-import com.grad.information.mainpage.ItemSpaceDecoration;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.information.vote.WrapContentLinearLayoutManager;
 import com.grad.pojo.User;
-import com.grad.service.CommitteeService;
 import com.grad.service.UserService;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
@@ -66,6 +65,7 @@ public class NoteListActivity extends AppCompatActivity {
                     case UserConstants.SHOW_THIS_NOTE:{
                         NoteItem noteItem = (NoteItem) msg.obj;
                         mBinding.rlDetail.setVisibility(View.VISIBLE);
+                        mBinding.rvNotes.setVisibility(View.INVISIBLE);
                         mBinding.tvDetail.setText(noteItem.getContent());
                         UserService.readNote(noteItem.getNoteId());
                         break;
@@ -99,6 +99,7 @@ public class NoteListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBinding.rlDetail.setVisibility(View.INVISIBLE);
+                mBinding.rvNotes.setVisibility(View.VISIBLE);
             }
         });
     }

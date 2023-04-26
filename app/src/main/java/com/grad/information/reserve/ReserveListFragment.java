@@ -3,8 +3,6 @@ package com.grad.information.reserve;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,11 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.grad.App;
-import com.grad.R;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.FragmentReserveListBinding;
-import com.grad.information.mainpage.ItemSpaceDecoration;
-import com.grad.information.note.NoteListActivity;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.information.vote.WrapContentLinearLayoutManager;
 import com.grad.service.UserService;
 import com.grad.util.GlideUtil;

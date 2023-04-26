@@ -10,12 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import com.grad.constants.VoteConstants;
 import com.grad.databinding.ActivityVoteListBinding;
-import com.grad.information.mainpage.ItemSpaceDecoration;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.pojo.vote.VoteItem;
 import com.grad.service.VoteService;
 

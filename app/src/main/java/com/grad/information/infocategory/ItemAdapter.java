@@ -1,4 +1,4 @@
-package com.grad.information.mainpage;
+package com.grad.information.infocategory;
 
 import android.content.Context;
 import android.content.Intent;

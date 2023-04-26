@@ -1,4 +1,4 @@
-package com.grad.information.mainpage2;
+package com.grad.information.mainpage;
 
 public class NavigationData {
     private int avatarUri;

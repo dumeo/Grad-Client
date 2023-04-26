@@ -11,22 +11,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.grad.R;
 import com.grad.constants.RecommConstants;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.FragmentRecommandBinding;
-import com.grad.information.mainpage.CustomStaggeredGridLayoutManager;
-import com.grad.information.mainpage.ItemAdapter;
-import com.grad.information.mainpage.ItemSpaceDecoration;
+import com.grad.information.infocategory.ItemAdapter;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.pojo.PostItem;
 import com.grad.pojo.User;
-import com.grad.service.PostService;
 import com.grad.service.RecommendService;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
