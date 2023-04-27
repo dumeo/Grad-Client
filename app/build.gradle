@@ -65,5 +65,7 @@ dependencies {
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.15.1'
 // https://mvnrepository.com/artifact/com.tbuonomo/dotsindicator
     implementation group: 'com.tbuonomo', name: 'dotsindicator', version: '4.3'
+// https://mvnrepository.com/artifact/jp.wasabeef/richeditor-android
+    implementation group: 'jp.wasabeef', name: 'richeditor-android', version: '2.0.0'
 
 }

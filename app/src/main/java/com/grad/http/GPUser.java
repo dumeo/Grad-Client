@@ -40,4 +40,7 @@ public interface GPUser {
     @GET("/user/reserve?")
     Call<List<JsonObject>> getUserReserve(@Query("uid")String uid);
 
+    @GET("/user/get-newest-note")
+    Call<JsonObject> getNewestNote(@Query("communityName")String communityName);
+
 }

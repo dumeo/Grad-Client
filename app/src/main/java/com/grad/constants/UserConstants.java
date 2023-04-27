@@ -32,4 +32,5 @@ public class UserConstants {
 
     public static final int GET_LATEST_NOTES_OK = 15;
     public static final int GET_LATEST_NOTES_FAILED = 16;
+    public static final int GET_NEWEST_NOTE_OK = 17;
 }

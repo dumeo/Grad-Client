@@ -6,8 +6,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@mipmap/ic_launcher"
         app:shapeAppearance="@style/circleStyle"
         android:layout_marginLeft="30dp"
@@ -19,6 +19,6 @@
         android:layout_below="@id/img"
         android:text="投诉处理"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="20sp"></TextView>
+        android:layout_marginLeft="10dp"
+        android:textSize="17sp"></TextView>
 </RelativeLayout>

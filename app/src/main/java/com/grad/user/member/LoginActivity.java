@@ -10,10 +10,12 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
+import com.grad.App;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityLoginBinding;
 import com.grad.information.mainpage.MainPageActivity;
 import com.grad.service.UserService;
+import com.grad.user.commitee.CommiteeActivity;
 import com.grad.util.SharedPreferenceUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
                 switch (msg.what){
                     case UserConstants.LOGIN_USER_OK:{
                         String strUser = (String) msg.obj;
-                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
-                        sharedPreferenceUtil.writeString(UserConstants.SHARED_PREF_USERINFO_KEY, strUser);
-                        startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+                        App.storeUser(getApplicationContext(), strUser);
+                        if(App.getUser().getUtype() == UserConstants.UTYPE_USER){
+                            startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+                        }else{
+                            startActivity(new Intent(LoginActivity.this, CommiteeActivity.class));
+
+                        }
+
                         finish();
                         break;
                     }

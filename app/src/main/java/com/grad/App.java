@@ -14,14 +14,14 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        getUser(getApplicationContext());
+        reloadUser(getApplicationContext());
     }
 
     public static User getUser() {
         return mUser;
     }
 
-    public static void getUser(Context context){
+    public static void reloadUser(Context context){
         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(context, UserConstants.USER_INFO_DATABASE);
         String userStr = sharedPreferenceUtil.readString(UserConstants.SHARED_PREF_USERINFO_KEY, null);
         mUser = JsonUtil.jsonToObject(userStr, User.class);
@@ -30,6 +30,7 @@ public class App extends Application {
     public static void storeUser(Context context, String userStr){
         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(context, UserConstants.USER_INFO_DATABASE);
         sharedPreferenceUtil.writeString(UserConstants.SHARED_PREF_USERINFO_KEY, userStr);
+        App.reloadUser(context);
     }
 
     public static void deleteUser(Context context){

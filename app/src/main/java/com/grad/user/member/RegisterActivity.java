@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.grad.App;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityRegisterBinding;
 import com.grad.information.mainpage.MainPageActivity;
@@ -53,8 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     case UserConstants.REGISTER_USER_OK:{
                         mBinding.registerProgressbar.setVisibility(View.INVISIBLE);
-                        SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
-                        sharedPreferenceUtil.writeString(UserConstants.SHARED_PREF_USERINFO_KEY, (String)msg.obj);
+                        String userStr = (String)msg.obj;
+                        App.storeUser(getApplicationContext(), userStr);
                         if(utype == UserConstants.UTYPE_USER){
                             startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));
                         }else{
@@ -135,7 +136,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
             }
         });
     }

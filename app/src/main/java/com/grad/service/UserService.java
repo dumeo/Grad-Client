@@ -21,6 +21,7 @@ import com.grad.util.JsonUtil;
 import java.util.List;
 import java.util.Locale;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.handler.BeanListHandler;
 import cn.hutool.http.HttpStatus;
 import retrofit2.Call;
@@ -231,6 +232,35 @@ public class UserService {
                 Message message = Message.obtain();
                 message.what = UserConstants.GET_RESERVE_FAILED;
                 handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void getNewestNote(Handler handler, String communityName){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.getNewestNote(communityName);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK || StrUtil.isEmpty(response.body().toString())){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                NoteItem noteItem = JsonUtil.jsonToObject(response.body().toString(), NoteItem.class);
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_NEWEST_NOTE_OK;
+                message.obj = noteItem;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
             }
         });
     }

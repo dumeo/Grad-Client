@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.grad.App;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.FragmentUserProfileBinding;
 import com.grad.user.member.RegisterActivity;
@@ -59,8 +60,7 @@ public class UserProfileFragment extends Fragment {
         mBinding.btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(mContext.getApplicationContext(), UserConstants.USER_INFO_DATABASE);
-                sharedPreferenceUtil.deleteString(UserConstants.SHARED_PREF_USERINFO_KEY);
+                App.deleteUser(getActivity().getApplicationContext());
                 startActivity(new Intent(mContext, RegisterActivity.class));
                 getActivity().finish();
             }

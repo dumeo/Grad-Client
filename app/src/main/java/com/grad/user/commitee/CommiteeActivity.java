@@ -16,6 +16,7 @@ import com.grad.R;
 import com.grad.constants.CommitteeConstants;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityCommiteeBinding;
+import com.grad.information.news.AddNewsActivity;
 import com.grad.information.note.NoteItem;
 import com.grad.pojo.User;
 import com.grad.service.CommitteeService;
@@ -81,7 +82,7 @@ public class CommiteeActivity extends AppCompatActivity {
         mBinding.news.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(CommiteeActivity.this, AddNewsActivity.class));
             }
         });
 

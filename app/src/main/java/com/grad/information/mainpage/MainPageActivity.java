@@ -25,8 +25,10 @@ import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.infocategory.InfoCategoryFragment;
 import com.grad.information.me.UserProfileFragment;
+import com.grad.information.note.NoteItem;
 import com.grad.information.note.NoteListActivity;
 import com.grad.information.recommand.RecommandFragment;
+import com.grad.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +88,14 @@ public class MainPageActivity extends AppCompatActivity{
                         }
                         break;
                     }
+
+                    case UserConstants.GET_NEWEST_NOTE_OK:{
+                        NoteItem noteItem = (NoteItem) msg.obj;
+                        mBinding.note.tvContent.setText(noteItem.getContent());
+                        mBinding.note.tvInfo.setText(noteItem.getCommunityName() + " " + noteItem.getCreateDate());
+                        mBinding.note.tvReadCnt.setText("");
+                        break;
+                    }
                 }
                 return false;
             }
@@ -94,10 +104,9 @@ public class MainPageActivity extends AppCompatActivity{
 
 
     private void initData(){
+        UserService.getNewestNote(mHandler, App.getUser().getCommunityName());
         mUserProfileFragment = new UserProfileFragment();
         mRecommandFragment = new RecommandFragment();
-
-
         //----------------------
         SpannableString spannableString = new SpannableString(mBinding.tvMoreNotes.getText().toString());
         spannableString.setSpan(new UnderlineSpan(), 0, spannableString.length(), 0);
@@ -197,6 +206,13 @@ public class MainPageActivity extends AppCompatActivity{
         });
 
         mBinding.tvMoreNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainPageActivity.this, NoteListActivity.class));
+            }
+        });
+
+        mBinding.note.tvContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainPageActivity.this, NoteListActivity.class));
