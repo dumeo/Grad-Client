@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.grad.constants.DefaultVals;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 import com.grad.util.UriUtil;
+import com.grad.util.UriUtil2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +154,7 @@ public class AddPostActivity extends AppCompatActivity {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    Log.e("wjj", "get FileName:" + UriUtil.getRealPathFromUri(getApplicationContext(), imageUri));
                     Bitmap bitmap = UriUtil.getBitmapFromUri(imageUri, getApplicationContext());
                     String fileName = UriUtil.getFileNameFromUri(imageUri, getApplicationContext());
                     imageInfos.add(new ImageInfo(bitmap, fileName));
@@ -160,6 +163,7 @@ public class AddPostActivity extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 Bitmap bitmap = UriUtil.getBitmapFromUri(imageUri, getApplicationContext());
                 String fileName = UriUtil.getFileNameFromUri(imageUri, getApplicationContext());
+                Log.e("wjj", UriUtil.getRealPathFromUri(getApplicationContext(), imageUri));
                 imageInfos.add(new ImageInfo(bitmap, fileName));
             }
 
@@ -171,19 +175,6 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
 
-//    private Bitmap getBitmapFromUri(Uri uri) {
-//        try {
-//            ParcelFileDescriptor parcelFileDescriptor =
-//                    getContentResolver().openFileDescriptor(uri, "r");
-//            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-//            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-//            parcelFileDescriptor.close();//
-//            return bitmap;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     private void addToImageHolder(List<ImageInfo> imageInfos){
         for (ImageInfo imageInfo : imageInfos) {
@@ -195,7 +186,6 @@ public class AddPostActivity extends AppCompatActivity {
                 public boolean onLongClick(View v) {
                     imageView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.them_color));
                     mDeleteImgAt = imageView.getPos();
-//                    Log.e("wjj", "select index:" + mDeleteImgAt);
                     mBinding.cancel.setClickable(true);
                     mBinding.cancel.setVisibility(View.VISIBLE);
                     mBinding.deleteImg.setClickable(true);
@@ -227,7 +217,6 @@ public class AddPostActivity extends AppCompatActivity {
         Post post = new Post("", user.getUid(), 0,
                 mModelAddPost.getTitle(), mModelAddPost.getContent(),
                 mModelAddPost.getTag(), 0, "");
-        Log.e("wjj", "post Tag:" + post.getPostTag());
 
         PostService.newPost(post, mHandler1);
     }

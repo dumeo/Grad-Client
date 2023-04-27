@@ -67,5 +67,9 @@ dependencies {
     implementation group: 'com.tbuonomo', name: 'dotsindicator', version: '4.3'
 // https://mvnrepository.com/artifact/jp.wasabeef/richeditor-android
     implementation group: 'jp.wasabeef', name: 'richeditor-android', version: '2.0.0'
+// https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+// https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.4'
 
 }

@@ -57,7 +57,6 @@ public class PostService {
 
 
     public static void fetchData(String postTag, Handler handler, List<PostItem> postItems, int fetchType){
-        Log.e("wjj", "Fragment fetching data....");
         postItems.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)

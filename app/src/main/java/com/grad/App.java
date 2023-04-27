@@ -2,6 +2,10 @@ package com.grad;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.grad.constants.UserConstants;
 import com.grad.pojo.User;
@@ -38,4 +42,6 @@ public class App extends Application {
         sharedPreferenceUtil.deleteString(UserConstants.SHARED_PREF_USERINFO_KEY);
         mUser = null;
     }
+
+
 }
