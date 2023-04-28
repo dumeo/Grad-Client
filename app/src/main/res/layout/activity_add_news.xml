@@ -267,29 +267,66 @@
         android:layout_below="@id/hscrv"
         android:layout_marginTop="30dp"
         >
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             >
-            <jp.wasabeef.richeditor.RichEditor
-                android:id="@+id/editor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/bt_submmit"
+                android:layout_width="@dimen/add_button_width"
+                android:layout_height="@dimen/add_button_height"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/add_button_margin"
+                android:layout_marginTop="@dimen/tag_text_margin"
+                android:background="@drawable/add_button_bg"
+                android:text="发布"
+                ></Button>
 
-            <TextView
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="在此输入标题..."
+                android:textSize="20sp"
+                android:background="@drawable/et_background"
+                android:layout_below="@id/bt_submmit"
+                android:layout_marginTop="20dp"
+                ></EditText>
+            <LinearLayout
+                android:id="@+id/ln_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="HTML Preview"
-                android:textSize="12sp" />
+                android:layout_below="@id/et_title"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bt_pick_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/add_button_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/add_button_margin"
+                    android:layout_marginTop="@dimen/tag_text_margin"
+                    android:background="@drawable/add_button_bg"
+                    android:layout_marginLeft="10dp"
+                    android:text="选择封面图片"
+                    ></Button>
 
-            <TextView
-                android:id="@+id/preview"
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:src="@mipmap/test_img"></ImageView>
+
+            </LinearLayout>
+            <jp.wasabeef.richeditor.RichEditor
+                android:id="@+id/editor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
+                android:layout_below="@id/ln_img"
+                android:layout_marginTop="20dp"
+                />
 
-        </LinearLayout>
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

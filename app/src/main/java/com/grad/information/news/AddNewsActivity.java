@@ -3,7 +3,6 @@ package com.grad.information.news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,8 +17,10 @@ import android.widget.Toast;
 
 import com.grad.R;
 import com.grad.constants.FileConstants;
+import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityAddNewsBinding;
 import com.grad.service.FileService;
+import com.grad.util.DialogUtil;
 import com.grad.util.UriUtil;
 
 import jp.wasabeef.richeditor.RichEditor;
@@ -27,9 +28,9 @@ import jp.wasabeef.richeditor.RichEditor;
 public class AddNewsActivity extends AppCompatActivity {
     ActivityAddNewsBinding mBinding;
     private RichEditor mEditor;
-    private TextView mPreview;
     private final int IMG_REQUEST = 0;
     private final int VIDEO_REQUEST = 1;
+    private final int AUDIO_REQUEST = 2;
     private Handler mHandler;
     String[] mPermissionList = new String[]{
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -47,11 +48,33 @@ public class AddNewsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
-        if (requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null){
+        if (resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
             String filePath = UriUtil.getRealPathFromUri(getApplicationContext(), uri);
-            FileService.uploadFile(mHandler, filePath, FileConstants.IMG);
+            if(requestCode == IMG_REQUEST){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileService.uploadFile(mHandler, filePath, FileConstants.IMG);
+                    }
+                }).start();
+            }else if(requestCode == VIDEO_REQUEST){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileService.uploadFile(mHandler, filePath, FileConstants.VIDEO);
+                    }
+                }).start();
+            }else if(requestCode == AUDIO_REQUEST){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileService.uploadFile(mHandler, filePath, FileConstants.AUDIO);
+                    }
+                }).start();
+            }
         }
+        if(data == null) mEditor.setEnabled(true);
     }
 
     @Override
@@ -83,6 +106,29 @@ public class AddNewsActivity extends AppCompatActivity {
                         mEditor.insertImage(imgUrl, "wjj", 300);
                         break;
                     }
+
+                    case FileConstants.UPLOAD_FILE_FAILED:{
+                        mEditor.setEnabled(true);
+                        break;
+                    }
+
+                    case FileConstants.UPLOAD_VIDEO_OK:{
+                        mEditor.setEnabled(true);
+                        String videoUrl = (String) msg.obj;
+                        mEditor.insertVideo(videoUrl, 300);
+                        break;
+                    }
+                    case FileConstants.FILE_SIZE_EXCEEZED:{
+                        mEditor.setEnabled(true);
+                        Toast.makeText(AddNewsActivity.this, "文件大小超出20MB", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case FileConstants.UPLOAD_AUDIO_OK:{
+                        mEditor.setEnabled(true);
+                        String audioUrl = (String) msg.obj;
+                        mEditor.insertAudio(audioUrl);
+                        break;
+                    }
                 }
 
                 return false;
@@ -96,16 +142,14 @@ public class AddNewsActivity extends AppCompatActivity {
 
     private void initView(){
         mEditor = (RichEditor) findViewById(R.id.editor);
-        mEditor.setEditorHeight(300);
-        mEditor.setEditorFontSize(22);
+        mEditor.setEditorHeight(400);
+        mEditor.setEditorFontSize(18);
         mEditor.setPadding(10, 10, 10, 10);
-        mEditor.setPlaceholder("Insert text here...");
-        //mEditor.setInputEnabled(false);
-        mPreview = (TextView) findViewById(R.id.preview);
+        mEditor.setPlaceholder("输入内容...");
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
-                mPreview.setText(text);
+
             }
         });
 
@@ -286,8 +330,6 @@ public class AddNewsActivity extends AppCompatActivity {
         findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mEditor.insertImage("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg",
-//                        "dachshund", 320);
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
@@ -296,31 +338,44 @@ public class AddNewsActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.action_insert_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mEditor.insertVideo("https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_10MB.mp4", 360);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("video/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+                startActivityForResult(intent, VIDEO_REQUEST);
+                mEditor.setEnabled(false);
+            }
+        });
+
         findViewById(R.id.action_insert_youtube).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.insertYoutubeVideo("https://www.youtube.com/embed/pS5peqApgUA");
+//                mEditor.insertYoutubeVideo("https://www.youtube.com/embed/pS5peqApgUA");
+                DialogUtil.showInputYoutubeDialog(AddNewsActivity.this, mEditor, UserConstants.INPUT_TYPE_YOUTUBE_LINK);
             }
         });
 
         findViewById(R.id.action_insert_audio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.insertAudio("https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3");
+//                mEditor.insertAudio("https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3");
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("audio/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+                startActivityForResult(intent, AUDIO_REQUEST);
+                mEditor.setEnabled(false);
             }
         });
 
-        findViewById(R.id.action_insert_video).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.insertVideo("https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_10MB.mp4", 360);
-            }
-        });
 
         findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.insertLink("https://github.com/wasabeef", "wasabeef");
+//                mEditor.insertLink("https://github.com/wasabeef", "wasabeef");
+                DialogUtil.showInputLinkDialog(AddNewsActivity.this, mEditor);
             }
         });
         findViewById(R.id.action_insert_checkbox).setOnClickListener(new View.OnClickListener() {
@@ -330,8 +385,12 @@ public class AddNewsActivity extends AppCompatActivity {
             }
         });
 
+        mBinding.btSubmmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
 
     }
 }
