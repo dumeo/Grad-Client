@@ -15,14 +15,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.grad.App;
 import com.grad.R;
+import com.grad.constants.CommitteeConstants;
 import com.grad.constants.FileConstants;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityAddNewsBinding;
+import com.grad.service.CommitteeService;
 import com.grad.service.FileService;
 import com.grad.util.DialogUtil;
+import com.grad.util.GlideUtil;
 import com.grad.util.UriUtil;
 
+import cn.hutool.core.util.StrUtil;
 import jp.wasabeef.richeditor.RichEditor;
 
 public class AddNewsActivity extends AppCompatActivity {
@@ -31,7 +36,9 @@ public class AddNewsActivity extends AppCompatActivity {
     private final int IMG_REQUEST = 0;
     private final int VIDEO_REQUEST = 1;
     private final int AUDIO_REQUEST = 2;
+    private final int HEAD_IMG_REQUEST = 3;
     private Handler mHandler;
+    private String mHeadImgUrl;
     String[] mPermissionList = new String[]{
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -52,6 +59,7 @@ public class AddNewsActivity extends AppCompatActivity {
             Uri uri = data.getData();
             String filePath = UriUtil.getRealPathFromUri(getApplicationContext(), uri);
             if(requestCode == IMG_REQUEST){
+                mBinding.progressBar.setVisibility(View.VISIBLE);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -59,6 +67,7 @@ public class AddNewsActivity extends AppCompatActivity {
                     }
                 }).start();
             }else if(requestCode == VIDEO_REQUEST){
+                mBinding.progressBar.setVisibility(View.VISIBLE);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -66,10 +75,19 @@ public class AddNewsActivity extends AppCompatActivity {
                     }
                 }).start();
             }else if(requestCode == AUDIO_REQUEST){
+                mBinding.progressBar.setVisibility(View.VISIBLE);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         FileService.uploadFile(mHandler, filePath, FileConstants.AUDIO);
+                    }
+                }).start();
+            }else if(requestCode == HEAD_IMG_REQUEST){
+                mBinding.imgProgressBar.setVisibility(View.VISIBLE);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommitteeService.uploadHeadImg(mHandler, filePath);
                     }
                 }).start();
             }
@@ -104,11 +122,13 @@ public class AddNewsActivity extends AppCompatActivity {
                         mEditor.setEnabled(true);
                         String imgUrl = (String) msg.obj;
                         mEditor.insertImage(imgUrl, "wjj", 300);
+                        mBinding.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     }
 
                     case FileConstants.UPLOAD_FILE_FAILED:{
                         mEditor.setEnabled(true);
+                        mBinding.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     }
 
@@ -116,17 +136,36 @@ public class AddNewsActivity extends AppCompatActivity {
                         mEditor.setEnabled(true);
                         String videoUrl = (String) msg.obj;
                         mEditor.insertVideo(videoUrl, 300);
+                        mBinding.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case FileConstants.FILE_SIZE_EXCEEZED:{
                         mEditor.setEnabled(true);
                         Toast.makeText(AddNewsActivity.this, "文件大小超出20MB", Toast.LENGTH_SHORT).show();
+                        mBinding.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case FileConstants.UPLOAD_AUDIO_OK:{
                         mEditor.setEnabled(true);
                         String audioUrl = (String) msg.obj;
                         mEditor.insertAudio(audioUrl);
+                        mBinding.progressBar.setVisibility(View.INVISIBLE);
+                        break;
+                    }
+                    case CommitteeConstants.UPLOAD_NEWS_OK:{
+                        Toast.makeText(AddNewsActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                    }
+                    case CommitteeConstants.UPLOAD_NEWS_FAILED:{
+                        Toast.makeText(AddNewsActivity.this, "上传失败", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CommitteeConstants.UPLOAD_HEAD_IMG_OK:{
+                        String url = (String) msg.obj;
+                        mHeadImgUrl = url;
+                        GlideUtil.loadImageView(AddNewsActivity.this, url, mBinding.ivHead, GlideUtil.DefaultRequestOptions);
+                        mBinding.imgProgressBar.setVisibility(View.INVISIBLE);
                         break;
                     }
                 }
@@ -385,10 +424,29 @@ public class AddNewsActivity extends AppCompatActivity {
             }
         });
 
+        mBinding.btPickImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+                startActivityForResult(intent, HEAD_IMG_REQUEST);
+            }
+        });
+
         mBinding.btSubmmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String communityName = App.getUser().getCommunityName();
+                String content = mEditor.getHtml();
+                String title = mBinding.etTitle.getText().toString();
+                if(mHeadImgUrl == null){
+                    Toast.makeText(AddNewsActivity.this, "请选择封面图片", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(StrUtil.isEmpty(title) || StrUtil.isEmpty(content)){
+                    Toast.makeText(AddNewsActivity.this, "请将内容补充完整", Toast.LENGTH_SHORT).show();
+                }
+                CommitteeService.uploadNews(mHandler, new CommunityNews(null, communityName, title, content, mHeadImgUrl, 0, null));
             }
         });
 

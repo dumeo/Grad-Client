@@ -318,6 +318,15 @@
                     android:layout_height="150dp"
                     android:src="@mipmap/test_img"></ImageView>
 
+                <ProgressBar
+                    android:id="@+id/img_progress_bar"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="invisible"
+                    ></ProgressBar>
+
+
             </LinearLayout>
             <jp.wasabeef.richeditor.RichEditor
                 android:id="@+id/editor"
@@ -329,4 +338,15 @@
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        ></ProgressBar>
+
 </RelativeLayout>

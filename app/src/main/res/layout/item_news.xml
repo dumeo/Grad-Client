@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tv_white">
+
+    <ImageView
+        android:id="@+id/head_img"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/test_img"></ImageView>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="市委书记徐俊平考察调研本社区"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/head_img"
+        android:textSize="20sp"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/black"></TextView>
+    <TextView
+        android:id="@+id/view_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100次浏览"
+        android:layout_marginLeft="150dp"
+        android:layout_toRightOf="@id/head_img"
+        android:layout_below="@id/title"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"></TextView>
+
+</RelativeLayout>

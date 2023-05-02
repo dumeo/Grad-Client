@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.grad.constants.UserConstants;
 import com.grad.http.GPCommittee;
 import com.grad.http.GPUser;
+import com.grad.information.news.CommunityNews;
 import com.grad.information.note.NoteItem;
 import com.grad.information.reserve.ReserveItem;
 import com.grad.pojo.RegisterRet;
@@ -256,6 +257,59 @@ public class UserService {
                 message.what = UserConstants.GET_NEWEST_NOTE_OK;
                 message.obj = noteItem;
                 handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void getCommunityNews(Handler handler, String communityName, List<CommunityNews> communityNewsList){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<List<JsonObject>> call = gpUser.getCommunityNews(communityName);
+        call.enqueue(new Callback<List<JsonObject>>() {
+            @Override
+            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                List<JsonObject> jsonObjects = response.body();
+                for(JsonObject jsonObject : jsonObjects){
+                    CommunityNews communityNews = JsonUtil.jsonToObject(jsonObject.toString(), CommunityNews.class);
+                    communityNewsList.add(communityNews);
+                }
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_NEWS_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = UserConstants.GET_NEWS_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void increaseNewsViewCnt(String newsId){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.increaseNewsViewCnt(newsId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
             }
 
             @Override

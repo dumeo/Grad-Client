@@ -43,4 +43,10 @@ public interface GPUser {
     @GET("/user/get-newest-note")
     Call<JsonObject> getNewestNote(@Query("communityName")String communityName);
 
+    @GET("/user/community-news")
+    Call<List<JsonObject>> getCommunityNews(@Query("communityName")String communityName);
+
+    @FormUrlEncoded
+    @POST("/committee/incr-news-view-cnt")
+    Call<JsonObject> increaseNewsViewCnt(@Field("newsId")String newsId);
 }

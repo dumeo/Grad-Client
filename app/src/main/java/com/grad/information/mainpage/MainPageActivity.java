@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -24,7 +25,9 @@ import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityMainPageBinding;
 import com.grad.information.addpost.AddPostActivity;
 import com.grad.information.infocategory.InfoCategoryFragment;
+import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.information.me.UserProfileFragment;
+import com.grad.information.news.CommunityNews;
 import com.grad.information.note.NoteItem;
 import com.grad.information.note.NoteListActivity;
 import com.grad.information.recommand.RecommandFragment;
@@ -44,6 +47,8 @@ public class MainPageActivity extends AppCompatActivity{
     private Handler mHandler;
     private List<NavigationData> mNavigationDataList = new ArrayList<>();
     private List<View> mNavigationGridViewList = new ArrayList<>();
+    private List<CommunityNews> mCommunityNewsList = new ArrayList<>();
+    private NewsItemAdapter mNewsItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,11 @@ public class MainPageActivity extends AppCompatActivity{
                         mBinding.note.tvReadCnt.setText("");
                         break;
                     }
+
+                    case UserConstants.GET_NEWS_OK:{
+                        initNewsRV();
+                        break;
+                    }
                 }
                 return false;
             }
@@ -133,12 +143,22 @@ public class MainPageActivity extends AppCompatActivity{
         NavigationViewPagerAdapter viewPagerAdapter = new NavigationViewPagerAdapter(mNavigationGridViewList);
         mBinding.nagViewPager.setAdapter(viewPagerAdapter);
         mBinding.dotsIndicator.setViewPager(mBinding.nagViewPager);
+        UserService.getCommunityNews(mHandler, App.getUser().getCommunityName(), mCommunityNewsList);
     }
 
     private void initView(){
         mBinding.tvCommunityName.setText(App.getUser().getCommunityName());
     }
 
+    private void initNewsRV() {
+        mNewsItemAdapter = new NewsItemAdapter(MainPageActivity.this, mCommunityNewsList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(MainPageActivity.this);
+        mBinding.rvNews.setPadding(5, 5, 5, 5);
+        ItemSpaceDecoration itemSpaceDecoration = new ItemSpaceDecoration(10);
+        mBinding.rvNews.addItemDecoration(itemSpaceDecoration);
+        mBinding.rvNews.setLayoutManager(layoutManager);
+        mBinding.rvNews.setAdapter(mNewsItemAdapter);
+    }
 
     private void initListener(){
         mBinding.tvMainPage.setOnClickListener(new View.OnClickListener() {
