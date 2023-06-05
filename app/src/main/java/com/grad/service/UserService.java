@@ -238,12 +238,14 @@ public class UserService {
     }
 
     public static void getNewestNote(Handler handler, String communityName){
+        //构建Retrofit网路请求接口
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DefaultVals.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         GPUser gpUser = retrofit.create(GPUser.class);
+        //检索最新一条公告
         Call<JsonObject> call = gpUser.getNewestNote(communityName);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -252,6 +254,7 @@ public class UserService {
                     onFailure(call, new Throwable());
                     return;
                 }
+                //得到数据进行展示
                 NoteItem noteItem = JsonUtil.jsonToObject(response.body().toString(), NoteItem.class);
                 Message message = Message.obtain();
                 message.what = UserConstants.GET_NEWEST_NOTE_OK;
@@ -310,6 +313,37 @@ public class UserService {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
+    public static void checkUserBanned(Handler handler, String email){
+        //构建Retrofit网路请求接口
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GPUser gpUser = retrofit.create(GPUser.class);
+        Call<JsonObject> call = gpUser.checkBanned(email);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, null);
+                    return;
+                }
+                Message message = Message.obtain();
+                message.what = UserConstants.CHECK_USER_BANNED_OK;
+                message.obj = response.body();
+                handler.sendMessage(message);
             }
 
             @Override

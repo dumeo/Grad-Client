@@ -12,6 +12,7 @@ import com.grad.util.JsonUtil;
 
 import java.util.List;
 
+import cn.hutool.http.HttpStatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,14 +31,16 @@ public class CommentService {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Comment comment1 = (Comment) JsonUtil.jsonToObject(response.body().toString(), Comment.class);
-                if(comment1.getCommentId() == null) onFailure(call, new Throwable());
-                else{
-                    Message message = Message.obtain();
-                    message.what = DefaultVals.ADD_COMMENT_SUCCESS;
-                    message.obj = comment1;
-                    handler.sendMessage(message);
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
                 }
+                Comment comment1 = (Comment) JsonUtil.jsonToObject(response.body().toString(), Comment.class);
+                Message message = Message.obtain();
+                message.what = DefaultVals.ADD_COMMENT_SUCCESS;
+                message.obj = comment1;
+                handler.sendMessage(message);
+
             }
 
             @Override

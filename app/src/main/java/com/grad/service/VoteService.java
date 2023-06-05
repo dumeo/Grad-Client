@@ -144,6 +144,7 @@ public class VoteService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GPVote gpVote = retrofit.create(GPVote.class);
+        //将uid、voteId、optionId传给后端
         Call<JsonObject> call = gpVote.vote(uid, voteId, optionId);
         call.enqueue(new Callback<JsonObject>() {
             @Override

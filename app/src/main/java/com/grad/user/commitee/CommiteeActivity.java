@@ -3,10 +3,13 @@ package com.grad.user.commitee;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -16,6 +19,9 @@ import com.grad.R;
 import com.grad.constants.CommitteeConstants;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityCommiteeBinding;
+import com.grad.databinding.LayoutBanUserBinding;
+import com.grad.databinding.LayoutInputLinkBinding;
+import com.grad.information.delpost.DeletePostActivity;
 import com.grad.information.news.AddNewsActivity;
 import com.grad.information.note.NoteItem;
 import com.grad.pojo.User;
@@ -59,6 +65,14 @@ public class CommiteeActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "网络错误！", Toast.LENGTH_SHORT).show();
                         break;
                     }
+                    case CommitteeConstants.BAN_USER_OK:{
+                        Toast.makeText(getApplicationContext(), "操作成功！", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case CommitteeConstants.BAN_USER_FAILED:{
+                        Toast.makeText(getApplicationContext(), "操作失败！", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                 }
 
                 return false;
@@ -74,7 +88,8 @@ public class CommiteeActivity extends AppCompatActivity {
 
     private void initView(){
         mBinding.news.tv.setText("发布新闻");
-        mBinding.report.tv.setText("投诉处理");
+        mBinding.userManage.tv.setText("禁言用户");
+        mBinding.postManage.tv.setText("信息删除");
         mBinding.tvTop.setText(mUser.getCommunityName() + "居委会中心");
     }
 
@@ -86,10 +101,46 @@ public class CommiteeActivity extends AppCompatActivity {
             }
         });
 
-        mBinding.report.img.setOnClickListener(new View.OnClickListener() {
+        mBinding.userManage.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 创建一个AlertDialog.Builder对象
+                AlertDialog.Builder builder = new AlertDialog.Builder(CommiteeActivity.this);
+                builder.setTitle("输入用户信息");
 
+                // 防止内存泄漏
+                final com.grad.databinding.LayoutBanUserBinding[] binding = {LayoutBanUserBinding.inflate(getLayoutInflater(), null, false)};
+                builder.setView(binding[0].getRoot());
+
+                // 设置对话框的“确定”按钮点击事件
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String email = binding[0].etEmail.getText().toString();
+                        int days = Integer.parseInt(binding[0].etTime.getText().toString());
+                        CommitteeService.banUser(mHandler, email, days);
+                        binding[0] = null;
+                    }
+                });
+
+                // 设置对话框的“取消”按钮点击事件
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 防止内存泄漏
+                        binding[0] = null;
+                    }
+                });
+
+                // 显示对话框
+                builder.show();
+            }
+        });
+
+        mBinding.postManage.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CommiteeActivity.this, DeletePostActivity.class));
             }
         });
 

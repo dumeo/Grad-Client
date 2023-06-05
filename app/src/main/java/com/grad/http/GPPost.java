@@ -3,6 +3,8 @@ package com.grad.http;
 import com.google.gson.JsonObject;
 import com.grad.pojo.Post;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,5 +31,11 @@ public interface GPPost {
     @POST("/post/like")
     Call<JsonObject> setLikeStatus(@Field("uid")String uid, @Field("postId")String postId, @Field("transferType")int transferType);
 
+    @POST("/post/delete-post")
+    @FormUrlEncoded
+    Call<JsonObject> deletePost(@Field("postId")String postId);
+
+    @GET("/post/search?")
+    Call<List<JsonObject>> searchPost(@Query("postTitle") String postTitle);
 
 }

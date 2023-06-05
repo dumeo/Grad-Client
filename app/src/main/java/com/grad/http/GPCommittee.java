@@ -22,5 +22,12 @@ public interface GPCommittee {
     @POST("/committee/upload-news")
     Call<JsonObject> uploadNews(@Body CommunityNews communityNews);
 
+    @POST("/committee/ban-user")
+    @FormUrlEncoded
+    Call<JsonObject> banUser(@Field("email")String email, @Field("days")int days);
+
+
+
+
 
 }

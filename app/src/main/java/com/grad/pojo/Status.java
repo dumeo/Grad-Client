@@ -2,13 +2,13 @@ package com.grad.pojo;
 
 public class Status {
     private String status;
-    private Object msg;
+    private String msg;
 
     public Status(String status) {
         this.status = status;
     }
 
-    public Status(String status, Object msg) {
+    public Status(String status, String msg) {
         this.status = status;
         this.msg = msg;
     }
@@ -21,11 +21,11 @@ public class Status {
         this.status = status;
     }
 
-    public Object getMsg() {
+    public String getMsg() {
         return msg;
     }
 
-    public void setMsg(Object msg) {
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 }

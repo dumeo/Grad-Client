@@ -7,4 +7,7 @@ public class CommitteeConstants {
     public static final int UPLOAD_NEWS_OK = 20;
     public static final int UPLOAD_NEWS_FAILED = 21;
     public static final int UPLOAD_HEAD_IMG_OK = 11;
+    public static final int BAN_USER_OK = 12;
+    public static final int BAN_USER_FAILED = 13;
+
 }

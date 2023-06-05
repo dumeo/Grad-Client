@@ -40,13 +40,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
-<!--投诉处理-->
-                    <include
-                        android:id="@+id/report"
-                        layout="@layout/commitee_item"
-                        android:layout_width="90dp"
-                        android:layout_height="60dp"
-                        ></include>
                     <!--发布新闻-->
                     <include
                         android:id="@+id/news"
@@ -54,6 +47,20 @@
                         android:layout_width="90dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
+                        ></include>
+                    <!--禁言用户-->
+                    <include
+                        android:id="@+id/user_manage"
+                        layout="@layout/commitee_item"
+                        android:layout_width="90dp"
+                        android:layout_height="60dp"
+                        ></include>
+                    <!--信息管理-->
+                    <include
+                        android:id="@+id/post_manage"
+                        layout="@layout/commitee_item"
+                        android:layout_width="90dp"
+                        android:layout_height="60dp"
                         ></include>
                 </LinearLayout>
 

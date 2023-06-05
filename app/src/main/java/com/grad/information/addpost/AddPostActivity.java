@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,19 +14,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.grad.App;
 import com.grad.R;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityAddPostBinding;
+import com.grad.databinding.LayoutInfoDialogBinding;
+import com.grad.information.postdetail.PostDetailActivity;
 import com.grad.pojo.Post;
+import com.grad.pojo.Status;
 import com.grad.pojo.User;
 import com.grad.service.ImageService;
 import com.grad.service.PostService;
 import com.grad.constants.DefaultVals;
+import com.grad.service.UserService;
+import com.grad.util.DialogUtil;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 import com.grad.util.UriUtil;
@@ -73,6 +82,43 @@ public class AddPostActivity extends AppCompatActivity {
                 else if(msg.what == DefaultVals.ADD_POST_SUCCESS){
                     finish();
                 }
+                else if(msg.what == UserConstants.CHECK_USER_BANNED_OK){
+                    Status status = JsonUtil.jsonToObject(msg.obj.toString(), Status.class);
+                    if(status.getStatus().equals(UserConstants.USER_BANNED)){
+                        String startDate = StrUtil.split(status.getMsg(), '=').get(0);
+                        String days = StrUtil.split(status.getMsg(), '=').get(1);
+                        String message = "您已被管理员禁言，从" + startDate + "开始，时长" + days + "天";
+                        // 创建一个AlertDialog.Builder对象
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddPostActivity.this);
+                        builder.setTitle("注意");
+
+                        // 防止内存泄漏
+                        final com.grad.databinding.LayoutInfoDialogBinding[] binding = {LayoutInfoDialogBinding.inflate(getLayoutInflater(), null, false)};
+                        builder.setView(binding[0].getRoot());
+                        binding[0].tvMsg.setText(message);
+
+                        // 设置对话框的“确定”按钮点击事件
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                binding[0] = null;
+                                finish();
+                            }
+                        });
+
+                        // 设置对话框的“取消”按钮点击事件
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 防止内存泄漏
+                                binding[0] = null;
+                                finish();
+                            }
+                        });
+                        // 显示对话框
+                        builder.show();
+                    }
+                }
                 return false;
             }
         });
@@ -83,6 +129,8 @@ public class AddPostActivity extends AppCompatActivity {
             mBinding.spinnerTag.setOnItemSelectedListener(mModelAddPost.mOnItemSelectedListener);
         }
         mBinding.setLifecycleOwner(this);
+
+        UserService.checkUserBanned(mHandler1, App.getUser().getEmail());
     }
 
     private void initListener(){
@@ -214,10 +262,11 @@ public class AddPostActivity extends AppCompatActivity {
         mBinding.progressBar.setVisibility(View.VISIBLE);
         SharedPreferenceUtil sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE);
         User user = JsonUtil.jsonToObject(sharedPreferenceUtil.readString(UserConstants.SHARED_PREF_USERINFO_KEY, "null"), User.class);
+        //客户端构造信息实体
         Post post = new Post("", user.getUid(), 0,
                 mModelAddPost.getTitle(), mModelAddPost.getContent(),
                 mModelAddPost.getTag(), 0, "");
-
+        //将信息实体传入服务端
         PostService.newPost(post, mHandler1);
     }
 

@@ -49,4 +49,8 @@ public interface GPUser {
     @FormUrlEncoded
     @POST("/committee/incr-news-view-cnt")
     Call<JsonObject> increaseNewsViewCnt(@Field("newsId")String newsId);
+
+    @FormUrlEncoded
+    @POST("/user/check-banned")
+    Call<JsonObject> checkBanned(@Field("email") String email);
 }

@@ -38,4 +38,8 @@ public class UserConstants {
     public static final int INPUT_TYPE_LINK = 19;
     public static final int GET_NEWS_OK = 20;
     public static final int GET_NEWS_FAILED = 21;
+
+    public static final int CHECK_USER_BANNED_OK = 22;
+    public static final String USER_BANNED = "User banned";
+    public static final String USER_NOT_BANNED = "User Not Banned";
 }

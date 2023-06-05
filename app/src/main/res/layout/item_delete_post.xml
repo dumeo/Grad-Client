@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/delete_post_title"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:text="是否进行居委会换人？"></TextView>
+
+    <Button
+        android:id="@+id/bt_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/delete_post_title"
+        android:text="删除"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="10dp"></Button>
+</RelativeLayout>

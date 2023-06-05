@@ -335,8 +335,9 @@
                 android:layout_below="@id/ln_img"
                 android:layout_marginTop="20dp"
                 />
-
         </RelativeLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
     <ProgressBar

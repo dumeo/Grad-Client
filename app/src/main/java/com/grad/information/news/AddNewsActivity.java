@@ -84,9 +84,11 @@ public class AddNewsActivity extends AppCompatActivity {
                 }).start();
             }else if(requestCode == HEAD_IMG_REQUEST){
                 mBinding.imgProgressBar.setVisibility(View.VISIBLE);
+                //插入图片
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        //将图片传入后端
                         CommitteeService.uploadHeadImg(mHandler, filePath);
                     }
                 }).start();
@@ -120,7 +122,9 @@ public class AddNewsActivity extends AppCompatActivity {
                 switch (msg.what){
                     case FileConstants.UPLOAD_IMG_OK:{
                         mEditor.setEnabled(true);
+                        //后端返回的图片url
                         String imgUrl = (String) msg.obj;
+                        //使用富文本编辑器插入图片url
                         mEditor.insertImage(imgUrl, "wjj", 300);
                         mBinding.progressBar.setVisibility(View.INVISIBLE);
                         break;

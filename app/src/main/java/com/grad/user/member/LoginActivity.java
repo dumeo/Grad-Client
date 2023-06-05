@@ -39,11 +39,10 @@ public class LoginActivity extends AppCompatActivity {
                     case UserConstants.LOGIN_USER_OK:{
                         String strUser = (String) msg.obj;
                         App.storeUser(getApplicationContext(), strUser);
-                        if(App.getUser().getUtype() == UserConstants.UTYPE_USER){
-                            startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
-                        }else{
+                        if(App.getUser().getUtype() == UserConstants.UTYPE_GWH){
                             startActivity(new Intent(LoginActivity.this, CommiteeActivity.class));
-
+                        }else{
+                            startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
                         }
 
                         finish();
@@ -65,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initListener(){
+        //登录用户
         mBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

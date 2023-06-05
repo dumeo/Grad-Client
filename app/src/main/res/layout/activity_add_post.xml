@@ -92,11 +92,12 @@
                 <EditText
                     android:id="@+id/post_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:hint="在此添加标题"
                     android:text="@={addPostViewModel.title}"
                     android:layout_below="@id/horizontal_scroll"
                     android:textSize="@dimen/add_title_textSize"
+                    android:background="@drawable/et_background"
                     android:gravity="center|left"
                     android:textColor="@color/add_post_textcolor"
                     ></EditText>
@@ -104,13 +105,13 @@
                 <EditText
                     android:id="@+id/post_content"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:hint="在此添加内容"
                     android:text="@={addPostViewModel.content}"
                     android:layout_below="@id/post_title"
                     android:layout_marginTop="@dimen/image_text_margin"
                     android:textSize="@dimen/add_content_textSize"
-                    android:gravity="center|left"
+                    android:gravity="left"
                     android:textColor="@color/add_post_textcolor"
                     ></EditText>
 

@@ -67,6 +67,7 @@
             android:background="@drawable/add_button_bg"
             android:layout_marginLeft="10dp"
             android:text="关注"
+            android:visibility="invisible"
             ></Button>
 
     </RelativeLayout>

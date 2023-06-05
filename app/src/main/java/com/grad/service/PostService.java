@@ -10,6 +10,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.grad.constants.CommitteeConstants;
 import com.grad.constants.PostConstants;
 import com.grad.http.GetPost;
 import com.grad.http.GPPost;
@@ -21,6 +22,7 @@ import com.grad.util.JsonUtil;
 
 import java.util.List;
 
+import cn.hutool.http.HttpStatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -196,6 +198,70 @@ public class PostService {
            }
        });
     }
+
+    public static void searchPost(Handler handler, String postTitle, List<Post> res){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPPost gpPost = retrofit.create(GPPost.class);
+        Call<List<JsonObject>> call = gpPost.searchPost(postTitle);
+        call.enqueue(new Callback<List<JsonObject>>() {
+            @Override
+            public void onResponse(Call<List<JsonObject>> call, Response<List<JsonObject>> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, null);
+                    return;
+                }
+                List<JsonObject> jsonObjects = response.body();
+                for(JsonObject jsonObject : jsonObjects){
+                    Post post = JsonUtil.jsonToObject(jsonObject.toString(), Post.class);
+                    res.add(post);
+                }
+                Message message = Message.obtain();
+                message.what = PostConstants.SEARCH_POSTS_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<List<JsonObject>> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = PostConstants.SEARCH_POSTS_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
+
+    public static void deletePost(Handler handler, String postId){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPPost gpPost = retrofit.create(GPPost.class);
+        Call<JsonObject> call = gpPost.deletePost(postId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    Log.e("wjj", "Response code:" + response.code());
+                    onFailure(call, null);
+                    return;
+                }
+                Message message = Message.obtain();
+                message.what = PostConstants.DELETE_POST_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = PostConstants.DELETE_POST_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
 
 
 }

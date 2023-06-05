@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,25 +16,34 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.grad.App;
 import com.grad.R;
 import com.grad.constants.UserConstants;
 import com.grad.databinding.ActivityPostDetailBinding;
+import com.grad.databinding.LayoutBanUserBinding;
 import com.grad.information.infocategory.ItemSpaceDecoration;
 import com.grad.pojo.ClientToThisInfo;
 import com.grad.pojo.Comment;
 import com.grad.pojo.CommentItem;
 import com.grad.pojo.PostItem;
+import com.grad.pojo.Status;
 import com.grad.pojo.User;
 import com.grad.service.CollectService;
 import com.grad.service.CommentService;
+import com.grad.service.CommitteeService;
 import com.grad.service.PostService;
 import com.grad.constants.DefaultVals;
+import com.grad.service.UserService;
+import com.grad.user.commitee.CommiteeActivity;
+import com.grad.util.DialogUtil;
 import com.grad.util.GlideUtil;
 import com.grad.util.JsonUtil;
 import com.grad.util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 public class PostDetailActivity extends AppCompatActivity {
     ActivityPostDetailBinding mBinding;
@@ -89,7 +100,8 @@ public class PostDetailActivity extends AppCompatActivity {
                         break;
                     }
                     case DefaultVals.ADD_COMMENT_FAILED:{
-                        Toast.makeText(PostDetailActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostDetailActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                        UserService.checkUserBanned(mHandler, App.getUser().getEmail());
                         break;
                     }
                     case DefaultVals.REQUEST_ADD_COMMENT:{
@@ -110,6 +122,11 @@ public class PostDetailActivity extends AppCompatActivity {
                     }
                     case DefaultVals.SET_LIKE_STATUS_FAILED:{
                         Toast.makeText(PostDetailActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                    case UserConstants.CHECK_USER_BANNED_OK:{
+
                         break;
                     }
                 }
@@ -208,6 +225,17 @@ public class PostDetailActivity extends AppCompatActivity {
                         break;
                     }
 
+                    case UserConstants.CHECK_USER_BANNED_OK:{
+                        Status status = JsonUtil.jsonToObject(msg.obj.toString(), Status.class);
+                        if(status.getStatus().equals(UserConstants.USER_BANNED)){
+                            String startDate = StrUtil.split(status.getMsg(), '=').get(0);
+                            String days = StrUtil.split(status.getMsg(), '=').get(1);
+                            String message = "您已被管理员禁言，从" + startDate + "开始，时长" + days + "天";
+                            DialogUtil.showInfoDialog(PostDetailActivity.this, message);
+                        }
+                        break;
+                    }
+
                 }
                 return false;
             }
@@ -301,8 +329,12 @@ public class PostDetailActivity extends AppCompatActivity {
                         null, mUser.getUid(), mPostId,
                         content, 0, null, 0, null
                 );
+
+                //判断是否是回复某条评论
                 if(mIsReplyToChildComment && mReplyToCommentItem != null){
+                    //若是，则该评论层级加1
                     comment.setCommentLevel(mReplyToCommentItem.getComment().getCommentLevel()+1);
+                    //标记父评论ID
                     comment.setFatherId(mReplyToCommentItem.getComment().getCommentId());
                     mIsReplyToChildComment = false;
                 }

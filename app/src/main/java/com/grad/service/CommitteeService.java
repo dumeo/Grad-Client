@@ -9,6 +9,7 @@ import com.grad.constants.FileConstants;
 import com.grad.constants.UserConstants;
 import com.grad.http.GPCommittee;
 import com.grad.http.GPFile;
+import com.grad.http.GPPost;
 import com.grad.http.GPUser;
 import com.grad.information.news.CommunityNews;
 import com.grad.information.note.NoteItem;
@@ -143,6 +144,36 @@ public class CommitteeService {
             e.printStackTrace();
         }
     }
+
+
+    public static void banUser(Handler handler, String email, int days){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DefaultVals.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GPCommittee gpCommittee = retrofit.create(GPCommittee.class);
+        Call<JsonObject> call = gpCommittee.banUser(email, days);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.code() != HttpStatus.HTTP_OK){
+                    onFailure(call, new Throwable());
+                    return;
+                }
+                Message message = Message.obtain();
+                message.what = CommitteeConstants.BAN_USER_OK;
+                handler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Message message = Message.obtain();
+                message.what = CommitteeConstants.BAN_USER_FAILED;
+                handler.sendMessage(message);
+            }
+        });
+    }
+
 
 
 }

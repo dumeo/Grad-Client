@@ -163,21 +163,19 @@ public class InfoCategoryFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 int[] lastVisiblePositions = mLayoutManager.findLastVisibleItemPositions(null);
                 int lastVisiblePosition = getLastVisiblePosition(lastVisiblePositions);
                 Log.e("wjj", "lastVisiblePosition:" + lastVisiblePosition);
+                //判断用户是否已经浏览到底部
                 if(mPostTag != null
                         && !binding.swipeRefresh.isRefreshing()
                         && !mIsLodaing
                         && lastVisiblePosition >= mItemAdapter.getItemCount() - 1){
                     mIsLodaing = true;
                     binding.progressbarLoadMore.setVisibility(View.VISIBLE);
-                    //load more data...
                     mCurrentCount = mItemAdapter.getItemCount();
-//                    Log.e("wjj", "current count = " + mCurrentCount);
                     String startTime = mItemAdapter.getmPostItems().get(mCurrentCount - 1).getPost().getPostDate();
-//                    Log.e("wjj", "startTime = " + startTime);
+                    //若浏览到底部，自动请求更多信息
                     PostService.loadMorePosts(mPostTag, mHandler, startTime, mPostItems);
                 }
 

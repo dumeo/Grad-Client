@@ -66,10 +66,10 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     case UserConstants.CHECK_USER_OK:{
                         if(((String)msg.obj).equals(UserConstants.USER_EXISTS)) {
-                            if(mUser.getUtype() == UserConstants.UTYPE_USER){
-                                startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));
-                            }else{
+                            if(mUser.getUtype() == UserConstants.UTYPE_GWH){
                                 startActivity(new Intent(RegisterActivity.this, CommiteeActivity.class));
+                            }else{
+                                startActivity(new Intent(RegisterActivity.this, MainPageActivity.class));
                             }
                             finish();
                         }
@@ -83,9 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void checkUserExists(){
-        String userStr = SharedPreferenceUtil.getInstance(getApplicationContext(), UserConstants.USER_INFO_DATABASE).readString(UserConstants.SHARED_PREF_USERINFO_KEY, null);
+        //检测本地是否存在用户
+        String userStr = SharedPreferenceUtil.getInstance(getApplicationContext(),
+                UserConstants.USER_INFO_DATABASE).readString(UserConstants.SHARED_PREF_USERINFO_KEY, null);
+        //若本地存在用户
         if(userStr != null){
             mUser = JsonUtil.jsonToObject(userStr, User.class);
+            //检测远程数据库是否存在用户
             UserService.checkIfUserExists(mHandler, mUser.getUid());
         }
     }
